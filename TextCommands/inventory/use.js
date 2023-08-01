@@ -29,8 +29,8 @@ module.exports = {
     if ( ruongBac < 0) return message.channel.send(`**${message.author.username}**, bạn không còn rương bạc nào!`)
 
     const moneyRandom = {
-        minMoney: 1000,   
-        maxMoney: 15000, 
+        minMoney: 5000,   
+        maxMoney: 20000, 
     }
 
     const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
