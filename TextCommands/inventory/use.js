@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const itemModel = require("../../database/models/itemModel");
 
 module.exports = {
   name: "use",
@@ -17,63 +18,26 @@ module.exports = {
       );
 
     const id = args[0];
-    let soluong = parseInt(args[1]);
 
     if (!id)
-    return message.channel.send(
-      `**${message.author.username}**, bạn phải nhập id món đồ cần dùng!`
-    );
-  if (soluong < 0)
-    return message.channel.send(
-      `**${message.author.id}**, bạn không thể nhập số âm`
+      return message.channel.send(
+        `**${message.author.username}**, bạn phải nhập id món đồ cần dùng!`
     );
 
-    if (id == "ruongbac" || id == "109") {
-      const ruongBacItem = [
-        "2,000 coins <:O_o:1135831601205481523>",
-        "15,000 coins <:O_o:1135831601205481523>",
-        "1,500 coins <:O_o:1135831601205481523>",
-        "5,500 coins <:O_o:1135831601205481523>",
-        "10,000 coins <:O_o:1135831601205481523>",
-        "20,000 coins <:O_o:1135831601205481523>",
-      ];
+    const ruongBac = await client.item(message.author.id, "Rương bạc")
 
-      const ruongBac = await client.item(message.author.id, "Rương bạc");
+    if ( ruongBac < 0) return message.channel.send(`**${message.author.username}**, bạn không còn rương bạc nào!`)
 
-      if (ruongBac < 0)
-        return message.channel.send(
-          `**${author.username}**, bạn không có rương bạc nào để dùng`
-        );
-
-      if (!soluong && ruongBac > 0) soluong = 1;
-      if (soluong > 10) soluong = 10
-      if (args[1] == `all`) soluong = ruongBac
-    
-      console.log(soluong)
-      let arr = [];
-      if (soluong > 0) {
-        for (var i = 0; i < soluong; i++) {
-          let r = ruongBacItem[Math.floor(Math.random() * ruongBacItem.length)];
-          arr[i] = r;
-          if ( r = ruongBacItem[0]) await client.addTien(message.author.id, 2000)
-        }
-        let count = {};
-        arr.forEach((item) => {
-          if (count[item]) {
-            count[item] += 1;
-            return;
-          }
-          count[item] = 1;
-        });
-
-        await client.truItem(message.author.id, "Rương bạc", soluong)
-        await message.channel.send(
-          `**${
-            message.author.username
-          }**, bạn đã mở rương bạc và nhận được:\n${arr.join("\n")}`
-        );
-      }
+    const moneyRandom = {
+        minMoney: 1000,   
+        maxMoney: 15000, 
     }
 
+    const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
+    await message.channel.send(`🎉** | ${message.author.username}**, bạn đã nhận được ${randomAmount} <:O_o:1135831601205481523> coins`)
+
+    await client.addTien(message.author.id, randomAmount)
+    await client.truItem(message.author.id, "Rương bạc", 1)
+    
   },
 };
