@@ -1,16 +1,12 @@
 const Discord = require("discord.js");
 const itemModel = require('../../database/models/itemModel')
-const nhanModel = require('../../database/models/nhanModel')
 
 /**
  *          Note
- * các loại cúp là type = 1                          ---
- * các loại hoa, gấu bông, socola, kẹo là type = 2     |==> itemSchema.js
- * các loại rương là type = 3                        ---
- * 
- * nhẫn các loại thì type 1 : bạc
- *                   type 2 : vàng
- *                   type 3 : hồng
+ * các loại cúp là type = 1                          
+ * các loại hoa, gấu bông, socola, kẹo là type = 2     
+ * các loại rương là type = 3  
+ * các loại nhẫn thì type = 4                      
  */
 
 module.exports = {
@@ -96,9 +92,9 @@ module.exports = {
       })
       .sort({ soLuong: -1 })
 
-    const nhan = await nhanModel
+    const nhan = await itemModel
       .find({
-        userId: message.author.id
+        userId: message.author.id, type: 4
       })
       .sort({ soLuong: -1 })
 

@@ -51,7 +51,28 @@ module.exports = {
 
     if (interaction.isStringSelectMenu()) {
       if (interaction.customId === "shop_menu") {
-        if (interaction.values[0] === "ring") {
+        if (interaction.values[0] === "flower") {
+          await interaction.deferUpdate();
+
+          const modEmbed = new Discord.EmbedBuilder()
+            .setTitle("Quầy Bán Hoa")
+            .setDescription(`
+
+<:chamxanh:1124058113742479400> \`20\` <a:p_flower22:1135636392374960310> Bông Hoa | \`1,000\`
+
+<:chamxanh:1124058113742479400> \`21\` <:bbng:1124017699614371890> Bó Bông | \`2,000\`
+
+<:chamxanh:1124058113742479400> \`22\` <:ko:1124018356949884928> Cục Kẹo | \`3,000\`
+
+<:chamxanh:1124058113742479400> \`23\` <:socola:1124018847511478372> Socola | \`5,000\`
+
+<:chamxanh:1124058113742479400> \`24\` <:gubng:1124018585275211867> Gấu Bông | \`10,000\`
+            `)
+            .setColor(0x0099ff)
+            .setImage('https://i0.wp.com/boingboing.net/wp-content/uploads/2015/07/tumblr_noa6mdd3yb1qze3hdo1_500.gif?resize=500%2C288')
+          await interaction.editReply({ embeds: [modEmbed], ephemeral: true });
+        }
+        else if (interaction.values[0] === "ring") {
           await interaction.deferUpdate();
       
           const infoEmbed = new Discord.EmbedBuilder()
@@ -102,27 +123,7 @@ module.exports = {
             `)
             .setColor("Random");
           await interaction.editReply({ embeds: [modEmbed], ephemeral: true });
-        } else if (interaction.values[0] === "flower") {
-          await interaction.deferUpdate();
-
-          const modEmbed = new Discord.EmbedBuilder()
-            .setTitle("Quầy Bán Hoa")
-            .setDescription(`
-
-<:chamxanh:1124058113742479400> \`20\` <a:p_flower22:1135636392374960310> Bông Hoa | \`1,000\`
-
-<:chamxanh:1124058113742479400> \`21\` <:bbng:1124017699614371890> Bó Bông | \`2,000\`
-
-<:chamxanh:1124058113742479400> \`22\` <:ko:1124018356949884928> Cục Kẹo | \`3,000\`
-
-<:chamxanh:1124058113742479400> \`23\` <:socola:1124018847511478372> Socola | \`5,000\`
-
-<:chamxanh:1124058113742479400> \`24\` <:gubng:1124018585275211867> Gấu Bông | \`10,000\`
-            `)
-            .setColor(0x0099ff)
-            .setImage('https://i0.wp.com/boingboing.net/wp-content/uploads/2015/07/tumblr_noa6mdd3yb1qze3hdo1_500.gif?resize=500%2C288')
-          await interaction.editReply({ embeds: [modEmbed], ephemeral: true });
-        }
+        } 
       }
     }
   },

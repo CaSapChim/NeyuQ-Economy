@@ -65,10 +65,10 @@ module.exports = {
       ㅤㅤ• Mua các loại hoa đang bán
       
       <:nhan:1124415305347780720> **Quầy Bán Nhẫn**
-      ㅤㅤ• Mua các nhẫn đang có
+      ㅤㅤ• Mua các loại nhẫn đang có
       
       <:shoprole:1124059582805856267> **Quầy bán role**
-      ㅤㅤ• Mua các role trong shop
+      ㅤㅤ• Mua các loại role trong shop
       
       <:rng:1124057508177256598> **Quầy Gacha**
       ㅤㅤ• Mua các rương gacha`)
