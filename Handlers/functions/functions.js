@@ -51,7 +51,7 @@ module.exports = (client) => {
       if (data) {
         data.coins = data.coins + coins;
       } else {
-        data = new balanceModel({ userId, coins: coins });
+        data = new balanceModel({ userId: userId, coins: coins });
       }
   
       await data.save();
@@ -67,7 +67,7 @@ module.exports = (client) => {
       if (data) {
         data.coins = data.coins - coins;
       } else {
-        data = new balanceModel({ userId, coins: -coins });
+        data = new balanceModel({ userId: userId, coins: -coins });
       }
   
       await data.save();
