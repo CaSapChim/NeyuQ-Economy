@@ -26,7 +26,7 @@ module.exports = {
 
     if ( id === '109' || id === 'ruongbac') {
       const ruongBac = await client.item(message.author.id, "Rương bạc")
-      if ( ruongBac < 0) return message.channel.send(`**${message.author.username}**, bạn không còn rương bạc nào!`)
+      if ( ruongBac < 1) return message.channel.send(`**${message.author.username}**, bạn không còn rương bạc nào!`)
 
       const moneyRandom = {
           minMoney: 5000,   
@@ -34,7 +34,7 @@ module.exports = {
       }
 
       const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
-      await message.channel.send(`🎉** | ${message.author.username}**, bạn đã nhận được ${randomAmount} <:O_o:1135831601205481523> coins`)
+      await message.channel.send(`🎉** | ${message.author.username}**, bạn đã nhận được ${randomAmount.toLocaleString('en-Us')} <:O_o:1135831601205481523> coins`)
 
       await client.addTien(message.author.id, randomAmount)
       await client.truItem(message.author.id, "Rương bạc", 1)
@@ -46,12 +46,17 @@ module.exports = {
 
       const itemRandom = [
         'Bó bông',   
-        'Bông hoa',     // 8 bông hoa | 10 bó bông | 6 kẹo | 3 socola | 2 Gấu 
+        'Bông hoa',     // 20 bông hoa | 10 bó bông | 6 kẹo | 3 socola | 2 Gấu 
         'Bó bông',
         'Cục kẹo',
         'Socola',
         'Gấu bông',
         'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
         'Bó bông',
         'Cục kẹo',
         'Bông hoa',
@@ -63,7 +68,15 @@ module.exports = {
         'Bó bông',
         'Cục kẹo',
         'Bó bông',
+        'Cục kẹo',
+        'Cục kẹo',
         'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
+        'Bó bông',
+        'Bó bông',
         'Bó bông',
         'Cục kẹo',
         'Socola', 
@@ -71,6 +84,9 @@ module.exports = {
         'Bó bông', // TAI NGHE HET PIN CMNR
         'Bông hoa',
         'Cục kẹo',
+        'Bông hoa',
+        'Bông hoa',
+        'Bông hoa',
         'Bông hoa',
         'Bó bông',
         'Cục kẹo',
@@ -86,16 +102,17 @@ module.exports = {
 
       const moneyRandom = {
         minMoney: 10000,   
-        maxMoney: 20000, 
+        maxMoney: 25000, 
     }
 
       const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
 
-      const result = Math.floor(Math.random() * itemRandom.length) + 1
-      message.channel.send(`🎉** | ${message.author.username}**, bạn đã mở rương vàng và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}\n${randomAmount} <:O_o:1135831601205481523> coins**`)
+      const result = Math.floor(Math.random() * itemRandom.length)
+      message.channel.send(`🎉** | ${message.author.username}**, bạn đã mở rương vàng và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}**\n${randomAmount} <:O_o:1135831601205481523> coins`)
 
       await client.addTien(message.author.id, randomAmount)
       await client.addItem(message.author.id, itemRandom[result], 1, 2)
+      await client.truItem(message.author.id, 'Rương vàng', 1)
 
     }
     
