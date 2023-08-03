@@ -1,14 +1,22 @@
 const Discord = require("discord.js");
+const userModel = require('../../database/models/userModel')
 
 module.exports = {
   name: "daily",
   aliases: ["daily"],
   description: "Nhận tiền hàng ngày của bạn",
   run: async (client, message, args, userData) => {
-    if (!userData) {
-      return message.reply('Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!');
-    }
 
+     if (!userData) {
+      userData = await userModel.create({
+        userId: message.author.id,
+        username: message.author.username,
+        guildId: message.guild.id,
+        inventory: [],
+        marriedPersonId: ''
+    })
+
+     }     
      const currentTime = new Date();
      const lastDaily = userData.daily.timestamp;
      const elapsedMillis = currentTime - lastDaily;

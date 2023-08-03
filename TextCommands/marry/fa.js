@@ -14,7 +14,6 @@ module.exports = {
      */
 //////////////////////////////////
     run: async (client, message, args, userData) => {
-    if (!userData) return message.reply('Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!')
         const user1 = message.author
         const user2 = message.mentions.users.first();
         if (!user2) {
@@ -25,7 +24,7 @@ module.exports = {
 
         const existingMarriage = await marryModel.findOne({ $or: [{ userId1: user1.id }, { userId2: user1.id }] });
         if (!existingMarriage) 
-          return message.channel.send('Bạn Đã Có Người Yêu Đâu ChiaTay LÊU LÊU~~~');
+          return message.channel.send('Bạn Đã Có Người Yêu Đâu Mà ChiaTay LÊU LÊU <a:NQG_leuleu:1136579769429925939><a:NQG_leuleu:1136579769429925939>');
             
         const filter = (button) => {
             return button.user.id === user2.id;
@@ -57,7 +56,9 @@ collector.on('collect', async (button) => {
     try {
         if (button.customId === 'accept') {
             await marryModel.deleteOne({ userId1: user1.id}) 
+            await marryModel.deleteOne({ username1: user1.username})
             await marryModel.deleteOne({ userId2: user2.id})
+            await marryModel.deleteOne({ username2: user2.username})
             await button.reply(`${user2} Đã Chấp Nhận Lời chiatay!`);
         } else if (button.customId === 'decline') {
             await button.reply(`${user2} Đã Từ Chối Lời chiatay!`);

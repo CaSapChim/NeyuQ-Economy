@@ -49,11 +49,6 @@ module.exports = {
    */
   run: async (client, message, args, userData) => {
 
-    if (!userData)
-      return message.reply(
-        "Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!"
-      );
-
     const author = message.author.id;
     const balance = await client.xemTien(author);
     const msgKoDuTien = `**${message.author.username}**, bạn không có đủ tiền để mua vật phẩm này!`;

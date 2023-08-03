@@ -14,7 +14,6 @@ module.exports = {
      */
 //////////////////////////////////
     run: async (client, message, args, userData) => {
-    if (!userData) return message.reply('Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!')
         const user1 = message.author
         const user2 = message.mentions.users.first();
         if (!user2) {
@@ -53,7 +52,9 @@ collector.on('collect', async (button) => {
     if (button.customId === 'accept') {
         const newKetban = new ketbanModel({
             userId1: user1.id,
+            username1: user1.username,
             userId2: user2.id,
+            username2: user2.username,
         });
         await newKetban.save();
         await button.reply(`${user2} Đã Chấp Nhận Lời KetBan`);

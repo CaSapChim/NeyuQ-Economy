@@ -12,10 +12,6 @@ module.exports = {
      * @param {*} userData
      */
     run: async (client, message, args, userData) => {
-      if (!userData)
-        return message.reply(
-          "Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!"
-        );
       const userInv = userData.inventory;
       
       // Function to get the quantity of a specific item in the inventory

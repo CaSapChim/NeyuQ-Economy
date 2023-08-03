@@ -12,10 +12,6 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-    if (!userData)
-      return message.reply(
-        "Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!"
-      );
 
     const id = args[0];
 
@@ -108,13 +104,49 @@ module.exports = {
       const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
 
       const result = Math.floor(Math.random() * itemRandom.length)
-      message.channel.send(`🎉** | ${message.author.username}**, bạn đã mở rương vàng và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}**\n${randomAmount} <:O_o:1135831601205481523> coins`)
+      message.channel.send(`🎉** | ${message.author.username}**, bạn đã mở rương vàng và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}**\n${randomAmount.toLocaleString('en-Us')} <:O_o:1135831601205481523> coins`)
 
       await client.addTien(message.author.id, randomAmount)
       await client.addItem(message.author.id, itemRandom[result], 1, 2)
       await client.truItem(message.author.id, 'Rương vàng', 1)
 
     }
-    
-  },
+    else if ( id === '111' || id === 'ruongdacbiet') {
+      const ruongDacBiet = await client.item(message.author.id, "Rương đặc biệt")
+      if (ruongDacBiet < 1) return message.channel.send(`**${message.author.username}**, bạn không còn rương vàng nào!`)
+
+      const itemRandom = [
+        'Tình Yêu Cháy Bỏng', 
+        'Huy Hiệu Tri Kỉ',
+        'Huy Hiệu Thân Thiết',
+        'Tri Kỉ Valentine', //  
+        'Huy Hiệu VDay',
+        'Huy Hiệu Cặp Đôi',
+      ]
+
+      const emojis = {
+        'Tình Yêu Cháy Bỏng': '<:tinhyeuchaybong:1136568485166718986>',
+        'Huy Hiệu Tri Kỉ': '<:trik:1122444231223558174>',
+        'Huy Hiệu Thân Thiết': '<:banbe:1136575697909989426>',
+        'Tri Kỉ Valentine': '<:triki:1136577819409907793>',
+        'Huy Hiệu VDay': '<:valnetine:1136578277570510929>',
+        'Huy Hiệu Cặp Đôi': '<:trikivalentine:1136577479679688815>' ,
+      }
+
+      const moneyRandom = {
+        minMoney: 10000,   
+        maxMoney: 20000, 
+      }
+
+      const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
+      const result = Math.floor(Math.random() * itemRandom.length)
+      message.channel.send(`🎉** | ${message.author.username}**, Bạn đã mở rương đặc biệt và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}**\n${randomAmount.toLocaleString('en-Us')} <:O_o:1135831601205481523> coins`)
+
+      await client.addTien(message.author.id, randomAmount)
+      await client.addItem(message.author.id, itemRandom[result], 1, 5)
+      await client.truItem(message.author.id, 'Rương đặc biệt', 1)
+
+  }
+}
 };
+

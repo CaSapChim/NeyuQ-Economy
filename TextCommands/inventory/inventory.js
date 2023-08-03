@@ -6,7 +6,8 @@ const itemModel = require('../../database/models/itemModel')
  * các loại cúp là type = 1                          
  * các loại hoa, gấu bông, socola, kẹo là type = 2     
  * các loại rương là type = 3  
- * các loại nhẫn thì type = 4                      
+ * các loại nhẫn thì type = 4     
+ * các loãi huy hiệu thì type = 5                 
  */
 
 module.exports = {
@@ -21,10 +22,6 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-    if (!userData)
-      return message.reply(
-        "Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!"
-      );
     
     const cupCacLoai = [
       'Cúp gỗ',

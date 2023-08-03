@@ -22,7 +22,6 @@ module.exports = {
       };
 
         try {
-          if (!userData) return message.reply('Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!')
             const minedResources = mine()
             for ( const resource of minedResources ) {
               const existResource = userData.inventory.find(item => item.name === resource.name)

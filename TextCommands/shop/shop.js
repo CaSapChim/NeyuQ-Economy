@@ -21,7 +21,6 @@ module.exports = {
    * @returns
    */
   run: async (client, message, args, userData) => {
-    if (!userData) return message.reply('Hình như chúng tôi chưa cấu hình tài khoản cho bạn. Hãy dùng lệnh `!start`!')
     let helpMenu = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId("shop_menu")

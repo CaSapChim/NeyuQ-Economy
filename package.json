@@ -11,6 +11,7 @@
   "dependencies": {
     "ascii-table": "^0.0.9",
     "axios": "^1.4.0",
+    "canvas": "^2.11.2",
     "colors": "^1.4.0",
     "cpu-stat": "^2.0.1",
     "cron": "^2.3.1",

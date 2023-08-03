@@ -1,6 +1,7 @@
 const itemModel = require('../../database/models/itemModel')
 const balanceModel = require('../../database/models/balanceModel')
 const nhanModel = require('../../database/models/nhanModel')
+const marryModel = require('../../database/models/marryModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {
@@ -38,6 +39,7 @@ module.exports = (client) => {
     }
   }
   
+  ///////////////////////////////////////////////////////// Tiền
   client.xemTien = (userId) => new Promise(async ful => {
     const data = await balanceModel.findOne({ userId: userId });
     if (!data) return ful(0);
@@ -76,7 +78,7 @@ module.exports = (client) => {
     }
   };
 
-  //
+  ///////////////////////////////////// Nhẫn
 
   client.nhan = (userId, name) => new Promise(async ful => {
     const data = await nhanModel.findOne({ userId: userId, name: name });
@@ -112,4 +114,10 @@ module.exports = (client) => {
       console.log('Lỗi trừ nhẫn: ', err)
     }
   }
+  ////////////////////////////////////////////////////// Xem level marry
+  client.marryLevel = (userId) => new Promise(async ful => {
+    const data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] });
+    if (!data) return ful(0);
+    ful(data.level);
+  })
 }
