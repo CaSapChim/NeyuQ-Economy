@@ -22,15 +22,15 @@ module.exports = {
      const elapsedMillis = currentTime - lastDaily;
      const elapsedDays = Math.floor(elapsedMillis / (24 * 60 * 60 * 1000));
 
-    // if (elapsedDays === 0) {
-    //   // Tính thời gian còn lại cho người dùng có thể nhận tiền hàng ngày tiếp theo
-    //   const remainingMillis = 24 * 60 * 60 * 1000 - elapsedMillis;
-    //   const remainingHours = Math.floor(remainingMillis / (1000 * 60 * 60));
-    //   const remainingMinutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
-    //   const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
+     if (elapsedDays === 0) {
+       // Tính thời gian còn lại cho người dùng có thể nhận tiền hàng ngày tiếp theo
+       const remainingMillis = 24 * 60 * 60 * 1000 - elapsedMillis;
+       const remainingHours = Math.floor(remainingMillis / (1000 * 60 * 60));
+       const remainingMinutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
+       const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
 
-    //   return message.channel.send(`Bạn đã nhận tiền hàng ngày rồi. Hãy quay lại sau ${remainingHours} giờ, ${remainingMinutes} phút và ${remainingSeconds} giây.`);
-    // }
+       return message.channel.send(`Bạn đã nhận tiền hàng ngày rồi. Hãy quay lại sau ${remainingHours} giờ, ${remainingMinutes} phút và ${remainingSeconds} giây.`);
+     }
 
     const streak = elapsedDays > 1 ? 0 : userData.daily.streak + 1;
     userData.daily.streak = streak;

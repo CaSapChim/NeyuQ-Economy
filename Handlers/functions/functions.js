@@ -1,6 +1,5 @@
 const itemModel = require('../../database/models/itemModel')
 const balanceModel = require('../../database/models/balanceModel')
-const nhanModel = require('../../database/models/nhanModel')
 const marryModel = require('../../database/models/marryModel')
 
 module.exports = (client) => {
@@ -77,43 +76,6 @@ module.exports = (client) => {
       console.log('Lỗi trừ tiền: ', err);
     }
   };
-
-  ///////////////////////////////////// Nhẫn
-
-  client.nhan = (userId, name) => new Promise(async ful => {
-    const data = await nhanModel.findOne({ userId: userId, name: name });
-    if (!data) return ful(0);
-    ful(data.soLuong);
-  })
-
-  client.addNhan = async (userId, name, soLuong, type) => {
-    try {
-      let data = await nhanModel.findOne({ userId: userId, name: name})
-      if (!data) {
-        data = new nhanModel({ userId: userId, name: name, soLuong: soLuong, type: type})
-      } else {
-        data.soLuong = data.soLuong + soLuong
-        data.type = type
-      }
-      await data.save()
-    } catch (err) {
-      console.log('Lỗi add nhẫn: ', err)
-    }
-  }
-  
-  client.truNhan = async (userId, name, soLuong) => {
-    try {
-      let data = await nhanModel.findOne({ userId: userId, name: name})
-      if (data) {
-        data.soLuong = data.soLuong - soLuong
-      } else {
-        return
-      }
-      await data.save()
-    } catch (err) {
-      console.log('Lỗi trừ nhẫn: ', err)
-    }
-  }
   ////////////////////////////////////////////////////// Xem level marry
   client.marryLevel = (userId) => new Promise(async ful => {
     const data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] });

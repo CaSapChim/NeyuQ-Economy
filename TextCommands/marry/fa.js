@@ -40,11 +40,13 @@ module.exports = {
         const acceptButton = new Discord.ButtonBuilder()
             .setCustomId('accept')
             .setLabel('Chấp nhận')
+            .setEmoji('<:tch:1136673192665161889>')
             .setStyle(Discord.ButtonStyle.Success);
 
         const declineButton = new Discord.ButtonBuilder()
             .setCustomId('decline')
             .setLabel('Từ chối')
+            .setEmoji('<:kotich:1136674388717076581>')
             .setStyle(Discord.ButtonStyle.Danger);
 
         const row = new Discord.ActionRowBuilder()
@@ -56,9 +58,7 @@ collector.on('collect', async (button) => {
     try {
         if (button.customId === 'accept') {
             await marryModel.deleteOne({ userId1: user1.id}) 
-            await marryModel.deleteOne({ username1: user1.username})
             await marryModel.deleteOne({ userId2: user2.id})
-            await marryModel.deleteOne({ username2: user2.username})
             await button.reply(`${user2} Đã Chấp Nhận Lời chiatay!`);
         } else if (button.customId === 'decline') {
             await button.reply(`${user2} Đã Từ Chối Lời chiatay!`);

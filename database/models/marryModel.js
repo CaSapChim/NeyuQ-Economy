@@ -5,15 +5,9 @@ const marrySchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    username1: {
-        type: String
-    },
     userId2: {
         type: String,
         require: true
-    },
-    username2: {
-        type: String
     },
     marriedAt: {
         type: Date,

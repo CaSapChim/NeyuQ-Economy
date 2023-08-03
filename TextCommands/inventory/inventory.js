@@ -51,6 +51,15 @@ module.exports = {
       'Rương đặc biệt'
     ]
 
+    const huyHieuCacLoai = [
+      'Tình Yêu Cháy Bỏng', 
+      'Huy Hiệu Tri Kỉ',
+      'Huy Hiệu Thân Thiết',
+      'Tri Kỉ Valentine', 
+      'Huy Hiệu VDay',
+      'Huy Hiệu Cặp Đôi',
+  ]
+
     let soLuongNhanBac = 0
     let soLuongNhanVang = 0
     let soLuongNhanHong = 0
@@ -70,6 +79,13 @@ module.exports = {
     let soLuongCucKeo = 0
     let soLuongSocola = 0
     let soLuongGauBong = 0
+
+    let soLuongHH1 = 0
+    let soLuongHH2 = 0
+    let soLuongHH3 = 0
+    let soLuongHH4 = 0
+    let soLuongHH5 = 0
+    let soLuongHH6 = 0
 
     const cup = await itemModel
       .find({
@@ -92,6 +108,11 @@ module.exports = {
     const nhan = await itemModel
       .find({
         userId: message.author.id, type: 4
+      })
+      .sort({ soLuong: -1 })
+    const huyHieu = await itemModel
+      .find({
+        userId: message.author.id, type: 5
       })
       .sort({ soLuong: -1 })
 
@@ -121,7 +142,16 @@ module.exports = {
       if ( itemRuong.name === ruongCacLoai[0] ) soLuongRuongBac = itemRuong.soLuong
       if ( itemRuong.name === ruongCacLoai[1] ) soLuongRuongVang = itemRuong.soLuong
       if ( itemRuong.name === ruongCacLoai[2] ) soLuongRuongDacBiet = itemRuong.soLuong
-  }
+    }
+
+    for (const itemHuyHieu of huyHieu) {
+      if ( itemHuyHieu.name === huyHieuCacLoai[0] ) soLuongHH1 = itemHuyHieu.soLuong
+      if ( itemHuyHieu.name === huyHieuCacLoai[1] ) soLuongHH2  = itemHuyHieu.soLuong
+      if ( itemHuyHieu.name === huyHieuCacLoai[2] ) soLuongHH3  = itemHuyHieu.soLuong
+      if ( itemHuyHieu.name === huyHieuCacLoai[3] ) soLuongHH4  = itemHuyHieu.soLuong
+      if ( itemHuyHieu.name === huyHieuCacLoai[4] ) soLuongHH5  = itemHuyHieu.soLuong
+      if ( itemHuyHieu.name === huyHieuCacLoai[5] ) soLuongHH6  = itemHuyHieu.soLuong
+    }  
 
     const cupEmbed = new Discord.EmbedBuilder()
       .setColor(0x0099ff)
@@ -133,6 +163,7 @@ module.exports = {
         `<:Gold_Pickaxe:1134749444785578034> ${cupCacLoai[3]}: ${soLuongCupVang}\n` +
         `<:diamond_pickaxe:1134749671613550592> ${cupCacLoai[4]}: ${soLuongCupKimCuong}`
       )
+      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp()
 
     const nhanEmbed = new Discord.EmbedBuilder()
@@ -143,6 +174,7 @@ module.exports = {
           `\`107\` | ${`<:Nhnvng:1124056797238534375> ${nhanCacLoai[1]}: **${soLuongNhanVang}**\n`}` +
           `\`108\` | ${`<:nhan:1124415305347780720> ${nhanCacLoai[2]}: **${soLuongNhanHong}**\n`}`
       )
+      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp();
 
     const hoaEmbed = new Discord.EmbedBuilder()
@@ -155,6 +187,7 @@ module.exports = {
           `\`104\` | ${`<:socola:1124018847511478372> ${hoaCacLoai[3]}: **${soLuongSocola}**\n`}` +
           `\`105\` | ${`<:gubng:1124018585275211867> ${hoaCacLoai[4]}: **${soLuongGauBong}**\n`}`
       )
+      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp();
 
     const ruongEmbed = new Discord.EmbedBuilder()
@@ -165,9 +198,24 @@ module.exports = {
           `\`110\` | ${`<:ruongvang:1135643685476896789> ${ruongCacLoai[1]}: **${soLuongRuongVang}**\n`}` +
           `\`111\` | ${`<:rngkimcuong:1135643691814494278> ${ruongCacLoai[2]}: **${soLuongRuongDacBiet}**\n`}`
       )
+      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp();
 
-    let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, cupEmbed];
+    const huyHieuEmbed = new Discord.EmbedBuilder()
+        .setColor('NotQuiteBlack')
+        .setTitle(`Bộ sưu tập huy hiệu của ${message.author.username}`)
+        .setDescription(
+          `${`<:tinhyeuchaybong:1136568485166718986> ${huyHieuCacLoai[0]}: **${soLuongHH1}**\n`}`+
+          `${`<:trik:1122444231223558174> ${huyHieuCacLoai[1]}: **${soLuongHH2}**\n`}`+
+          `${`<:banbe:1136575697909989426> ${huyHieuCacLoai[2]}: **${soLuongHH3}**\n`}`+
+          `${`<:triki:1136577819409907793> ${huyHieuCacLoai[3]}: **${soLuongHH4}**\n`}`+
+          `${`<:valnetine:1136578277570510929> ${huyHieuCacLoai[4]}: **${soLuongHH5}**\n`}`+
+          `${`<:trikivalentine:1136577479679688815> ${huyHieuCacLoai[5]}: **${soLuongHH6}**\n`}`
+        )
+        .setFooter({text: 'Chúc bạn một ngày tốt lành'})
+        .setTimestamp()
+
+    let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, huyHieuEmbed, cupEmbed];
     let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
     await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
 
@@ -176,14 +224,22 @@ module.exports = {
       let buttonRow1 = new Discord.ActionRowBuilder()
       .addComponents(
         new Discord.ButtonBuilder()
+        .setStyle(Discord.ButtonStyle.Secondary)
+        .setEmoji('<:jjj:1136731747074191440>')
+        .setCustomId('back-page1'),
+        new Discord.ButtonBuilder()
           .setStyle(Discord.ButtonStyle.Primary)
           .setCustomId('back-page')
           .setEmoji('⬅'),
         new Discord.ButtonBuilder()
           .setStyle(Discord.ButtonStyle.Primary)
           .setCustomId('next-page')
-          .setEmoji('➡️')
-          )
+          .setEmoji('➡️'),
+        new Discord.ButtonBuilder()
+          .setStyle(Discord.ButtonStyle.Secondary)
+          .setEmoji('<:jj:1136730727610863627>')
+          .setCustomId('next-page1')
+        )
           if (embeds.length === 1) return message.edit({ embeds: [embeds[0]] })
           const queueEmbed = await message.edit(
             {
@@ -218,6 +274,15 @@ module.exports = {
                 trangHienTai = embeds.length - 1
                 queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
               }
+            } else if (interaction.customId == "back-page1") {
+              interaction.deferUpdate()
+              trangHienTai = 0;
+              queueEmbed.edit({ content: `**Current Page - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+            }
+            else if (interaction.customId == "next-page1") {
+              interaction.deferUpdate()
+              trangHienTai = embeds.length - 1;
+              queueEmbed.edit({ content: `**Current Page - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
           }
       );

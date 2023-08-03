@@ -23,10 +23,13 @@ module.exports = {
 
         if (user2.id === message.author.id) return message.reply('Bạn không thể totinh với chính mình.');
 
-        const existingMarriage = await marryModel.findOne({ $or: [{ userId1: user1.id }, { userId2: user1.id }] });
-        if (existingMarriage) {
-          return message.channel.send('Bạn đã kết hôn rồi!');
-        }
+        const existingMarriage = await marryModel.findOne({
+            $or: [{ userId1: user1.id }, { userId2: user1.id }, { userId1: user2.id }, { userId2: user2.id }],
+          });
+      
+          if (existingMarriage) {
+            return message.channel.send('Quý Khách đã đến muộn, hoa đã có chủ rồi <a:NQG_leuleu:1136579769429925939>');
+          }
 
         const filter = (button) => {
             return button.user.id === user2.id;
@@ -42,26 +45,27 @@ module.exports = {
         const acceptButton = new Discord.ButtonBuilder()
             .setCustomId('accept')
             .setLabel('Chấp nhận')
+            .setEmoji('<:tch:1136673192665161889>')
             .setStyle(Discord.ButtonStyle.Success);
 
         const declineButton = new Discord.ButtonBuilder()
             .setCustomId('decline')
             .setLabel('Từ chối')
+            .setEmoji('<:kotich:1136674388717076581>')
             .setStyle(Discord.ButtonStyle.Danger);
 
         const row = new Discord.ActionRowBuilder()
             .addComponents(acceptButton, declineButton);
 
         const sentMessage = await message.channel.send({ embeds: [embed], components: [row] });
-////////////////////////////////////////////
+
+
+
 collector.on('collect', async (button) => {
     if (button.customId === 'accept') {
-        if (existingMarriage) return message.channel.send('Định cắm sừng nửa kia của mình ???')
         const newMarriage = new marryModel({
             userId1: user1.id,
-            username1: user1.username,
             userId2: user2.id,
-            username2: user2.username
         });
         await newMarriage.save();
         await button.reply(`${user2} Đã Chấp Nhận Lời ToTinh!`);

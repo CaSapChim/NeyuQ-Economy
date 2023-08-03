@@ -83,7 +83,7 @@ module.exports = {
             
 <:chamvang:1125863859740225556> \`26\` <:Nhnvng:1124056797238534375> Nhẫn Vàng: | \`100,000\`\n
             
-<:chamvang:1125863859740225556> \`27\` <:nhan:1124415305347780720> Nhẫn Đặc Biệt: | \`150,000\`\n
+<:chamvang:1125863859740225556> \`27\` <:nhan:1124415305347780720> Nhẫn Hồng: | \`150,000\`\n
             `)
             .setColor(0xe49300)
             .setImage('https://64.media.tumblr.com/6f39e453ebb570672af6ebcd0478cac6/tumblr_inline_plss2yuzfK1tiiqk5_540.gif')

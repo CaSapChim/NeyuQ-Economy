@@ -119,7 +119,7 @@ module.exports = {
         'Tình Yêu Cháy Bỏng', 
         'Huy Hiệu Tri Kỉ',
         'Huy Hiệu Thân Thiết',
-        'Tri Kỉ Valentine', //  
+        'Tri Kỉ Valentine', 
         'Huy Hiệu VDay',
         'Huy Hiệu Cặp Đôi',
       ]

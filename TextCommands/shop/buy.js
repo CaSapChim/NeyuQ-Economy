@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const OWNER_ID = require('../../config.json').OWNER_ID
 
 /**
  *          Note
@@ -21,7 +20,7 @@ const cupCacLoai = [
   "Cúp kim cương",
 ];
 
-const nhanCacLoai = ["Nhẫn bạc", "Nhẫn vàng", "Nhẫn hồng"];
+const nhanCacLoai = ['Nhẫn bạc', 'Nhẫn vàng', 'Nhẫn hồng'];
 
 const hoaCacLoai = ["Bông hoa", "Bó hoa", "Cục kẹo", "Socola", "Gấu bông"];
 
@@ -35,7 +34,7 @@ const roleCacLoai = [
 const ruongCacLoai = [
   'Rương bạc',
   'Rương vàng',
-  'Rương đặt biệt'
+  'Rương đặc biệt'
 ]
 
 module.exports = {
@@ -54,6 +53,7 @@ module.exports = {
     const msgKoDuTien = `**${message.author.username}**, bạn không có đủ tiền để mua vật phẩm này!`;
 
     const getItemInfo = async (itemId, price, itemName, itemType) => {
+      if (itemId == 28 || itemId == 29 || itemId == 30 || itemId == 31 ) amount = 1
       if (balance < price * amount) return message.channel.send(msgKoDuTien);
       await client.truTien(author, price * amount);
       if (itemType === 1) await client.addItem(author, itemName, amount, itemType);
@@ -106,27 +106,31 @@ module.exports = {
         await client.truTien(author, 30000);
         let role1 = message.guild.roles.cache.find((role) => role.name === "1124062125229346920" || role.id === "1124062125229346920");
         await message.member.roles.add(role1)
+        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[0]}`)
         break;
       case '29':
         if (balance < 15000) return message.channel.send(msgKoDuTien);
         await client.truTien(author, 15000);
         let role2 = message.guild.roles.cache.find((role) => role.name === "1125641678913548299" || role.id === "1125641678913548299");
         await message.member.roles.add(role2)
+        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[1]}`)
         break;
       case '30':
         if (balance < 50000) return message.channel.send(msgKoDuTien);
         await client.truTien(author, 50000);
         let role3 = message.guild.roles.cache.find((role) => role.name === "1125641802574209055" || role.id === "1125641802574209055");
         await message.member.roles.add(role3)
+        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[2]}`)
         break;
       case '31':
         if (balance < 100000) return message.channel.send(msgKoDuTien);
         await client.truTien(author, 100000);
         let role4 = message.guild.roles.cache.find((role) => role.name === "1125641989174595594" || role.id === "1125641989174595594");
         await message.member.roles.add(role4)
+        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[3]}`)
         break;
 
-      /////////////////////////////////////////////////// RƯơng
+      /////////////////////////////////////////////////// Rương
       case '32':
         getItemInfo(buyId, 10000, ruongCacLoai[0], 3);
         break;
