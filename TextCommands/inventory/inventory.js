@@ -201,16 +201,16 @@ module.exports = {
       .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp();
 
-    const huyHieuEmbed = new Discord.EmbedBuilder()
-        .setColor('NotQuiteBlack')
+    const huyHieuEmbed = new Discord.EmbedBuilder() 
+        .setColor('#9cfcf2')
         .setTitle(`Bộ sưu tập huy hiệu của ${message.author.username}`)
-        .setDescription(
-          `${`<:tinhyeuchaybong:1136568485166718986> ${huyHieuCacLoai[0]}: **${soLuongHH1}**\n`}`+
-          `${`<:trik:1122444231223558174> ${huyHieuCacLoai[1]}: **${soLuongHH2}**\n`}`+
-          `${`<:banbe:1136575697909989426> ${huyHieuCacLoai[2]}: **${soLuongHH3}**\n`}`+
-          `${`<:triki:1136577819409907793> ${huyHieuCacLoai[3]}: **${soLuongHH4}**\n`}`+
-          `${`<:valnetine:1136578277570510929> ${huyHieuCacLoai[4]}: **${soLuongHH5}**\n`}`+
-          `${`<:trikivalentine:1136577479679688815> ${huyHieuCacLoai[5]}: **${soLuongHH6}**\n`}`
+        .setDescription(  
+          `> ${`<:tinhyeuchaybong:1136568485166718986> | ${huyHieuCacLoai[0]}: **${soLuongHH1}**\n`}`+
+          `> ${`<:trik:1122444231223558174> | ${huyHieuCacLoai[1]}: **${soLuongHH2}**\n`}`+
+          `> ${`<:banbe:1136575697909989426> | ${huyHieuCacLoai[2]}: **${soLuongHH3}**\n`}`+
+          `> ${`<:triki:1136577819409907793> | ${huyHieuCacLoai[3]}: **${soLuongHH4}**\n`}`+
+          `> ${`<:valnetine:1136578277570510929> | ${huyHieuCacLoai[4]}: **${soLuongHH5}**\n`}`+
+          `> ${`<:trikivalentine:1136577479679688815> | ${huyHieuCacLoai[5]}: **${soLuongHH6}**\n`}`
         )
         .setFooter({text: 'Chúc bạn một ngày tốt lành'})
         .setTimestamp()

@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
 const ketbanSchema = new mongoose.Schema({
-    userId1: {
+    userId: {
         type: String,
         require: true
     },
-    userId2: {
-        type: String,
-        require: true
+    username: String,
+    friends: {
+        type: [String],
     },
     addFriendAt: {
         type: Date,

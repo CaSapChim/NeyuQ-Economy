@@ -50,7 +50,7 @@ module.exports = {
 
     const author = message.author.id;
     const balance = await client.xemTien(author);
-    const msgKoDuTien = `**${message.author.username}**, bạn không có đủ tiền để mua vật phẩm này!`;
+    const msgKoDuTien = `**${message.author.username}**, Bạn không có đủ tiền để mua vật phẩm này!`;
 
     const getItemInfo = async (itemId, price, itemName, itemType) => {
       if (itemId == 28 || itemId == 29 || itemId == 30 || itemId == 31 ) amount = 1
@@ -60,7 +60,7 @@ module.exports = {
       else if (itemType === 2) await client.addItem(author, itemName, amount, itemType);
       else if (itemType === 3) await client.addItem(author, itemName, amount, itemType);
       else if (itemType === 4) await client.addItem(author, itemName, amount, itemType);
-      return message.channel.send(`**${message.author.username}**, bạn đã mua thành công ${amount} ${itemName}`);
+      return message.channel.send(`**<:very:1137010214835597424> ${message.author.username}**, Bạn đã mua thành công ${amount} ${itemName}`);
     };
 
     if (!args[0])
@@ -76,6 +76,7 @@ module.exports = {
       ////////////////////////////////////////////// Hoa
       case '20':
         getItemInfo(buyId, 1000, hoaCacLoai[0], 2)
+        break;
       case '21':
         getItemInfo(buyId, 2000, hoaCacLoai[1], 2);
         break;
@@ -91,6 +92,7 @@ module.exports = {
 
       ////////////////////////////////////////////// Nhẫn
       case '25':
+        
         getItemInfo(buyId, 50000, nhanCacLoai[0], 4);
         break;
       case "26":
@@ -106,28 +108,28 @@ module.exports = {
         await client.truTien(author, 30000);
         let role1 = message.guild.roles.cache.find((role) => role.name === "1124062125229346920" || role.id === "1124062125229346920");
         await message.member.roles.add(role1)
-        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[0]}`)
-        break;
-      case '29':
+        await message.member.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[0]}`)
+        break; 
+      case '29':  
         if (balance < 15000) return message.channel.send(msgKoDuTien);
         await client.truTien(author, 15000);
         let role2 = message.guild.roles.cache.find((role) => role.name === "1125641678913548299" || role.id === "1125641678913548299");
         await message.member.roles.add(role2)
-        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[1]}`)
+        await message.member.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[1]}`)
         break;
       case '30':
         if (balance < 50000) return message.channel.send(msgKoDuTien);
         await client.truTien(author, 50000);
         let role3 = message.guild.roles.cache.find((role) => role.name === "1125641802574209055" || role.id === "1125641802574209055");
         await message.member.roles.add(role3)
-        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[2]}`)
+        await message.member.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[2]}`)
         break;
       case '31':
         if (balance < 100000) return message.channel.send(msgKoDuTien);
         await client.truTien(author, 100000);
         let role4 = message.guild.roles.cache.find((role) => role.name === "1125641989174595594" || role.id === "1125641989174595594");
         await message.member.roles.add(role4)
-        await message.member.send(`**${message.member.nickname}**, bạn đã mua thành công role ${roleCacLoai[3]}`)
+        await message.member.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[3]}`)
         break;
 
       /////////////////////////////////////////////////// Rương

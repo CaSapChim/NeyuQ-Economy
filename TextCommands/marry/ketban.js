@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const ketBanModel = require('../../database/models/ketbanModel');
+const ketBanModel = require('../../database/models/ketBanModel');
 
 module.exports = {
     name: 'ketban',
@@ -14,32 +14,35 @@ module.exports = {
      */
 //////////////////////////////////
     run: async (client, message, args, userData) => {
-        const user1 = message.author
-        const user2 = message.mentions.users.first();
-        if (!user2) {
-            return message.reply('Bạn cần phải đề cập đến một người dùng muốn kết bạn!');
+        let currentUser = await ketBanModel.findOne({ userId: message.author.id })
+        if (!currentUser) {
+            currentUser = new ketBanModel({
+                userId: message.author.id,
+                username: message.author.username
+            })
+            await currentUser.save()
         }
 
-        if (user2.id === message.author.id) return message.reply('Bạn không thể kết bạn với chính mình.');
+        const mentionedUser = message.mentions.users.first()
 
-        const existingFriend = await ketBanModel.findOne({
-            $or: [{ userId1: user1.id }, { userId2: user2.id }],
+        let targetUser = await ketBanModel.findOne({ userId: mentionedUser.id });
+        if (!targetUser) {
+          targetUser = new ketBanModel({
+            userId: mentionedUser.id,
+            username: mentionedUser.username,
           });
-      
-          if (existingFriend) {
-            return message.channel.send('Bạn đã kết bạn với người dùng này rồi!');
+          await targetUser.save();
         }
 
-        const filter = (button) => {
-            return button.user.id === user2.id;
-        };               
-
-        const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
+        if (currentUser.friends.includes(mentionedUser.username)) {
+            message.channel.send('Hai bạn đã là bạn của nhau rồi.');
+            return;
+        }
 
         const embed = new Discord.EmbedBuilder()
             .setColor('#0099ff')
             .setTitle('Tình Bạn của 2 cậu bắt đầu từ đâu?')
-            .setDescription(`Bạn có muốn trả lời tin nhắn của ${message.author.username} không?`)
+            .setDescription(`Bạn có muốn trả lời tin nhắn của ${mentionedUser} không?`)
             .setThumbnail('https://cdn.discordapp.com/emojis/1124400105429155912.webp?size=160&quality=lossless');
 
         const acceptButton = new Discord.ButtonBuilder()
@@ -57,22 +60,52 @@ module.exports = {
         const row = new Discord.ActionRowBuilder()
             .addComponents(acceptButton, declineButton);
 
-        const sentMessage = await message.channel.send({ embeds: [embed], components: [row] });
+        const dongYEmbed = new Discord.EmbedBuilder()
+            .setDescription(`${mentionedUser} đã đồng ý kết bạn`)
+            .setColor('Green')
+            .setThumbnail('https://media1.giphy.com/media/mGo8dkPOF6GLm/giphy.gif?cid=ecf05e47a7p8tksntc8tg5lhdjec6w5wvsxayous69pw5nps&ep=v1_gifs_search&rid=giphy.gif&ct=g')
+            .setTimestamp()
 
-collector.on('collect', async (button) => {
-    if (button.customId === 'accept') {
-        const newKetban = new ketBanModel({
-            userId1: user1.id,
-            userId2: user2.id,
-        });
-        await newKetban.save();
-        await button.reply(`${user2} Đã Chấp Nhận Lời KetBan`);
-    } else if (button.customId === 'decline') {
-        await button.reply(`${user2} Đã Từ Chối Lời KetBan?`);
-    }
-});
-collector.on('end', async () => {
-    await sentMessage.edit({ components: [] });
-});
+        const tuChoiEmbed = new Discord.EmbedBuilder()
+            .setDescription(`${mentionedUser} đã từ chối kết bạn`)
+            .setColor('Red')
+            .setTimestamp()        
+            
+        if (currentUser.friends.includes(mentionedUser.username)) {
+            message.channel.send('Hai bạn đã là bạn của nhau rồi.');
+            return;
+        }
+
+        const a = await message.channel.send(
+            {
+                components: [row],
+                embeds: [embed]
+            }
+        )
+
+        var collector = a.createMessageComponentCollector({
+            filter: interaction => (interaction.isButton() || interaction.isSelectMenu()) && interaction.message.author.id == client.user.id,
+        })
+
+    collector.on('collect', async (interaction) => {
+        if (interaction.customId === 'accept') {
+            interaction.deferUpdate()
+            if (currentUser.friends.includes(mentionedUser.username)) {
+                message.channel.send('Hai bạn đã là bạn của nhau rồi.');
+                return;
+            }
+
+            currentUser.friends.push(mentionedUser.username);
+            targetUser.friends.push(message.author.username);
+        
+            await currentUser.save();
+            await targetUser.save();
+
+            a.edit({ embeds: [dongYEmbed], components: []})
+        } else if (interaction.customId === 'decline') {
+            interaction.deferUpdate()
+            a.edit({ embeds: [tuChoiEmbed], components: []})
+        }
+    });
 },
 };

@@ -79,6 +79,14 @@ module.exports = {
       console.log('Lỗi daily:', err);
     }
 
+  const thumb = [
+    'https://cdn.discordapp.com/attachments/1080521432032882700/1137062771066945546/daily4.png',
+    'https://cdn.discordapp.com/attachments/1080521432032882700/1137062771280846932/daily6.png',
+    'https://cdn.discordapp.com/attachments/1080521432032882700/1137062771880640574/daily7.png',
+    'https://cdn.discordapp.com/attachments/1080521432032882700/1137062772191010946/daily8.png',
+    'https://cdn.discordapp.com/attachments/1080521432032882700/1137062772623036517/daily9.png'
+  ]
+
     const dailyEmbed = new Discord.EmbedBuilder()
       .setTitle(`${message.author.username}`)
       .setDescription(`
@@ -89,7 +97,7 @@ module.exports = {
         <:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276>
         <:chamxanh:1124058113742479400> Tổng nhận được: ${totalReward} coins
       `)
-      .setThumbnail('https://cdn.discordapp.com/attachments/1080521432032882700/1136198965029773363/daily.png')
+      .setThumbnail(thumb[Math.floor(Math.random() * thumb.length)])
       .setTimestamp()
       .setColor('#61c4ff');
 

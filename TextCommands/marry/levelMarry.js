@@ -58,7 +58,7 @@ module.exports = {
             const marryEmbed = new Discord.EmbedBuilder()
                 .setTitle('Xem Level Mối Quan Hệ') 
                 .setDescription(`
-                • Huy hiệu : ${huyHieu.join(' ')}
+                • Huy hiệu đang có: ${huyHieu.join(' ')}
                 • Bạn đã kêt hôn với: <@${existMarry.userId2}>
                 • Điểm thân mật hiện tại: ${level} 
                 • Bạn đã kết hôn được: ${currentDay - existMarry.marriedAt.getDate()} ngày
@@ -73,7 +73,7 @@ module.exports = {
             const marryEmbed2 = new Discord.EmbedBuilder()
                 .setTitle('Xem Level Mối Quan Hệ') 
                 .setDescription(`
-                <:mauxanh:1136716708363640862> Huy hiệu : ${huyHieu.join(' ')}
+                <:mauxanh:1136716708363640862> Huy hiệu đang có: ${huyHieu.join(' ')}
                 <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2}>
                 <:mauxanh:1136716708363640862> Điểm thân mật hiện tại: **${level}** 
                 <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
@@ -88,17 +88,34 @@ module.exports = {
 
             message.channel.send({ embeds: [marryEmbed2], files: [attachment] })
         } else if (nhanVang > 0) {
+
+            let thumbn = [
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137056070964092928/tim1.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137056251486949456/tim2.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356304351394/tim3.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356526653560/tim4.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356807688202/tim5.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058617187651654/tim_6.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659126485082/tim7.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659399123014/tim8.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659696910396/tim9.png',
+                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659990503504/tim10.png',
+            ]
             const marryEmbed3 = new Discord.EmbedBuilder()
-                .setTitle('Xem Level Mối Quan Hệ') 
+                .setTitle(`Xem Level Mối Quan Hệ
+                
+                <:ll:1137053770774229043><:__:1137053857621483671><:vv:1137053893960933528><:ee:1137053939855020083>`) 
                 .setDescription(`
-                <:maucam:1136722890042134558> Huy hiệu : ${huyHieu.join(' ')}
+                <:maucam:1136722890042134558> Huy hiệu đang có: ${huyHieu.join(' ')}
                 <:maucam:1136722890042134558> Bạn đã kêt hôn với: <@${existMarry.userId2}>
                 <:maucam:1136722890042134558> Điểm thân mật hiện tại: **${level}**
                 <:maucam:1136722890042134558> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
-                <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**`)
+                <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
+                
+                <:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140>`)
                 .setTimestamp()
                 .setFooter({text: 'Một Tình Yêu Đẹp >_< '})
-                .setThumbnail('https://cdn.discordapp.com/attachments/1080521432032882700/1136724209322704926/traitimmaucam.png')
+                .setThumbnail(thumbn[Math.floor(Math.random() * thumbn.length)])
                 .setColor('#f89e65')
                 .setImage('attachment://married.png')
                 
@@ -106,17 +123,32 @@ module.exports = {
 
             message.channel.send({ embeds: [marryEmbed3], files: [attachment] })
         } else if (nhanHong > 0) {
+
+            let thumb = [
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1136745550767718420/vuonmieng.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1136745551048749066/vuonmieng1.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1136745551317188670/vuonmieng2.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1136745551677894797/vuongmieng3.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1136745551942140014/vuongmieng4.png'  
+            ]
+
             const marryEmbed4 = new Discord.EmbedBuilder()
                 .setTitle(`Xem Level Mối Quan Hệ
                 
                 <:L_:1136726934911463444><:00:1136727704071327835><:V_:1136728323658088700><:E_:1136728342851227648>`)
                 .setDescription(`
-                <:cham3d:1136725096933888041> Bạn đã kêt hôn với: <@${existMarry.userId2}> 
-                <:cham3d:1136725096933888041> Điểm thân mật hiện tại: ${level} 
-                <:cham3d:1136725096933888041> Huy hiệu đang có: 
-                <:cham3d:1136725096933888041> Bạn đã kết hôn được: ${currentDay - existMarry.marriedAt.getDate()} ngày
-                <:cham3d:1136725096933888041> Ngày kỉ niệm: ${moment(existMarry.marriedAt).format('DD/MM/YYYY')}`)
+                > <:huyhieuj:1137002449736040528> | Huy hiệu đang có: ${huyHieu.join(' ')}
+                > <:kethon:1137002986472747160> | Bạn đã kêt hôn với: <@${existMarry.userId2}> 
+                > <:thanmat:1137004383008194631> | Điểm thân mật hiện tại: **${level}** 
+                > <:daymarry:1137003685659033631> | Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
+                > <:day:1137004327848914954> | Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
+                > <:laplanh:1137007267439460474> | Độc quyền: Nhẫn Hồng 
+                
+                <:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646><:gachhong:1137042601313304646>`)
+                .setFooter({text: 'Một Tình Yêu Đẹp >_< '}) 
                 .setTimestamp()
+                .setColor('#fd9a95')
+                .setThumbnail(thumb[Math.floor(Math.random() * thumb.length)])  
                 .setImage('attachment://married.png')
                 
             let attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: 'married.png' });
