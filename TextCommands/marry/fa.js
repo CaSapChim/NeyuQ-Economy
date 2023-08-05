@@ -56,6 +56,7 @@ module.exports = {
 ////////////////////////////////////////////
 collector.on('collect', async (button) => {
     try {
+        if (button.user.id !== user2.id ) return interaction.reply({ content: "Này, nút này không phải dành cho bạn!", ephemeral: true })
         if (button.customId === 'accept') {
             await marryModel.deleteOne({ userId1: user1.id}) 
             await marryModel.deleteOne({ userId2: user2.id})

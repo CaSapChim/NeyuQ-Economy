@@ -29,13 +29,7 @@ module.exports = {
       
           if (existingMarriage) {
             return message.channel.send('Quý Khách đã đến muộn, hoa đã có chủ rồi <a:NQG_leuleu:1136579769429925939>');
-          }
-
-        const filter = (button) => {
-            return button.user.id === user2.id;
-        };               
-
-        const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
+          }              
 
         const embed = new Discord.EmbedBuilder()
             .setColor('#0099ff')
@@ -57,20 +51,40 @@ module.exports = {
         const row = new Discord.ActionRowBuilder()
             .addComponents(acceptButton, declineButton);
 
-        const sentMessage = await message.channel.send({ embeds: [embed], components: [row] });
+            const dongYEmbed = new Discord.EmbedBuilder()
+            .setDescription(`${user2.username} đã đồng ý lời tỏ tình từ bạn`)
+            .setColor('Green')
+            .setTimestamp()
 
+        const tuChoiEmbed = new Discord.EmbedBuilder()
+            .setDescription(`${user2.username} đã từ chối lời tỏ tình từ bạn`)
+            .setColor('Red')
+            .setTimestamp()  
 
+        const a = await message.channel.send({ embeds: [embed], components: [row] });
+
+        
+        var collector = a.createMessageComponentCollector({
+            filter: interaction => (interaction.isButton() || interaction.isSelectMenu()) && interaction.message.author.id == client.user.id,
+        })
 
 collector.on('collect', async (button) => {
-    if (button.customId === 'accept') {
-        const newMarriage = new marryModel({
-            userId1: user1.id,
-            userId2: user2.id,
-        });
-        await newMarriage.save();
-        await button.reply(`${user2} Đã Chấp Nhận Lời ToTinh!`);
-    } else if (button.customId === 'decline') {
-        await button.reply(`${user2} Đã Từ Chối Lời ToTinh?`);
+    if (button.user.id === user2.id) {
+        if (button.customId === 'accept') {
+            const newMarriage = new marryModel({
+                userId1: user1.id,
+                userId2: user2.id,
+            });
+            await newMarriage.save();
+            button.deferUpdate()
+            a.edit({ embeds: [dongYEmbed], components: []})
+    
+        } else if (button.customId === 'decline') {
+            button.deferUpdate()
+            a.edit({ embeds: [tuChoiEmbed], components: []})
+        }
+    } else {
+        return button.reply({ content: 'Này. nút này không phải dành cho bạn', ephemeral: true})
     }
 });
 

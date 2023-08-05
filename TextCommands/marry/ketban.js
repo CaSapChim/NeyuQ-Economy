@@ -34,7 +34,7 @@ module.exports = {
           await targetUser.save();
         }
 
-        if (currentUser.friends.includes(mentionedUser.username)) {
+        if (currentUser.friends.includes(mentionedUser.id)) {
             message.channel.send('Hai bạn đã là bạn của nhau rồi.');
             return;
         }
@@ -71,7 +71,7 @@ module.exports = {
             .setColor('Red')
             .setTimestamp()        
             
-        if (currentUser.friends.includes(mentionedUser.username)) {
+        if (currentUser.friends.includes(mentionedUser.id)) {
             message.channel.send('Hai bạn đã là bạn của nhau rồi.');
             return;
         }
@@ -88,15 +88,16 @@ module.exports = {
         })
 
     collector.on('collect', async (interaction) => {
+        if (interaction.user.id !== mentionedUser.id) return interaction.reply({ content: "Này, nút này không phải dành cho bạn!", ephemeral: true })
         if (interaction.customId === 'accept') {
             interaction.deferUpdate()
-            if (currentUser.friends.includes(mentionedUser.username)) {
+            if (currentUser.friends.includes(mentionedUser.id)) {
                 message.channel.send('Hai bạn đã là bạn của nhau rồi.');
                 return;
             }
 
-            currentUser.friends.push(mentionedUser.username);
-            targetUser.friends.push(message.author.username);
+            currentUser.friends.push(mentionedUser.id);
+            targetUser.friends.push(message.author.id);
         
             await currentUser.save();
             await targetUser.save();
