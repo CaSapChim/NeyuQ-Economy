@@ -17,7 +17,7 @@ module.exports = {
 
     if (!id)
       return message.channel.send(
-        `**${message.author.username}**, bạn phải nhập id món đồ cần dùng!`
+        `**${message.author.username}**, bạn phải nhập iD/TÊN món đồ cần dùng!`
     );
 
     if ( id === '109' || id === 'ruongbac') {
@@ -146,6 +146,8 @@ module.exports = {
       await client.addItem(message.author.id, itemRandom[result], 1, 5)
       await client.truItem(message.author.id, 'Rương đặc biệt', 1)
 
+  } else {
+    message.reply('**Không tìm thấy ID/TÊN tương ứng!**')
   }
 }
 };

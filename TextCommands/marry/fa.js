@@ -52,6 +52,17 @@ module.exports = {
         const row = new Discord.ActionRowBuilder()
             .addComponents(acceptButton, declineButton);
 
+        const dongYEmbed = new Discord.EmbedBuilder()
+            .setDescription(`${mentionedUser} đã đồng ý chia tay`)
+            .setColor('Green')
+            .setThumbnail('https://i.pinimg.com/originals/fc/35/26/fc3526ea3315b365d1b5838b937ebb6d.gif')
+            .setTimestamp()
+
+        const tuChoiEmbed = new Discord.EmbedBuilder()
+            .setDescription(`${mentionedUser} đã từ chối lời chia tay`)
+            .setColor('Red')
+            .setTimestamp()
+
         const sentMessage = await message.channel.send({ embeds: [embed], components: [row] });
 ////////////////////////////////////////////
 collector.on('collect', async (button) => {
@@ -60,17 +71,13 @@ collector.on('collect', async (button) => {
         if (button.customId === 'accept') {
             await marryModel.deleteOne({ userId1: user1.id}) 
             await marryModel.deleteOne({ userId2: user2.id})
-            await button.reply(`${user2} Đã Chấp Nhận Lời chiatay!`);
+            await sentMessage.edit({ embeds: [dongYEmbed], components: [] })
         } else if (button.customId === 'decline') {
-            await button.reply(`${user2} Đã Từ Chối Lời chiatay!`);
+            await sentMessage.edit({ embeds: [tuChoiEmbed], components: [] })
         }
     } catch (err) {
         console.log("Lỗi chiatay: ", err)
     }
-});
-
-collector.on('end', async () => {
-    await sentMessage.edit({ components: [] });
 });
 },
 };

@@ -77,7 +77,8 @@ module.exports = {
                 <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2}>
                 <:mauxanh:1136716708363640862> Điểm thân mật hiện tại: **${level}** 
                 <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
-                <:mauxanh:1136716708363640862> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**`)
+                <:mauxanh:1136716708363640862> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
+                <:mauxanh:1136716708363640862> Độc Quyền: Nhẫn Bạc`)
                 .setTimestamp()
                 .setThumbnail('https://cdn.discordapp.com/attachments/1080521432032882700/1136722383626059857/traitiim.png')
                 .setFooter({text: 'Một Tình Yêu Đẹp >_< '})
@@ -111,6 +112,7 @@ module.exports = {
                 <:maucam:1136722890042134558> Điểm thân mật hiện tại: **${level}**
                 <:maucam:1136722890042134558> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
                 <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
+                <:maucam:1136722890042134558> Độc Quyền: Nhẫn Vàng
                 
                 <:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140>`)
                 .setTimestamp()
