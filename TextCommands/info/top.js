@@ -27,13 +27,13 @@ module.exports = {
             userCoins.forEach((user, index) => {
             const positionEmoji = getMedalEmoji(index);
                 if (index + 1 === 1) {
-                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.coins.toLocaleString('En-us')} coins\n`;
+                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId)} - **${user.coins.toLocaleString('En-us')} <:O_o:1135831601205481523> coins**\n`;
                   } else if (index + 1 === 2) {
-                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.coins.toLocaleString('En-us')} coins\n`;
+                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId)} - **${user.coins.toLocaleString('En-us')} <:O_o:1135831601205481523> coins**\n`;
                   } else if (index + 1 === 3) {
-                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.coins.toLocaleString('En-us')} coins\n`;
+                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId)} - **${user.coins.toLocaleString('En-us')} <:O_o:1135831601205481523> coins**\n`;
                   } else {
-                    leaderboard += `${positionEmoji} ${index + 1}. ${client.users.cache.get(user.userId)} - ${user.coins.toLocaleString('En-us')} coins\n`;
+                    leaderboard += `${index + 1}. ${client.users.cache.get(user.userId)} - **${user.coins.toLocaleString('En-us')} <:O_o:1135831601205481523> coins**\n`;
                   }
             });
 
@@ -84,7 +84,7 @@ module.exports = {
               case 2:
                 return ':third_place:';
               default:
-                return '';
+                return;
             }
         }
     }   

@@ -85,9 +85,9 @@ module.exports = (client) => {
     ful(data.level);
   })
 
-  client.addMarryLevel = async(userId, level) => {
+  client.addMarryLevel = async(userId1, userId2, level) => {
     try {
-      let data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] })
+      let data = await marryModel.findOne({ $or: [{userId1: userId1}, {userId2: userId1}, {userId1: userId2}, {userId2: userId2}] })
 
       data.level = data.level + level
       await data.save()

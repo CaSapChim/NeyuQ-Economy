@@ -91,11 +91,11 @@ module.exports = {
       .setTitle(`${message.author.username}`)
       .setDescription(`
         <a:verified_tick:1130871737580531792> Nhận Thành Công\n
-        <:tiu:1135830334664085554> Quà Hàng Ngày: ${dailyReward} coins\n
+        <:tiu:1135830334664085554> Quà Hàng Ngày: ${dailyReward} <:O_o:1135831601205481523> coins\n
         <:chamxanh:1124058113742479400> Bạn đã điểm danh được: ${streak} ngày\n
-        <:chamxanh:1124058113742479400> ${userRoleName}: + ${bonusMoney} coins\n
+        <:chamxanh:1124058113742479400> ${userRoleName}: + ${bonusMoney} <:O_o:1135831601205481523> coins\n
         <:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276><:gach:1136207746384011276>
-        <:chamxanh:1124058113742479400> Tổng nhận được: ${totalReward} coins
+        <:chamxanh:1124058113742479400> Tổng nhận được: ${totalReward} <:O_o:1135831601205481523> coins
       `)
       .setThumbnail(thumb[Math.floor(Math.random() * thumb.length)])
       .setTimestamp()
