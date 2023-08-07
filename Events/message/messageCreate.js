@@ -1,7 +1,7 @@
 const { Collection, Client, Message, EmbedBuilder } = require("discord.js");
-const client = require('../../index')
 const userModel = require('../../database/models/userModel.js')
 const prefixModel = require('../../database/models/prefixModel')
+const banModel = require('../../database/models/banModel.js')
 
 module.exports = {
   name: "messageCreate",
@@ -24,7 +24,13 @@ module.exports = {
       console.log('Lỗi userModel', err)
     } 
 
-
+    // Ban
+    let ban = await banModel.findOne({ userId: message.author.id })
+    if (ban) {
+      if ( ban.userId == message.author.id ) return
+    }
+    
+    // prefix
     let data = await prefixModel.findOne({
       guildId: message.guild.id
     })

@@ -1,6 +1,7 @@
 const itemModel = require('../../database/models/itemModel')
 const balanceModel = require('../../database/models/balanceModel')
 const marryModel = require('../../database/models/marryModel')
+const banModel = require('../../database/models/banModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {
@@ -76,6 +77,7 @@ module.exports = (client) => {
       console.log('Lỗi trừ tiền: ', err);
     }
   };
+
   ////////////////////////////////////////////////////// Xem level marry
   client.marryLevel = (userId) => new Promise(async ful => {
     const data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] });
@@ -88,8 +90,22 @@ module.exports = (client) => {
       let data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] })
 
       data.level = data.level + level
+      await data.save()
     } catch(err) {
       console.log("Lỗi add level marry: ", err)
+    }
+  }
+
+  /////////////////////////////////// Ban
+  client.ban = async userId => {
+    try {
+      let data = new banModel({
+        userId: userId
+      })
+
+      await data.save()
+    } catch(err) {
+      console.log('Lỗi ban:', err)
     }
   }
 }

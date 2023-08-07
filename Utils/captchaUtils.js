@@ -3,6 +3,7 @@ const Captcha = async (client, message) => {
   
     const Canvas = require('canvas');
     const Discord = require('discord.js');
+    const banModel = require('../database/models/banModel')
 
     let limit = 100
     const a = Math.floor(Math.random() * 500)
@@ -30,7 +31,7 @@ const Captcha = async (client, message) => {
         result[i] = cTxt.toLowerCase();
         let x = 10 + i * 20;
         let y = 20 + Math.random() * 8;
-        context.font = 'bold 23px';
+        context.font = 'bold 23px noto';
         context.translate(x, y);
         context.rotate(sDeg);
     
@@ -86,7 +87,8 @@ const Captcha = async (client, message) => {
     
         collector.on('end', async collected => {
             if (collected.size < 1) {
-                await message.channel.send(`**<@${message.author.id}>, đã trôi qua 1 phút, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ ... để được xem xét gỡ ban!**`);        
+                await message.channel.send(`**<@${message.author.id}>, đã trôi qua 1 phút, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ ... để được xem xét gỡ ban!**`); 
+                await client.ban(message.author.id)       
             }
         });
     
