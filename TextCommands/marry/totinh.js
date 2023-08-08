@@ -3,7 +3,7 @@ const marryModel = require('../../database/models/marryModel')
 
 module.exports = {
     name: 'totinh',
-    aliases: ["totinh"],
+    aliases: ["totinh", 'marry'],
     description: 'Cho phép member totinh nhau',
     /**
      * 
@@ -52,13 +52,13 @@ module.exports = {
             .addComponents(acceptButton, declineButton);
 
             const dongYEmbed = new Discord.EmbedBuilder()
-            .setDescription(`${user2.username} đã đồng ý lời tỏ tình từ bạn`)
+            .setDescription(`${user2} đã đồng ý lời tỏ tình từ bạn`)
             .setColor('Green')
             .setThumbnail('https://www.funimada.com/assets/images/cards/big/love-22.gif')
             .setTimestamp()
 
         const tuChoiEmbed = new Discord.EmbedBuilder()
-            .setDescription(`${user2.username} đã từ chối lời tỏ tình từ bạn`)
+            .setDescription(`${user2} đã từ chối lời tỏ tình từ bạn`)
             .setColor('Red')
             .setTimestamp()  
 

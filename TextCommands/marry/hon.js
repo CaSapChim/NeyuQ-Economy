@@ -3,6 +3,7 @@ const marryModel = require('../../database/models/marryModel')
 
 module.exports = {
     name: 'hun',
+    cooldown: 60 * 60 * 5,
     /**
      * 
      * @param {Discord.Client} client 
@@ -11,10 +12,18 @@ module.exports = {
      */
     run: async(client, message, args) => {
         let toKissUser = message.mentions.users.first()
+        if (toKissUser.id === message.author.id) return message.reply('**Bạn không thể hun chính mình...**')
         let existMarry = await marryModel.findOne({ $or: [{ userId1: toKissUser.id }, { userId2: toKissUser.id }] })
         if (!existMarry) return message.reply('**Bạn chỉ có thể hun với người đã kết hôn!**')
         let level = 10
-        
+
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+
+        if ( hours < ((hours + 5) % 24) ) {
+
+        }
+
         const hon = [
             `> <a:bearkiss:1125365990625124424> <@${message.author.id}> đã trao cho <@${toKissUser.id}> một nụt hôn ngọt ngào`,
             `> <a:bearkisembar:1125365849688117363> <@${message.author.id}> đã trao cho <@${toKissUser.id}> một nụt hôn dịu dàng`,

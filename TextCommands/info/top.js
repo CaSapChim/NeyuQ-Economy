@@ -56,13 +56,13 @@ module.exports = {
             marryLevel.forEach((user, index) => {
                 const positionEmoji = getMedalEmoji(index)
                 if (index + 1 === 1) {
-                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId1)} :hearts: ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
+                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId1)} <:nhancap:1138169115421462620> ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
                 } else if (index + 1 === 2) { 
-                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId1)} :hearts: ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
+                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId1)} <:nhancap:1138169115421462620> ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
                 } else if (index + 1 === 3) {
-                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId1)} :hearts: ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
+                    leaderboard += `${positionEmoji} ${client.users.cache.get(user.userId1)} <:nhancap:1138169115421462620> ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
                 } else {
-                    leaderboard += `${positionEmoji} ${index + 1}. ${client.users.cache.get(user.userId1)} :hearts: ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
+                    leaderboard += `${positionEmoji} ${index + 1}. ${client.users.cache.get(user.userId1)} <:nhancap:1138169115421462620> ${client.users.cache.get(user.userId2)} - ${user.level.toLocaleString('En-us')} điểm thân mật `
                 }
             })
 
@@ -78,11 +78,11 @@ module.exports = {
         function getMedalEmoji(index) {
             switch (index) {
               case 0:
-                return ':first_place:';
+                return '<:NQGTop1:1138175075829428387>';
               case 1:
-                return ':second_place:';
+                return '<:NQGTop2:1138175115130060843>';
               case 2:
-                return ':third_place:';
+                return '<:NQGTop3:1138175169324658849>';
               default:
                 return;
             }

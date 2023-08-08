@@ -6,17 +6,7 @@ module.exports = {
   aliases: ["daily"],
   description: "Nhận tiền hàng ngày của bạn",
   run: async (client, message, args, userData) => {
-
-     if (!userData) {
-      userData = await userModel.create({
-        userId: message.author.id,
-        username: message.author.username,
-        guildId: message.guild.id,
-        inventory: [],
-        marriedPersonId: ''
-    })
-
-     }     
+  
      const currentTime = new Date();
      const lastDaily = userData.daily.timestamp;
      const elapsedMillis = currentTime - lastDaily;

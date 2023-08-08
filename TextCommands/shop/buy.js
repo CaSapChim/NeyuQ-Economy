@@ -65,7 +65,7 @@ module.exports = {
       else if (itemType === 4) {
         await client.addItem(author, itemName, amount, itemType);
       }
-      return message.channel.send(`**<:very:1137010214835597424> ${message.author.username}**, Bạn đã mua thành công **${amount} ${itemName}** với giá **${price.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+      return message.channel.send(`**<:very:1137010214835597424> ${message.author.username}**, Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
     };
 
     if (!args[0])

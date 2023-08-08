@@ -53,13 +53,13 @@ module.exports = {
             .addComponents(acceptButton, declineButton);
 
         const dongYEmbed = new Discord.EmbedBuilder()
-            .setDescription(`${mentionedUser} đã đồng ý chia tay`)
+            .setDescription(`${user2} đã đồng ý chia tay`)
             .setColor('Green')
             .setThumbnail('https://i.pinimg.com/originals/fc/35/26/fc3526ea3315b365d1b5838b937ebb6d.gif')
             .setTimestamp()
 
         const tuChoiEmbed = new Discord.EmbedBuilder()
-            .setDescription(`${mentionedUser} đã từ chối lời chia tay`)
+            .setDescription(`${user2} đã từ chối lời chia tay`)
             .setColor('Red')
             .setTimestamp()
 
