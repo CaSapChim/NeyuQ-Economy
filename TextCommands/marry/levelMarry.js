@@ -4,7 +4,7 @@ const Canvas = require('canvas')
 const moment = require('moment')
 
 module.exports = {
-    name: 'lv',
+    name: 'lvmarry',
     aliases: ["lv", "level"],
     description: 'Cho phép member xem level của nhau',
     /**

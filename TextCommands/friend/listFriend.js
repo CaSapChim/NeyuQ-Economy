@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const ketBanModel = require('../../database/models/ketBanModel')
 
 module.exports = {
-    name: 'listFriend',
+    name: 'listfriend',
     aliases: ["banbe", "rela", "ketbancheck"],
     description: 'Cho phép member xem các bạn bè của nhau',
     /**

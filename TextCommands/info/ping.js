@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 
 module.exports = {
     name: 'ping',
-    aliases: ['p'],
+    aliases: ['p', 'ms'],
     description: 'Xem độ trễ của bot',
     /**
      * 
