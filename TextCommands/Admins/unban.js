@@ -1,5 +1,6 @@
 const banModel = require('../../database/models/banModel')
 const { Message, Client } = require('discord.js')
+const ownerId = require('../../config.json').OWNER_ID
 
 module.exports = {
     name: 'unban',
@@ -10,6 +11,7 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
+        if (!ownerId.includes(message.author.id)) return
         const toUnbanUser = message.mentions.users.first()
         let reason = args.slice(1).join(' ')
         if (!reason) reason = '**vì không vi phạm luật của bot**'

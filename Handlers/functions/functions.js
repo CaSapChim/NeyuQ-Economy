@@ -2,6 +2,7 @@ const itemModel = require('../../database/models/itemModel')
 const balanceModel = require('../../database/models/balanceModel')
 const marryModel = require('../../database/models/marryModel')
 const banModel = require('../../database/models/banModel')
+const buffModel = require('../../database/models/buffModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {
@@ -108,4 +109,39 @@ module.exports = (client) => {
       console.log('Lỗi ban:', err)
     }
   }
+
+  client.buff = (userId, type) => new Promise(async ful => {
+    const data = await buffModel.findOne({ userId: userId, type: type });
+    if (!data) return ful(0);
+    ful(data.soLuongBuff);
+  })
+
+  client.addBuff = async (userId, soLuong, type) => {
+    try {
+      let data = await buffModel.findOne({ userId: userId, type: type})
+      if (!data) {
+        data = new buffModel({
+          userId: userId,
+          soLuongBuff: soLuong,
+          type: type
+        })
+      } else {
+        data.soLuongBuff = data.soLuongBuff + soLuong
+      }
+    } catch(err) {
+      console.log('Lỗi buff:', err)
+    }
+  }
+
+  client.truBuff = async (userId, soLuong, type) => {
+    try {
+
+      let data = await buffModel.findOne({ userId: userId, type: type}) 
+      data.soLuongBuff = data.soLuongBuff - soLuong
+
+    } catch(err) {
+      console.log('Lỗi buff:', err)
+    }
+  }
+
 }

@@ -21,16 +21,9 @@ module.exports = {
 
         const currentDay = new Date(Date.now()).getDate()
 
-        let canvas = Canvas.createCanvas(384, 128); 
-        let ctx = canvas.getContext('2d');
-        
-        let userAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId1)).displayAvatarURL({ extension: 'png'}));
-        let partnerAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId2)).displayAvatarURL({ extension: 'png'}));
-        let heartImage = await Canvas.loadImage('https://cdn.discordapp.com/attachments/1071394444567400489/1128759034833555577/traitim.png');
-        
-        ctx.drawImage(userAvatar, 0, 0, 128, 128);
-        ctx.drawImage(heartImage, 128, 0, 128, 128);
-        ctx.drawImage(partnerAvatar, 256, 0, 128, 128); 
+        const nhanBac = await client.item(message.author.id, 'Nhẫn bạc')
+        const nhanVang = await client.item(message.author.id, 'Nhẫn vàng')
+        const nhanHong = await client.item(message.author.id, 'Nhẫn hồng')
 
         let arr = []
 
@@ -50,11 +43,18 @@ module.exports = {
 
         const huyHieu = arr
 
-        const nhanBac = await client.item(message.author.id, 'Nhẫn bạc')
-        const nhanVang = await client.item(message.author.id, 'Nhẫn vàng')
-        const nhanHong = await client.item(message.author.id, 'Nhẫn hồng')
-
         if (nhanBac == 0 && nhanVang == 0 && nhanHong == 0) {
+            let canvas = Canvas.createCanvas(384, 128); 
+            let ctx = canvas.getContext('2d');
+            
+            let userAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId1)).displayAvatarURL({ extension: 'png'}));
+            let partnerAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId2)).displayAvatarURL({ extension: 'png'}));
+            let heartImage = await Canvas.loadImage('https://cdn.discordapp.com/attachments/1138141730928070736/1138769093437181973/love1.png');
+            
+            ctx.drawImage(userAvatar, 0, 0, 128, 128);
+            ctx.drawImage(heartImage, 128, 0, 128, 128);
+            ctx.drawImage(partnerAvatar, 256, 0, 128, 128)
+
             const marryEmbed = new Discord.EmbedBuilder()
                 .setTitle('Xem Level Mối Quan Hệ') 
                 .setDescription(`
@@ -69,62 +69,94 @@ module.exports = {
             let attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: 'married.png' }); 
 
             message.channel.send({ embeds: [marryEmbed], files: [attachment] })
-        } else if (nhanBac > 0) {
-            const marryEmbed2 = new Discord.EmbedBuilder()
-                .setTitle('Xem Level Mối Quan Hệ') 
-                .setDescription(`
-                <:mauxanh:1136716708363640862> Huy hiệu đang có: ${huyHieu.join(' ')}
-                <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2}>
-                <:mauxanh:1136716708363640862> Điểm thân mật hiện tại: **${level}** 
-                <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
-                <:mauxanh:1136716708363640862> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
-                <:mauxanh:1136716708363640862> Độc Quyền: Nhẫn Bạc`)
-                .setTimestamp()
-                .setThumbnail('https://cdn.discordapp.com/attachments/1080521432032882700/1136722383626059857/traitiim.png')
-                .setFooter({text: 'Một Tình Yêu Đẹp >_< '})
-                .setImage('attachment://married.png')
-                .setColor('#baf1ec')
-                
-            let attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: 'married.png' }); // là dòng cho ảnh vào embed đó ai mà bt
+        }
+        else if (nhanBac > 0) {
+            let canvas = Canvas.createCanvas(384, 128); 
+            let ctx = canvas.getContext('2d');
+            
+            let userAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId1)).displayAvatarURL({ extension: 'png'}));
+            let partnerAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId2)).displayAvatarURL({ extension: 'png'}));
+            let heartImage = await Canvas.loadImage('https://cdn.discordapp.com/attachments/1071394444567400489/1128759034833555577/traitim.png');
+            
+            ctx.drawImage(userAvatar, 0, 0, 128, 128);
+            ctx.drawImage(heartImage, 128, 0, 128, 128);
+            ctx.drawImage(partnerAvatar, 256, 0, 128, 128) 
 
-            message.channel.send({ embeds: [marryEmbed2], files: [attachment] })
+            const marryEmbed2 = new Discord.EmbedBuilder()
+            .setTitle('Xem Level Mối Quan Hệ') 
+            .setDescription(`
+            <:mauxanh:1136716708363640862> Huy hiệu đang có: ${huyHieu.join(' ')}
+            <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2}>
+            <:mauxanh:1136716708363640862> Điểm thân mật hiện tại: **${level}** 
+            <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
+            <:mauxanh:1136716708363640862> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
+            <:mauxanh:1136716708363640862> Độc Quyền: Nhẫn Bạc`)
+            .setTimestamp()
+            .setThumbnail('https://cdn.discordapp.com/attachments/1080521432032882700/1136722383626059857/traitiim.png')
+            .setFooter({text: 'Một Tình Yêu Đẹp >_< '})
+            .setImage('attachment://married.png')
+            .setColor('#baf1ec')
+            
+        let attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: 'married.png' }); // là dòng cho ảnh vào embed đó ai mà bt
+
+        message.channel.send({ embeds: [marryEmbed2], files: [attachment] })
         } else if (nhanVang > 0) {
+            let canvas = Canvas.createCanvas(384, 128); 
+            let ctx = canvas.getContext('2d');
+            
+            let userAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId1)).displayAvatarURL({ extension: 'png'}));
+            let partnerAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId2)).displayAvatarURL({ extension: 'png'}));
+            let heartImage = await Canvas.loadImage('https://cdn.discordapp.com/attachments/1138141730928070736/1138770326537392168/love2.png');
+            
+            ctx.drawImage(userAvatar, 0, 0, 128, 128);
+            ctx.drawImage(heartImage, 128, 0, 128, 128);
+            ctx.drawImage(partnerAvatar, 256, 0, 128, 128)
 
             let thumbn = [
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137056070964092928/tim1.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137056251486949456/tim2.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356304351394/tim3.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356526653560/tim4.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356807688202/tim5.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058617187651654/tim_6.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659126485082/tim7.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659399123014/tim8.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659696910396/tim9.png',
-                 'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659990503504/tim10.png',
-            ]
-            const marryEmbed3 = new Discord.EmbedBuilder()
-                .setTitle(`Xem Level Mối Quan Hệ
-                
-                <:ll:1137053770774229043><:__:1137053857621483671><:vv:1137053893960933528><:ee:1137053939855020083>`) 
-                .setDescription(`
-                <:maucam:1136722890042134558> Huy hiệu đang có: ${huyHieu.join(' ')}
-                <:maucam:1136722890042134558> Bạn đã kêt hôn với: <@${existMarry.userId2}>
-                <:maucam:1136722890042134558> Điểm thân mật hiện tại: **${level}**
-                <:maucam:1136722890042134558> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
-                <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
-                <:maucam:1136722890042134558> Độc Quyền: Nhẫn Vàng
-                
-                <:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140>`)
-                .setTimestamp()
-                .setFooter({text: 'Một Tình Yêu Đẹp >_< '})
-                .setThumbnail(thumbn[Math.floor(Math.random() * thumbn.length)])
-                .setColor('#f89e65')
-                .setImage('attachment://married.png')
-                
-            let attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: 'married.png' }); 
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137056070964092928/tim1.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137056251486949456/tim2.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356304351394/tim3.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356526653560/tim4.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137057356807688202/tim5.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137058617187651654/tim_6.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659126485082/tim7.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659399123014/tim8.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659696910396/tim9.png',
+                'https://cdn.discordapp.com/attachments/1080521432032882700/1137058659990503504/tim10.png',
+           ]
+           const marryEmbed3 = new Discord.EmbedBuilder()
+               .setTitle(`Xem Level Mối Quan Hệ
+               
+               <:ll:1137053770774229043><:__:1137053857621483671><:vv:1137053893960933528><:ee:1137053939855020083>`) 
+               .setDescription(`
+               <:maucam:1136722890042134558> Huy hiệu đang có: ${huyHieu.join(' ')}
+               <:maucam:1136722890042134558> Bạn đã kêt hôn với: <@${existMarry.userId2}>
+               <:maucam:1136722890042134558> Điểm thân mật hiện tại: **${level}**
+               <:maucam:1136722890042134558> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
+               <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
+               <:maucam:1136722890042134558> Độc Quyền: Nhẫn Vàng
+               
+               <:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140><:gachcam:1137049788576174140>`)
+               .setTimestamp()
+               .setFooter({text: 'Một Tình Yêu Đẹp >_< '})
+               .setThumbnail(thumbn[Math.floor(Math.random() * thumbn.length)])
+               .setColor('#f89e65')
+               .setImage('attachment://married.png')
+               
+           let attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: 'married.png' }); 
 
-            message.channel.send({ embeds: [marryEmbed3], files: [attachment] })
+           message.channel.send({ embeds: [marryEmbed3], files: [attachment] })
         } else if (nhanHong > 0) {
+            let canvas = Canvas.createCanvas(384, 128); 
+            let ctx = canvas.getContext('2d');
+            
+            let userAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId1)).displayAvatarURL({ extension: 'png'}));
+            let partnerAvatar = await Canvas.loadImage((await client.users.fetch(existMarry.userId2)).displayAvatarURL({ extension: 'png'}));
+            let heartImage = await Canvas.loadImage('https://cdn.discordapp.com/attachments/1138141730928070736/1138771609512058900/love3.png');
+            
+            ctx.drawImage(userAvatar, 0, 0, 128, 128);
+            ctx.drawImage(heartImage, 128, 0, 128, 128);
+            ctx.drawImage(partnerAvatar, 256, 0, 128, 128)
 
             let thumb = [
                 'https://cdn.discordapp.com/attachments/1080521432032882700/1136745550767718420/vuonmieng.png',
@@ -157,6 +189,5 @@ module.exports = {
 
             message.channel.send({ embeds: [marryEmbed4], files: [attachment] })
         }
-
-        }
     }
+}

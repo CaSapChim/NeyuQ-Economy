@@ -37,7 +37,7 @@ module.exports = {
         } 
         
         else if (type == 'socola') {
-            message.channel.send(`**Đã chuyển cho ${toGiveUser} ${amount}socola**`)
+            message.channel.send(`**Đã chuyển cho ${toGiveUser} ${amount} socola**`)
             await client.addItem(toGiveUser.id, "Socola", amount, 2)
         } 
         

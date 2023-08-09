@@ -47,7 +47,7 @@ module.exports = {
             else if ( itemType === 2) {   
                 let data = await client.item(message.author.id, itemName)
                 if (data < amount) return message.channel.send(`**${message.author.username}**, bạn không đủ **${amount} ${emoji[itemName]}** để tặng!`)
-                await client.addMarryLevel(message.author.id, mention.id, level)
+                await client.addMarryLevel(message.author.id, mention.id, level * amount)
                 await client.truItem(message.author.id, itemName, amount) 
             }
 
@@ -55,28 +55,28 @@ module.exports = {
         };
 
         switch (type) {
-            case 'bonghoa':
+            case '101':
                 getItem("Bông hoa", amount, 2, 20)
                 break;
-            case 'bobong':
+            case '102':
                 getItem("Bó bông", amount, 2, 50)
                 break;
-            case 'cuckeo':
+            case '103':
                 getItem("Cục kẹo", amount, 2, 80)
                 break;
-            case 'socola':
+            case '104':
                 getItem("Socola", amount, 2, 120)
                 break;
-            case 'gaubong':
+            case '105':
                 getItem("Gấu bông", amount, 2, 150)
                 break;
-            case 'nhanbac':
+            case '106':
                 getItem("Nhẫn bạc", amount, 4, null)
                 break;
-            case 'nhanvang':
+            case '107':
                 getItem("Nhẫn vàng", amount, 4, null)
                 break;
-            case 'nhanhong':
+            case '108':
                 getItem("Nhẫn hồng", amount, 4, null)
                 break;
             default:

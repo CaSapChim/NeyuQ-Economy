@@ -39,9 +39,11 @@ module.exports = {
     }
 
     const bonusRoles = [
-      { roleId: '1083780659128053791', bonus: 150 },
-      { roleId: '1118211005521076254', bonus: 50 },
-      { roleId: '1136198796733337630', bonus: 100 }
+      { roleId: '1071392984639229984', bonus: 150 }, // booster
+      { roleId: '1113451254195159161', bonus: 50 }, //  donator 1
+      { roleId: '1135968082435788952', bonus: 100 }, // donator 2
+      { roleId: '1076113410355363860', bonus: 50 }, // MC
+      { roleId: '1127613575314284614', bonus: 50 } // girlgang
     ];
 
     let bonusMoney = 0;

@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const { mine } = require('../../Utils/mineUtils')
+const ownerId = require('../../config.json').OWNER_ID
 
 module.exports = {
     name: 'mine',
@@ -13,6 +14,7 @@ module.exports = {
      * @param {*} userData 
      */
     run: async(client, message, args, userData) => {
+      if (!ownerId.includes(message.author.id)) return
       const emojis = {
         'Than': '<:905609870114439208:1134500336862765138>',
         "Sắt": '<:842601384561868810:1134500649548124161>',

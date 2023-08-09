@@ -22,14 +22,6 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-    
-    const cupCacLoai = [
-      'Cúp gỗ',
-      'Cúp đá',
-      'Cúp sắt',
-      'Cúp vàng',
-      'Cúp kim cương'
-    ]
 
     const nhanCacLoai = [
       'Nhẫn bạc',
@@ -64,12 +56,6 @@ module.exports = {
     let soLuongNhanVang = 0
     let soLuongNhanHong = 0
 
-    let soLuongCupGo = 0
-    let soLuongCupDa = 0
-    let soLuongCupSat = 0
-    let soLuongCupVang = 0
-    let soLuongCupKimCuong = 0
-
     let soLuongRuongBac = 0
     let soLuongRuongVang = 0
     let soLuongRuongDacBiet = 0
@@ -86,12 +72,6 @@ module.exports = {
     let soLuongHH4 = 0
     let soLuongHH5 = 0
     let soLuongHH6 = 0
-
-    const cup = await itemModel
-      .find({
-        userId: message.author.id, type: 1
-      })
-      .sort({ soLuong: -1 })
     
     const hoa = await itemModel
       .find({
@@ -115,14 +95,6 @@ module.exports = {
         userId: message.author.id, type: 5
       })
       .sort({ soLuong: -1 })
-
-    for (const itemCup of cup) {
-        if ( itemCup.name === cupCacLoai[0] ) soLuongCupGo = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[1] ) soLuongCupDa = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[2] ) soLuongCupSat = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[3] ) soLuongCupVang = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[4] ) soLuongCupKimCuong = itemCup.soLuong
-    }
 
     for (const itemNhan of nhan) {
         if ( itemNhan.name === nhanCacLoai[0] ) soLuongNhanBac = itemNhan.soLuong
@@ -152,19 +124,6 @@ module.exports = {
       if ( itemHuyHieu.name === huyHieuCacLoai[4] ) soLuongHH5  = itemHuyHieu.soLuong
       if ( itemHuyHieu.name === huyHieuCacLoai[5] ) soLuongHH6  = itemHuyHieu.soLuong
     }  
-
-    const cupEmbed = new Discord.EmbedBuilder()
-      .setColor(0x0099ff)
-      .setTitle(`Túi dụng cụ của ${message.author.username} `)
-      .setDescription(
-        `<:wooden_pickaxe:1134750444854444042> ${cupCacLoai[0]}: ${soLuongCupGo}\n` +
-        `<:905609866691891220:1134749977529299014> ${cupCacLoai[1]}: ${soLuongCupDa}\n` +
-        `<:mcmine:1134750599188062350> ${cupCacLoai[2]}: ${soLuongCupSat}\n` +
-        `<:Gold_Pickaxe:1134749444785578034> ${cupCacLoai[3]}: ${soLuongCupVang}\n` +
-        `<:diamond_pickaxe:1134749671613550592> ${cupCacLoai[4]}: ${soLuongCupKimCuong}`
-      )
-      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
-      .setTimestamp()
 
     const nhanEmbed = new Discord.EmbedBuilder()
       .setColor('Purple')
@@ -215,7 +174,7 @@ module.exports = {
         .setFooter({text: 'Chúc bạn một ngày tốt lành'})
         .setTimestamp()
 
-    let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, huyHieuEmbed, cupEmbed];
+    let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, huyHieuEmbed];
     let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
     await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
 

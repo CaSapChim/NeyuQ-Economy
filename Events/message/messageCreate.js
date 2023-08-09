@@ -11,6 +11,7 @@ const userModel = require("../../database/models/userModel.js");
 const prefixModel = require("../../database/models/prefixModel");
 const banModel = require("../../database/models/banModel.js");
 const { dropGift } = require('../../Utils/dropGiftUtil.js')
+const ownerId = require('../../config.json').OWNER_ID
 
 module.exports = {
   name: "messageCreate",
@@ -41,19 +42,22 @@ module.exports = {
       prefix = "!";
     }
 
+        if (message.channelId == '1129012498855636992') {
+          const recieveGift = await dropGift(message.author.id)
+          if (recieveGift) {
+            return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `nqg mayman` ngay!**')
+          }
+        }
+
     const content = message.content.toLowerCase();
     if (!content.startsWith(prefix)) return;
     const args = content.slice(prefix.length).trim().split(/ +/g);
     const cmd = args.shift();
     const command =
       client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-    if (!command) {
-      const recieveGift = await dropGift(message.author.id)
-      if (recieveGift) {
-        return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `!mayman` ngay!**')
-      }
-      return
-    };
+    if (!command) return;
+
+    if (!ownerId.includes(message.author.id)) return  
 
     // Lấy thông tin người dùng và chuyển đến lệnh
     let userData;
@@ -170,7 +174,7 @@ module.exports = {
           timeLeftString += `${seconds} giây `;
         }
     
-        return message.reply(`Vui lòng chờ ${timeLeftString} để dùng lại lệnh \`${command.name}\``)
+        return message.reply(`Vui lòng chờ ${timeLeftString}để dùng lại lệnh \`${command.name}\``)
           .then((msg) => {
           setTimeout(() => {
             msg.delete();

@@ -3,10 +3,10 @@ async function dropGift(userId) {
 
     
     const tiLe = 1
-    const rand = Math.floor(Math.random() * 11)
+    const rand = Math.floor(Math.random() * 101)
 
     try {
-        if (tiLe > rand) {
+        if (tiLe == rand) {
             let recieveGift = '<:t_:1138458437559263323>'
 
             let data = await dropGiftModel.findOne({

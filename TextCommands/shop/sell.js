@@ -12,7 +12,7 @@ module.exports = {
      */
     run: async(client, message, args) => {
         let id = args[0]
-        if (!id) return message.reply('Hãy nhập ID của sản phẩm')
+        if (!id) return message.reply('Hãy nhập ID/Tên của sản phẩm')
         
         const getItemInfo = async (price, itemName) => {
             let item = await client.item(message.author.id, itemName)
@@ -25,18 +25,27 @@ module.exports = {
             }
         }
 
-        switch(id) {
-            case '106':
-                getItemInfo(35000, "Nhẫn bạc")
-                break;
-            case '107':
-                getItemInfo(70000, "Nhẫn vàng")
-                break;
-            case '108':
-                getItemInfo(105000, "Nhẫn hồng")
-                break;
-            default:
-                message.channel.send('**Không tìm thấy ID của sản phẩm\nHiện tại chỉ được phép bán nhẫn!**')
-        } 
+        // switch(id) {
+        //     case '106':
+        //         getItemInfo(35000, "Nhẫn bạc")
+        //         break;
+        //     case '107':
+        //         getItemInfo(70000, "Nhẫn vàng")
+        //         break;
+        //     case '108':
+        //         getItemInfo(105000, "Nhẫn hồng")
+        //         break;
+        //     default:
+        //         message.channel.send('**Không tìm thấy ID của sản phẩm\nHiện tại chỉ được phép bán nhẫn!**')
+        // } 
+        if ( id === '106' || id === 'nhanbac') {
+            getItemInfo(35000, "Nhẫn bạc")
+        } else if ( id === '107' || id === 'nhanvang' ) {
+            getItemInfo(70000, "Nhẫn vàng")
+        } else if ( id === '108' || id === 'nhanhong') {
+            getItemInfo(105000, "Nhẫn hồng")
+        } else {
+            message.channel.send('**Không tìm thấy ID của sản phẩm\nHiện tại chỉ được phép bán nhẫn!**')
+        }
     }
 }

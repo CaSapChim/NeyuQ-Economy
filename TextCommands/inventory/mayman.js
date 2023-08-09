@@ -20,6 +20,15 @@ module.exports = {
         const soRuongMayMan = data.soLuong
         const diemMayMan = data.mayman
         await data.save()
-        message.channel.send(`${message.author.username}, bạn đang có **${soRuongMayMan}** rương may mắn.\nĐiểm may mắn hiện tại: **${diemMayMan}**`)
+
+        const embed = new Discord.EmbedBuilder()
+            .setTitle(message.author.username)
+            .setDescription(`
+                Bạn đang có **${soRuongMayMan}** <:t_:1138458437559263323>
+                Điểm may mắn: **${diemMayMan}**
+            `)
+            .setColor('Green')
+            .setFooter({ text: 'Cách dùng:...'})
+        message.reply({ embeds: [embed] })
     }
 }

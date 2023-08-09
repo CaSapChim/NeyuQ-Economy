@@ -28,7 +28,7 @@ module.exports = {
         let countCfsData = await cfsModel.findOne()
         
         // Kiểm tra xem người dùng có sử dụng lệnh ở kênh cho phép hay không
-        const allowedChannelId = '1080521432032882700';
+        const allowedChannelId = '1113703851774722049';
         if (interaction.channelId !== allowedChannelId) {
             return interaction.reply({ content: 'Bạn không thể sử dụng lệnh này ở đây!', ephemeral: true });
         }
@@ -52,7 +52,7 @@ module.exports = {
             await newCfsData.save()
         }   
 
-        const logChannel = client.channels.cache.get('1129314138259202079');
+        const logChannel = client.channels.cache.get('1113703884398010519');
         if (logChannel) {
             // Tạo thông báo nhúng mới
             const logEmbed = new EmbedBuilder()
