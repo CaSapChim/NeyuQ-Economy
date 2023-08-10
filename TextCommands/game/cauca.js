@@ -7,7 +7,7 @@ module.exports = {
     name: "cauca",
     aliases: ["fish"],
     description: "Lệnh cho phép member câu cá trong server",
-    cooldown: 60,
+    cooldown: 0,
     /**
      *
      * @param {Discord.Client} client
@@ -16,18 +16,77 @@ module.exports = {
      * @param {*} userData
      */
     run: async (client, message, args, userData) => {
-        if (!ownerId.includes(message.author.id)) return
+        if (!ownerId.includes(message.author.id)) return 
+
+        let data = await buffModel.findOne({
+            userId: message.author.id
+        })
 
         let rarity = {
-            'Very Common': 30,
-            'Common': 20,
+            'Very Common': 35,
+            'Common': 10,
             'Uncommon': 10,
-            'Rare': 7,
-            'Very Rare': 3
+            'Rare': 4,
+            'Very Rare': 1
         }
 
-        let data = await client.buff()
+        let buffMsg = ``
 
+        if (!data) {
+            rarity = {
+                'Very Common': 35,
+                'Common': 10,
+                'Uncommon': 10,
+                'Rare': 4,
+                'Very Rare': 1
+            }
+            buffMsg += `Bạn đang bắt cá bằng **hai tay**`
+        } else {
+            let soLuongBuff = data.soLuongBuff
+            let type = data.type    
+
+            if (soLuongBuff > 0 && type == 1) {
+                rarity = {
+                    'Very Common': 40, //85 % cá
+                    'Common': 25,       // 15% rác
+                    'Uncommon': 10,
+                    'Rare': 7,
+                    'Very Rare': 3
+                }
+                client.truBuff(message.author.id, 1, 1)
+                buffMsg += `Bạn đang bắt cá bằng **cần câu tre** \`(${soLuongBuff - 1}/25)\``
+            } else if (soLuongBuff > 0 && type == 2) {
+                rarity = {
+                    'Very Common': 30, // 90% cá
+                    'Common': 30,
+                    'Uncommon': 15,
+                    'Rare': 10,
+                    'Very Rare': 5
+                }
+                client.truBuff(message.author.id, 1, 2)
+                buffMsg += `Bạn đang bắt cá bằng **cần câu xịn** \`(${soLuongBuff - 1}/50)\``
+            } else if (soLuongBuff > 0 && type == 3) {
+                rarity = {
+                    'Very Common': 25, // 90% cá
+                    'Common': 30,
+                    'Uncommon': 15,
+                    'Rare': 13,
+                    'Very Rare': 7
+                }
+                client.truBuff(message.author.id, 1, 3)
+                buffMsg += `Bạn đang bắt cá bằng **lưới** \`(${soLuongBuff - 1}/100)\``
+            } else if (soLuongBuff > 0 && type == 4) {
+                rarity = {
+                    'Very Common': 25, // 95% cá
+                    'Common': 25,
+                    'Uncommon': 20,
+                    'Rare': 20,
+                    'Very Rare': 15
+                }
+                client.truBuff(message.author.id, 1, 4)
+                buffMsg += `Bạn đang bắt cá bằng **lưới vip** \`(${soLuongBuff - 1}/200)\``
+            } 
+        }  
 
 
         const veryCommonFish = fishData.fish.filter(fish => fish.rarity === 'Very Common')
@@ -71,33 +130,26 @@ module.exports = {
             case 'Very Rare':
                 result = getRandomFish(veryRareFish);
                 break;
-            default:
-                result = null;
-                break;
         }
 
-        const fail = [
-            'Bạn câu được... cái nịt',
-            'Móc câu của bạn bị móc vào quần bạn',
-            'Mẹ gank'
-        ]
-
-        if (result != null ) {
+        if (result) {
             const fishEmbed = new Discord.EmbedBuilder()
                 .setColor('Blue')
                 .setTitle(`Bạn đã bắt được \`${result.name}\``)
                 .setDescription(`
                     Độ hiếm: **${result.rarity}**
                     Kích thước: **${result.size[Math.floor(Math.random() * result.size.length)]} cm**
-
                 `)
                 .setFooter({ text: `${result.catch}`})
                 .setThumbnail(`${result.image}`)
-            message.reply({ embeds: [fishEmbed] })
+            message.reply({ embeds: [fishEmbed], content: `${buffMsg}` })
         } else {
+            console.log(result)
+            const fail = fishData.fail
             const failEmbed = new Discord.EmbedBuilder()
                 .setTitle(`${fail[Math.floor(Math.random() * fail.length)]}`)
-            message.reply({ embeds: [failEmbed] })
+                .setTimestamp()
+            message.reply({ embeds: [failEmbed], content: `${buffMsg}` })
         }
     }
 }

@@ -146,8 +146,9 @@ module.exports = {
       await client.addItem(message.author.id, itemRandom[result], 1, 5)
       await client.truItem(message.author.id, 'Rương đặc biệt', 1)
 
-  } else {
-    message.reply('**Không tìm thấy ID/TÊN tương ứng!**')
+  } else if (id === 'cancau') {
+    message.reply('Bạn đã dùng cần câu thường!')
+    await client.addBuff(message.author.id, 25, 1)
   }
 }
 };

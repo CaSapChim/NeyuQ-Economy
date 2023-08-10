@@ -128,6 +128,7 @@ module.exports = (client) => {
       } else {
         data.soLuongBuff = data.soLuongBuff + soLuong
       }
+      await data.save()
     } catch(err) {
       console.log('Lỗi buff:', err)
     }
@@ -138,7 +139,7 @@ module.exports = (client) => {
 
       let data = await buffModel.findOne({ userId: userId, type: type}) 
       data.soLuongBuff = data.soLuongBuff - soLuong
-
+      await data.save()
     } catch(err) {
       console.log('Lỗi buff:', err)
     }

@@ -1,4 +1,8 @@
 {
+    "fail": ["Đang câu thì bị mẹ gank",
+            "Bạn câu được... cái nịt",
+            "Bạn câu được một mớ... rác thải"
+            ],
     "fish": [{
             "name": "Bitterling",
             "image": "https://nookipedia.com/w/images/4/4d/Bitterling_NH_Icon.png",

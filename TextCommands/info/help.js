@@ -5,7 +5,7 @@ const {
     Message,
     StringSelectMenuBuilder,
   } = require ("discord.js");
-  
+
   module.exports = {
     name: "help",
     description: "Xem danh sách các lệnh của bot",
@@ -18,7 +18,31 @@ const {
      * @returns
      */
     run: async (client, message, args, userData) => {
-    
+      const hoa = args[0]
+      if (hoa == 'hoa') {
+        const hoaEmbed = new EmbedBuilder()
+          .setColor('LuminousVividPink')
+          .setTitle('Điểm thân mật của từng loại quà')
+          .setDescription(`
+            > **Điểm này sẽ cộng vào level marry khi tặng quà**
+
+            **Bông hoa:** \`+20 điểm\`
+
+            **Bó bông:** \`+50 điểm\`
+
+            **Cục kẹo:** \`+80 điểm\` 
+
+            **Socola:** \`+120 điểm\`
+
+            **Gấu bông:** \`+150 điểm\`
+
+            **=> Bạn có thể sở hữu các loại quà này ở \`shop\`**
+          `)
+          .setTimestamp()
+          .setFooter({ text: 'Chúc bạn thật nhiều sức khỏe'})
+          message.channel.send({ embeds: [hoaEmbed] })
+          return
+      }
 
       let helpMenu = new ActionRowBuilder().addComponents(
         new StringSelectMenuBuilder()
