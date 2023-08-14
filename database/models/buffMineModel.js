@@ -6,6 +6,6 @@ const buffSchema = new mongoose.Schema({
     type: Number,
 })
 
-const buffModel = mongoose.model('buff', buffSchema)
+const buffMineModel = mongoose.model('buffmine', buffSchema)
 
-module.exports = buffModel
+module.exports = buffMineModel

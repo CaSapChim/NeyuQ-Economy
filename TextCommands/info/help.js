@@ -26,15 +26,15 @@ const {
           .setDescription(`
             > **Điểm này sẽ cộng vào level marry khi tặng quà**
 
-            **Bông hoa:** \`+20 điểm\`
+            **Bông hoa:** \`+10 điểm\`
 
-            **Bó bông:** \`+50 điểm\`
+            **Bó bông:** \`+30 điểm\`
 
-            **Cục kẹo:** \`+80 điểm\` 
+            **Cục kẹo:** \`+50 điểm\` 
 
-            **Socola:** \`+120 điểm\`
+            **Socola:** \`+80 điểm\`
 
-            **Gấu bông:** \`+150 điểm\`
+            **Gấu bông:** \`+100 điểm\`
 
             **=> Bạn có thể sở hữu các loại quà này ở \`shop\`**
           `)

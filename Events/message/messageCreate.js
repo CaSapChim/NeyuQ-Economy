@@ -36,11 +36,7 @@ module.exports = {
       guildId: message.guild.id,
     });
 
-    if (data) {
-      var prefix = data.prefix;
-    } else {
-      prefix = "!";
-    }
+    let prefix = '!'
 
         if (message.channelId == '1129012498855636992') {
           const recieveGift = await dropGift(message.author.id)
@@ -55,9 +51,7 @@ module.exports = {
     const cmd = args.shift();
     const command =
       client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-    if (!command) return;
-
-    if (!ownerId.includes(message.author.id)) return  
+    if (!command) return;  
 
     // Lấy thông tin người dùng và chuyển đến lệnh
     let userData;

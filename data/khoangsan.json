@@ -1,0 +1,9 @@
+{
+  "resources": [
+    { "name": "Ngọc lục bảo", "chance":2000 },
+    { "name": "Sắt", "chance": 10000 },
+    { "name": "Vàng", "chance": 8000 },
+    { "name": "Kim cương", "chance": 4000 },
+    { "name": "Than", "chance": 20000 }
+  ]
+}

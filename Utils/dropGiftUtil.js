@@ -17,10 +17,10 @@ async function dropGift(userId) {
                 data = new dropGiftModel({
                     userId: userId
                 })
-            } else {
+            } 
                 data.soLuong = data.soLuong + 1
                 data.mayman = data.mayman + 1
-            }
+                        
             await data.save()
             return recieveGift
         }

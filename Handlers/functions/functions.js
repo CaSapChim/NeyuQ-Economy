@@ -2,7 +2,12 @@ const itemModel = require('../../database/models/itemModel')
 const balanceModel = require('../../database/models/balanceModel')
 const marryModel = require('../../database/models/marryModel')
 const banModel = require('../../database/models/banModel')
-const buffModel = require('../../database/models/buffModel')
+const buffMineModel = require('../../database/models/buffMineModel')
+const cupModel = require('../../database/models/cupModel')
+const khoangSanModel = require('../../database/models/khoangSanModel')
+const caModel = require('../../database/models/caModel')
+const buffCauCaModel = require('../../database/models/buffCauCaModel')
+const toolCauCaModel = require('../../database/models/toolCauCaModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {
@@ -40,6 +45,45 @@ module.exports = (client) => {
     }
   }
   
+  ///////////////////////////////////////////////////////// KHOÁNG SẢN
+  client.khoangsan = (userId, name) => new Promise(async ful => {
+    const data = await khoangSanModel.findOne({ userId: userId, name: name })
+    if (!data) return ful(0)
+    ful(data.soLuong)
+  })
+
+  client.addKS = async (userId, name, soLuong) => {
+    try {
+      let data = await khoangSanModel.findOne({ userId: userId, name: name})
+      if (!data) {
+        data = new khoangSanModel({
+          userId: userId,
+          name: name,
+          soLuong: soLuong
+        })
+      } else {
+        data.soLuong = data.soLuong + soLuong
+      }
+      await data.save()
+    } catch(err) {
+      console.log('Lỗi add ks:', err)
+    }
+  }
+
+  client.truKS = async (userId, name, soLuong) => {
+    try {
+      let data = await khoangSanModel.findOne({ userId: userId, name: name})
+      if (data) {
+        data.soLuong = data.soLuong - soLuong
+      } else {
+        return
+      }
+      await data.save()
+    } catch(err) {
+      console.log('Lỗi add cá:', err)
+    }
+  }
+
   ///////////////////////////////////////////////////////// Tiền
   client.xemTien = (userId) => new Promise(async ful => {
     const data = await balanceModel.findOne({ userId: userId });
@@ -79,7 +123,7 @@ module.exports = (client) => {
     }
   };
 
-  ////////////////////////////////////////////////////// Xem level marry
+  ////////////////////////////////////////////////////////////////////////////////// Xem level marry
   client.marryLevel = (userId) => new Promise(async ful => {
     const data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] });
     if (!data) return ful(0);
@@ -97,7 +141,7 @@ module.exports = (client) => {
     }
   }
 
-  /////////////////////////////////// Ban
+  //////////////////////////////////////////////////////////////////////////////// Ban
   client.ban = async userId => {
     try {
       let data = new banModel({
@@ -110,17 +154,18 @@ module.exports = (client) => {
     }
   }
 
-  client.buff = (userId, type) => new Promise(async ful => {
-    const data = await buffModel.findOne({ userId: userId, type: type });
+  /////////////////////////////////////////////////////////////////////////////BUFF CỦA CÚP
+  client.buffMine = (userId, type) => new Promise(async ful => {
+    const data = await buffMineModel.findOne({ userId: userId, type: type });
     if (!data) return ful(0);
     ful(data.soLuongBuff);
   })
 
-  client.addBuff = async (userId, soLuong, type) => {
+  client.addBuffMine = async (userId, soLuong, type) => {
     try {
-      let data = await buffModel.findOne({ userId: userId, type: type})
+      let data = await buffMineModel.findOne({ userId: userId, type: type})
       if (!data) {
-        data = new buffModel({
+        data = new buffMineModel({
           userId: userId,
           soLuongBuff: soLuong,
           type: type
@@ -134,10 +179,10 @@ module.exports = (client) => {
     }
   }
 
-  client.truBuff = async (userId, soLuong, type) => {
+  client.truBuffMine = async (userId, soLuong, type) => {
     try {
 
-      let data = await buffModel.findOne({ userId: userId, type: type}) 
+      let data = await buffMineModel.findOne({ userId: userId, type: type}) 
       data.soLuongBuff = data.soLuongBuff - soLuong
       await data.save()
     } catch(err) {
@@ -145,4 +190,143 @@ module.exports = (client) => {
     }
   }
 
+  /////////////////////////////////////////////////////////////////////////////BUFF CỦA FISH
+  client.buffCauCa = (userId, type) => new Promise(async ful => {
+    const data = await buffCauCaModel.findOne({ userId: userId, type: type });
+    if (!data) return ful(0);
+    ful(data.soLuongBuff);
+  })
+
+  client.addBuffCauCa = async (userId, soLuong, type) => {
+    try {
+      let data = await buffCauCaModel.findOne({ userId: userId, type: type})
+      if (!data) {
+        data = new buffCauCaModel({
+          userId: userId,
+          soLuongBuff: soLuong,
+          type: type
+        })
+      } else {
+        data.soLuongBuff = data.soLuongBuff + soLuong
+      }
+      await data.save()
+    } catch(err) {
+      console.log('Lỗi buff:', err)
+    }
+  }
+
+  client.truBuffCauCa = async (userId, soLuong, type) => {
+    try {
+
+      let data = await buffCauCaModel.findOne({ userId: userId, type: type}) 
+      data.soLuongBuff = data.soLuongBuff - soLuong
+      await data.save()
+    } catch(err) {
+      console.log('Lỗi buff:', err)
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////Cúp
+  client.cup = (userId, name) => new Promise(async ful => {
+    const data = await cupModel.findOne({ userId: userId, name: name });
+    if (!data) return ful(0);
+    ful(data.soLuong);
+  })
+
+  client.addCup = async (userId, name, type, soLuong) => {
+    try {
+      let data = await cupModel.findOne({
+        userId: userId,
+        name: name,
+      })
+
+      if (!data) {
+        data = new cupModel({
+          userId: userId,
+          name: name,
+          type: type,
+          soLuong: soLuong
+        })
+      } else {
+        data.soLuong = data.soLuong + soLuong
+        data.type = type
+      }
+      await data.save()
+
+    } catch(err) {
+      console.log("Lỗi add cúp: ",err)
+    }
+  }
+
+  client.truCup = async (userId, name, soLuong) => {
+    try {
+      let data = await cupModel.findOne({
+        userId: userId,
+        name: name,
+      })
+
+      if (data) {
+        data.soLuong = data.soLuong - soLuong
+      } else {
+        return
+      }
+
+      await data.save()
+
+    } catch(err) {
+      console.log("Lỗi trừ cúp: ",err)
+    }
+  }
+
+    ////////////////////////////////////////////////////////////////////////////////////////TOOL FISH
+    client.toolCauCa = (userId, name) => new Promise(async ful => {
+      const data = await toolCauCaModel.findOne({ userId: userId, name: name });
+      if (!data) return ful(0);
+      ful(data.soLuong);
+    })
+  
+    client.addToolCC = async (userId, name, type, soLuong) => {
+      try {
+        let data = await toolCauCaModel.findOne({
+          userId: userId,
+          name: name,
+        })
+  
+        if (!data) {
+          data = new toolCauCaModel({
+            userId: userId,
+            name: name,
+            type: type,
+            soLuong: soLuong
+          })
+        } else {
+          data.soLuong = data.soLuong + soLuong
+          data.type = type
+        }
+        await data.save()
+  
+      } catch(err) {
+        console.log("Lỗi add cần câu: ",err)
+      }
+    }
+  
+    client.truToolCC = async (userId, name, soLuong) => {
+      try {
+        let data = await toolCauCaModel.findOne({
+          userId: userId,
+          name: name,
+        })
+  
+        if (data) {
+          data.soLuong = data.soLuong - soLuong
+        } else {
+          return
+        }
+  
+        await data.save()
+  
+      } catch(err) {
+        console.log("Lỗi trừ tool câu cá: ",err)
+      }
+    }
 }

@@ -3,9 +3,8 @@ const Captcha = async (client, message) => {
   
     const Canvas = require('canvas');
     const Discord = require('discord.js');
-    const banModel = require('../database/models/banModel')
 
-    let limit = 100
+    let limit = 200
     const a = Math.floor(Math.random() * 500)
     const b = Math.floor(Math.random() * 500)
 

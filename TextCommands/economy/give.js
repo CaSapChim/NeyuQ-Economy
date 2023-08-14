@@ -12,6 +12,7 @@ module.exports = {
     run: async(client, message, args) => {
         const toGiveUser = message.mentions.users.first()
         const coinsToGive = parseInt(args[1])
+        if (!coinsToGive) return message.reply('Cần nhập số tiền muốn chuyển')
 
         let coins = await client.xemTien(message.author.id)
         if (coins < coinsToGive) return message.reply(`**Nghèo còn bày đặt cho tiền người khác.\nXem lại ví tiền mình đi!**`)

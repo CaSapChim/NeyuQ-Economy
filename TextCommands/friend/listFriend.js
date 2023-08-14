@@ -35,7 +35,8 @@ module.exports = {
             const listFriendsEmbed = new Discord.EmbedBuilder()
                 .setColor('Aqua')
                 .setTitle(`Danh sách bạn của ${message.author.username}`)
-                .setDescription(`<@${friendsArr.join('\n')}>: <:banbe2:1122443390580166676> Bạn Bè`)
+                .setDescription(`${friendsArr.map(id => `<@${id}>`).join('\n')} <:banbe2:1122443390580166676> Bạn Bè`)
+                .setThumbnail(`${message.author.displayAvatarURL()}`)
             message.channel.send({ embeds: [listFriendsEmbed] })
         }
     }

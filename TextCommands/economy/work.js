@@ -10,13 +10,13 @@ module.exports = {
     await Captcha(client, message)
 
     const jobs = [
-      { name: 'quét rác', minCoins: 30, maxCoins: 50, chance: 65 },
-      { name: 'bán vé số', minCoins: 30, maxCoins: 50, chance: 65 },
-      { name: 'phục vụ', minCoins: 50, maxCoins: 100, chance: 35 },
-      { name: 'marketing', minCoins: 100, maxCoins: 150, chance: 25 },
-      { name: 'xây dựng', minCoins: 150, maxCoins: 250, chance: 15 },
-      { name: 'viết code', minCoins: 300, maxCoins: 400, chance: 10 },
-      { name: 'bác sĩ', minCoins: 400, maxCoins: 500, chance: 5 },
+      { name: 'quét rác', minCoins: 5, maxCoins: 10, chance: 90 },
+      { name: 'bán vé số', minCoins: 5, maxCoins: 10, chance: 80 },
+      { name: 'phục vụ', minCoins: 5, maxCoins: 10, chance: 80 },
+      { name: 'marketing', minCoins: 5, maxCoins: 20, chance: 10 },
+      { name: 'xây dựng', minCoins: 5, maxCoins: 30, chance: 5 },
+      { name: 'viết code', minCoins: 5, maxCoins: 40, chance: 5 },
+      { name: 'bác sĩ', minCoins: 5, maxCoins: 50, chance: 2 },
     ];
 
     const job = getRandomJob();

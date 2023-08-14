@@ -3,7 +3,7 @@ const marryModel = require('../../database/models/marryModel')
 
 module.exports = {
     name: 'hun',
-    cooldown: 60 * 60 * 5,
+    cooldown: 18000,
     /**
      * 
      * @param {Discord.Client} client 
@@ -11,6 +11,9 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
+        let currentUser = await marryModel.findOne({$or: [{ userId1: message.author.id }, { userId2: message.author.id }] })
+
+        if (!currentUser) return message.reply('Có ny đâu mà đi hun người khác')
         let toKissUser = message.mentions.users.first()
         if (toKissUser.id === message.author.id) return message.reply('**Bạn không thể hun chính mình...**')
         let existMarry = await marryModel.findOne({ $or: [{ userId1: toKissUser.id }, { userId2: toKissUser.id }] })

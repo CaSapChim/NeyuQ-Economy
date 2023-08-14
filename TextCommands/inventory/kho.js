@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
+const toolCauCaModel = require('../../database/models/toolCauCaModel')
 const ownerId = require('../../config.json').OWNER_ID
-const itemModel = require('../../database/models/itemModel')
 
 module.exports = {
     name: "kho",
@@ -11,17 +11,9 @@ module.exports = {
      * @param {Discord.Client} client
      * @param {Discord.Message} message
      * @param {*} args
-     * @param {*} userData
      */
-    run: async (client, message, args, userData) => {
-      if (!ownerId.includes(message.author.id)) return
-      const userInv = userData.inventory;
-      
-      // Function to get the quantity of a specific item in the inventory
-      const getItemQuantity = (itemName) => {
-        const itemArr = userInv.filter((item) => item.name === itemName);
-        return itemArr.length > 0 ? itemArr[0].soLuong : 0;
-      };    
+    run: async (client, message, args) => {      
+         
 
       const cupCacLoai = [
         'Cúp gỗ',
@@ -31,58 +23,63 @@ module.exports = {
         'Cúp kim cương'
       ]
       
-      let soLuongCupGo = 0
-      let soLuongCupDa = 0
-      let soLuongCupSat = 0
-      let soLuongCupVang = 0
-      let soLuongCupKimCuong = 0
+      const than = await client.khoangsan(message.author.id, "Than")
+      const sat = await client.khoangsan(message.author.id, "Sắt")
+      const vang = await client.khoangsan(message.author.id, "Vàng")
+      const kc = await client.khoangsan(message.author.id, "Kim cương")
+      const nlb = await client.khoangsan(message.author.id, "Ngọc lục bảo")
 
-      const countVang = getItemQuantity("Vàng");
-      const countSat = getItemQuantity("Sắt");
-      const countThan = getItemQuantity("Than");
-      const countNgocLucBao = getItemQuantity("Ngọc lục bảo");
-      const countKimCuong = getItemQuantity("Kim cương");
 
-      const cup = await itemModel
-        .find({
-          userId: message.author.id, type: 1
-        })
-        .sort({ soLuong: -1 })
+      const cup1 = await client.cup(message.author.id, "Cúp gỗ")
+      const cup2 = await client.cup(message.author.id, "Cúp đá")
+      const cup3 = await client.cup(message.author.id, "Cúp sắt")
+      const cup4 = await client.cup(message.author.id, "Cúp vàng")
+      const cup5 = await client.cup(message.author.id, "Cúp kim cương")
 
-      for (const itemCup of cup) {
-        if ( itemCup.name === cupCacLoai[0] ) soLuongCupGo = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[1] ) soLuongCupDa = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[2] ) soLuongCupSat = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[3] ) soLuongCupVang = itemCup.soLuong
-        if ( itemCup.name === cupCacLoai[4] ) soLuongCupKimCuong = itemCup.soLuong
-    }
+      const canCauTre = await client.toolCauCa(message.author.id, "Cần câu tre")
+      const canCauXin = await client.toolCauCa(message.author.id, "Cần câu xịn")
+      const luoi = await client.toolCauCa(message.author.id, "Lưới")
+      const luoiVip = await client.toolCauCa(message.author.id, "Lưới vip")
 
       const khoangSanEmbed = new Discord.EmbedBuilder()
       .setColor(0xff9900)
       .setTitle(`Kho khoáng sản của ${message.author.username}`)
       .setDescription(
-          `${`<:905609870114439208:1134500336862765138> Than: ${countThan}\n`}` +
-          `${`<:842601384561868810:1134500649548124161> Sắt: ${countSat}\n`}` +
-          `${`<:905609869485289482:1134500596871868588> Vàng: ${countVang}\n`}` +
-          `${`<:943215979935187074:1134500706095743150> Kim cương: ${countKimCuong}\n`}` +
-          `${`<:905609867769839637:1134500619898593380> Ngọc lục bảo: ${countNgocLucBao}\n`}`
+          `${`<:905609870114439208:1134500336862765138> Than: ${than}\n`}` +
+          `${`<:842601384561868810:1134500649548124161> Sắt: ${sat}\n`}` +
+          `${`<:905609869485289482:1134500596871868588> Vàng: ${vang}\n`}` +
+          `${`<:943215979935187074:1134500706095743150> Kim cương: ${kc}\n`}` +
+          `${`<:905609867769839637:1134500619898593380> Ngọc lục bảo: ${nlb}\n`}`
       )
+      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp();
 
       const cupEmbed = new Discord.EmbedBuilder()
       .setColor(0x0099ff)
       .setTitle(`Túi dụng cụ của ${message.author.username} `)
       .setDescription(
-        `<:wooden_pickaxe:1134750444854444042> ${cupCacLoai[0]}: ${soLuongCupGo}\n` +
-        `<:905609866691891220:1134749977529299014> ${cupCacLoai[1]}: ${soLuongCupDa}\n` +
-        `<:mcmine:1134750599188062350> ${cupCacLoai[2]}: ${soLuongCupSat}\n` +
-        `<:Gold_Pickaxe:1134749444785578034> ${cupCacLoai[3]}: ${soLuongCupVang}\n` +
-        `<:diamond_pickaxe:1134749671613550592> ${cupCacLoai[4]}: ${soLuongCupKimCuong}`
+        `\`120\` | <:wooden_pickaxe:1134750444854444042> ${cupCacLoai[0]}: ${cup1}\n` +
+        `\`121\` | <:905609866691891220:1134749977529299014> ${cupCacLoai[1]}: ${cup2}\n` +
+        `\`122\` | <:mcmine:1134750599188062350> ${cupCacLoai[2]}: ${cup3}\n` +
+        `\`123\` | <:Gold_Pickaxe:1134749444785578034> ${cupCacLoai[3]}: ${cup4}\n` +
+        `\`124\` | <:diamond_pickaxe:1134749671613550592> ${cupCacLoai[4]}: ${cup5}`
       )
-
       .setFooter({text: 'Chúc bạn một ngày tốt lành'})
       .setTimestamp()
-      let embeds = [cupEmbed, khoangSanEmbed];
+
+      const toolCCEmbed = new Discord.EmbedBuilder()
+      .setColor(0x0099ff)
+      .setTitle(`Túi dụng cụ câu cá của ${message.author.username} `)
+      .setDescription(
+        `\`130\` | <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> Cần câu tre: ${canCauTre}\n` +
+        `\`131\` | <:pro_fishing_rod49:1140523548763500665> Cần câu xin: ${canCauXin}\n` +
+        `\`132\` | <:Flimsy_Net_NH_Icon:1140523599170654298> Lưới: ${luoi}\n` +
+        `\`133\` | <:Golden_Net_NH_Inv_Icon:1140523506656874496> Lưới vip: ${luoiVip}`
+      )
+      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
+      .setTimestamp()
+
+      let embeds = [cupEmbed, toolCCEmbed, khoangSanEmbed];
     let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
     await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
 
@@ -144,12 +141,12 @@ module.exports = {
             } else if (interaction.customId == "back-page1") {
               interaction.deferUpdate()
               trangHienTai = 0;
-              queueEmbed.edit({ content: `**Current Page - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+              queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
             else if (interaction.customId == "next-page1") {
               interaction.deferUpdate()
               trangHienTai = embeds.length - 1;
-              queueEmbed.edit({ content: `**Current Page - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+              queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
           }
       );

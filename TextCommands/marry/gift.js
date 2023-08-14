@@ -56,19 +56,19 @@ module.exports = {
 
         switch (type) {
             case '101':
-                getItem("Bông hoa", amount, 2, 20)
+                getItem("Bông hoa", amount, 2, 10)
                 break;
             case '102':
-                getItem("Bó bông", amount, 2, 50)
+                getItem("Bó bông", amount, 2, 30)
                 break;
             case '103':
-                getItem("Cục kẹo", amount, 2, 80)
+                getItem("Cục kẹo", amount, 2, 50)
                 break;
             case '104':
-                getItem("Socola", amount, 2, 120)
+                getItem("Socola", amount, 2, 80)
                 break;
             case '105':
-                getItem("Gấu bông", amount, 2, 150)
+                getItem("Gấu bông", amount, 2, 100)
                 break;
             case '106':
                 getItem("Nhẫn bạc", amount, 4, null)

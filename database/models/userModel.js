@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const invModel = require('./inventoryModel');
-const cupModel = require('./itemModel');
 
 const userSchema = new mongoose.Schema(
 {
@@ -21,7 +19,6 @@ const userSchema = new mongoose.Schema(
         streak: { type: Number, default: 0 },
         timestamp: Date,
     },
-    inventory: [invModel.schema]
     
 },
     {

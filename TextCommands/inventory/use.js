@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const itemModel = require("../../database/models/itemModel");
 
 module.exports = {
   name: "use",
@@ -97,8 +96,8 @@ module.exports = {
       }
 
       const moneyRandom = {
-        minMoney: 10000,   
-        maxMoney: 25000, 
+        minMoney: 20000,   
+        maxMoney: 40000, 
     }
 
       const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
@@ -135,7 +134,7 @@ module.exports = {
 
       const moneyRandom = {
         minMoney: 10000,   
-        maxMoney: 20000, 
+        maxMoney: 100000, 
       }
 
       const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
@@ -145,10 +144,99 @@ module.exports = {
       await client.addTien(message.author.id, randomAmount)
       await client.addItem(message.author.id, itemRandom[result], 1, 5)
       await client.truItem(message.author.id, 'Rương đặc biệt', 1)
+  } 
 
-  } else if (id === 'cancau') {
-    message.reply('Bạn đã dùng cần câu thường!')
-    await client.addBuff(message.author.id, 25, 1)
+  const emojiCup = {
+    "Cúp gỗ": "<:wooden_pickaxe:1134750444854444042>",
+    "Cúp đá": "<:905609866691891220:1134749977529299014>",
+    "Cúp sắt": "<:mcmine:1134750599188062350>",
+    "Cúp vàng": "<:Gold_Pickaxe:1134749444785578034>",
+    "Cúp kim cương": "<:diamond_pickaxe:1134749671613550592>"
+  }
+
+  const emojiCa = {
+    "Cần câu tre": "<:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438>",
+    "Cần câu xịn": "<:pro_fishing_rod49:1140523548763500665>",
+    "Lưới": "<:Flimsy_Net_NH_Icon:1140523599170654298>",
+    "Lưới vip": "<:Golden_Net_NH_Inv_Icon:1140523506656874496>"
+  }
+
+  let cup1 = await client.cup(message.author.id, "Cúp gỗ")
+  let cup2 = await client.cup(message.author.id, "Cúp đá")
+  let cup3 = await client.cup(message.author.id, "Cúp sắt")
+  let cup4 = await client.cup(message.author.id, "Cúp vàng")
+  let cup5 = await client.cup(message.author.id, "Cúp kim cương")
+
+  async function cup(nameCup, soLuongBuff, type) {
+    for (let i = 1; i < 6; i++) {
+      let buff = await client.buffMine(message.author.id, i)
+      if ( buff > 0 ) return message.reply(`**Bạn không thể dùng cúp khác khi cúp hiện tại chưa sử dụng xong!**`)
+    }
+    await client.addBuffMine(message.author.id, soLuongBuff, type)
+    await client.truCup(message.author.id, nameCup, 1)
+    message.channel.send(`Bạn đã sử dụng thành công 1 **${nameCup} ${emojiCup[nameCup]}**`)
+  }
+
+
+
+  if (id === '120' || id === 'cupgo') {
+    if (cup1 < 1) return message.reply('Bạn không có **cúp gỗ** <:wooden_pickaxe:1134750444854444042> nào để dùng!')
+    await cup("Cúp gỗ", 25, 1)
+  } 
+  
+  else if (id === '121' || id === 'cupda') {
+    if (cup2 < 1) return message.reply('Bạn không có **cúp đá** <:905609866691891220:1134749977529299014> nào để dùng!')
+    await cup("Cúp đá", 50, 2)
+  } 
+  
+  else if (id === '122' || id === 'cupsat') {
+    if (cup3 < 1) return message.reply('Bạn không có **cúp sắt** <:mcmine:1134750599188062350 nào để dùng!')
+    await cup("Cúp sắt", 100, 3)
+  }
+  
+  else if (id === '123' || id === 'cupvang') {
+    if (cup4 < 1) return message.reply('Bạn không có **cúp vàng** <:Gold_Pickaxe:1134749444785578034> nào để dùng!')
+    await cup("Cúp vàng", 200, 4)
+  }
+  
+  else if (id === '124' || id === 'cupkimcuong' || id === 'cupkc' ) {
+    if (cup5 < 1) return message.reply('Bạn không có **cúp kim cương** <:diamond_pickaxe:1134749671613550592> nào để dùng!')
+    await cup("Cúp kim cương", 400, 5)
+  }
+
+  let canCauTre = await client.toolCauCa(message.author.id, "Cần câu tre")
+  let canCauXin = await client.toolCauCa(message.author.id, "Cần câu xịn")
+  let luoi= await client.toolCauCa(message.author.id, "Lưới")
+  let luoiVip = await client.toolCauCa(message.author.id, "Lưới vip")
+
+  async function cauca(toolCauCa, soLuongBuff, type) {
+    for (let i = 1; i < 5; i++) {
+      let buff = await client.buffCauCa(message.author.id, i)
+      if ( buff > 0 ) return message.reply(`**Bạn không thể dùng dụng cụ câu cá khác khi dụng cụ hiện tại chưa sử dụng xong!**`)
+    }
+    await client.addBuffCauCa(message.author.id, soLuongBuff, type)
+    await client.truToolCC(message.author.id, toolCauCa, 1)
+    message.channel.send(`Bạn đã sử dụng thành công 1 **${toolCauCa} ${emojiCa[toolCauCa]}**`)
+  }
+
+  if (id === '130' || id === 'cancautre') {
+    if ( canCauTre < 1) return message.reply('Bạn không có **Cần câu tre** <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> nào để dùng!')
+    await cauca("Cần câu tre", 25, 1)
+  } 
+  
+  else if (id === '131' || id === 'cancauxin') {
+    if ( canCauXin < 1) return message.reply('Bạn không có **Cần câu xịn** <:pro_fishing_rod49:1140523548763500665> nào để dùng!')
+    await cauca("Cần câu xịn", 50, 2)
+  } 
+  
+  else if (id === '132' || id === 'luoi') {
+    if ( luoi < 1) return message.reply('Bạn không có **Lưới** <:Flimsy_Net_NH_Icon:1140523599170654298> nào để dùng!')
+    await cauca("Lưới", 100, 3)
+  }
+  
+  else if (id === '133' || id === 'luoivip') {
+    if ( luoiVip < 1) return message.reply('Bạn không có **Lưới vip** <:Golden_Net_NH_Inv_Icon:1140523506656874496> nào để dùng**')
+    await cauca("Lưới vip", 200, 4)
   }
 }
 };
