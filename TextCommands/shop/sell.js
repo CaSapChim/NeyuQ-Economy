@@ -20,19 +20,13 @@ module.exports = {
             if (item > 0) {
                 await client.truItem(message.author.id, itemName, 1)
                 await client.addTien(message.author.id, price)
-                message.reply(`<:very:1137010214835597424> **|** Đã bán thành công **${itemName}** với giá **${price.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
+                return message.reply(`<:very:1137010214835597424> **|** Đã bán thành công **${itemName}** với giá **${price.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
             } else {
-                message.reply(`Bạn không có **${itemName}** nào để bán!`)
+                return message.reply(`Bạn không có **${itemName}** nào để bán!`)
             }
         }
 
-        if ( id === '106' || id === 'nhanbac'.toLowerCase()) {
-            getItemInfo(35000, "Nhẫn bạc")
-        } else if ( id === '107' || id === 'nhanvang'.toLowerCase() ) {
-            getItemInfo(70000, "Nhẫn vàng")
-        } else if ( id === '108' || id === 'nhanhong'.toLowerCase()) {
-            getItemInfo(105000, "Nhẫn hồng")
-        }
+
 
         const emojiKS = {
             "Than": "<:905609870114439208:1134500336862765138>",
@@ -44,14 +38,28 @@ module.exports = {
 
         const getKSInfo = async (author, price, itemName) => {
             let amount = parseInt(args[1]) || 'all'.toLowerCase()
-            if (amount === 'all'.toLowerCase()) amount = await client.khoangsan(author, itemName)
-            if ( amount < 1 ) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
-            await client.truKS(author, itemName, amount)
-            await client.addTien(author, amount * price)
+            if ( amount < 0 ) return message.reply(`Bạn không được nhập số âm `)
+            if (amount === 'all'.toLowerCase()) { 
+                amount = await client.khoangsan(author, itemName)
+                if ( amount < 0 ) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
+                await client.truKS(author, itemName, amount)
+                await client.addTien(author, amount * price)
+            } else {
+                let a = await client.khoangsan(author, itemName)
+                if (a < 1) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
+                await client.truKS(author, itemName, amount)
+                await client.addTien(author, amount * price)
+            }
             message.reply(`<:very:1137010214835597424> **|** Đã bán thành công **${amount} ${emojiKS[itemName]}** với giá **${price.toLocaleString('En-Us') * amount} <:O_o:1135831601205481523> coins**`)
         }
-
-        if ( id === 'than'.toLowerCase() ) await getKSInfo(author, 5, "Than")
+        if ( id === '106' || id === 'nhanbac'.toLowerCase()) {
+            getItemInfo(35000, "Nhẫn bạc")
+        } else if ( id === '107' || id === 'nhanvang'.toLowerCase() ) {
+            getItemInfo(70000, "Nhẫn vàng")
+        } else if ( id === '108' || id === 'nhanhong'.toLowerCase()) {
+            getItemInfo(105000, "Nhẫn hồng")
+        }
+        else if ( id === 'than'.toLowerCase() ) await getKSInfo(author, 5, "Than")
         else if ( id === 'sat'.toLowerCase() ) await getKSInfo(author, 7, "Sắt")
         else if ( id === 'vang'.toLowerCase() ) await getKSInfo(author, 15, "Vàng")
         else if ( id === 'kimcuong'.toLowerCase() || id === 'kc'.toLowerCase() ) await getKSInfo(author, 25, "Kim cương")

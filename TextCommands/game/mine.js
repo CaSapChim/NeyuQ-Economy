@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { mine } = require('../../Utils/mineUtils');
 const { OWNER_ID } = require('../../config.json');
+const { Captcha } = require('../../Utils/captchaUtils')
 
 const BUFF_CUPS = {
   3: { emoji: '<:wooden_pickaxe:1134750444854444042>', count: 25 },
@@ -30,7 +31,7 @@ module.exports = {
    */
   run: async (client, message) => {
     try {
-
+      await Captcha(client, message)
       const minedResources = await mine(client, message);
 
       if (minedResources.length === 0) {

@@ -12,8 +12,6 @@ const prefixModel = require("../../database/models/prefixModel");
 const banModel = require("../../database/models/banModel.js");
 const { dropGift } = require('../../Utils/dropGiftUtil.js')
 const ownerId = require('../../config.json').OWNER_ID
-const timeData = require("../../data/time.json");
-const fishData = require("../../data/fish.json");
 
 module.exports = {
   name: "messageCreate",
@@ -40,52 +38,13 @@ module.exports = {
 
     let prefix = '!'
 
-        if (message.channelId == '1129012498855636992') {
-          const recieveGift = await dropGift(message.author.id)
-          if (recieveGift) {
-            return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `nqg mayman` ngay!**')
-          }
-        }
 
-
-        if (message.channelId == '1129314158555443231') {
-          const toDate = function (date) {
-            return `${date.hour}${date.hour > 12 ? "pm" : "am"} ngày ${date.day} tháng ${
-              date.month
-            } năm ${date.year}`;
-          };
-          const fishAvailableArray = fishData.fish.filter(
-            (fish) =>
-              fish.time.includes(timeData.hour) &&
-              fish.months.includes(timeData.month)
-          ).sort((a, b) => a.rarity.localeCompare(b.rarity));
-      
-          let fishAvailableName = [];
-          let fishAvailableRarity = [];
-          let fishAvailablePrice = []
-          fishAvailableArray.forEach((fish) => fishAvailableName.push(fish.name));
-          fishAvailableArray.forEach((fish) => fishAvailableRarity.push(fish.rarity));
-          fishAvailableArray.forEach((fish) => fishAvailablePrice.push(fish.price));
-      
-          const fishList = fishAvailableName.map((fishName, i) => `${fishAvailableRarity[i] === 'Very Common' ? ':black_circle:' : fishAvailableRarity[i] === 'Common' ? ':white_circle:' : fishAvailableRarity[i] === "Uncommon" ? ':green_circle:' : fishAvailableRarity[i] === "Rare" ? ':blue_circle:' : ':purple_circle:'}  ${fishAvailableRarity[i]} | ${fishName} - ${fishAvailablePrice[i]} <:O_o:1135831601205481523> coins`).join("\n\n");
-          const dateEmbed = new EmbedBuilder()
-            .setColor("Gold")
-            .setAuthor({
-              name: `⏰ THÔNG BÁO THỜI GIAN ⏰`
-            })
-            .setTitle(`Thời gian hôm nay : ${toDate(timeData)}`)
-            .setDescription(
-              `Các loài cá có thể câu được hôm nay:
-      
-              ${fishList}
-      
-            `)
-            .setFooter({ text: "Đây là thời gian ảo của bot"});
-          setInterval(async () => {
-            console.log('Đã qua 10 phút')
-            await message.channel.send({ embeds: [dateEmbed] });
-          }, 600000);
-        }
+    if (message.channelId == '1129012498855636992') {
+      const recieveGift = await dropGift(message.author.id)
+      if (recieveGift) {
+        return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `nqg mayman` ngay!**')
+      }
+    }
 
     const content = message.content.toLowerCase();
     if (!content.startsWith(prefix)) return;

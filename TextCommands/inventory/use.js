@@ -134,7 +134,7 @@ module.exports = {
 
       const moneyRandom = {
         minMoney: 10000,   
-        maxMoney: 100000, 
+        maxMoney: 70000, 
       }
 
       const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
@@ -174,7 +174,7 @@ module.exports = {
     }
     await client.addBuffMine(message.author.id, soLuongBuff, type)
     await client.truCup(message.author.id, nameCup, 1)
-    message.channel.send(`Bạn đã sử dụng thành công 1 **${nameCup} ${emojiCup[nameCup]}**`)
+    message.reply(`Bạn đã sử dụng thành công 1 **${nameCup} ${emojiCup[nameCup]}**`)
   }
 
 
@@ -216,7 +216,7 @@ module.exports = {
     }
     await client.addBuffCauCa(message.author.id, soLuongBuff, type)
     await client.truToolCC(message.author.id, toolCauCa, 1)
-    message.channel.send(`Bạn đã sử dụng thành công 1 **${toolCauCa} ${emojiCa[toolCauCa]}**`)
+    message.reply(`Bạn đã sử dụng thành công 1 **${toolCauCa} ${emojiCa[toolCauCa]}**`)
   }
 
   if (id === '130' || id === 'cancautre') {
