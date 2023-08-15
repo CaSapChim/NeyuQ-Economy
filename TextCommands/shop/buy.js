@@ -173,31 +173,31 @@ module.exports = {
 
       //////////////////////////////////////////////////////////CÚP
       case '40':
-        getCupInfo(buyId, 1, cupCacLoai[0], 1)
+        getCupInfo(buyId, 1000, cupCacLoai[0], 1)
         break;
       case '41':
-        getCupInfo(buyId, 1, cupCacLoai[1], 2)
+        getCupInfo(buyId, 2000, cupCacLoai[1], 2)
         break;
       case '42':
-        getCupInfo(buyId, 1, cupCacLoai[2], 3)
+        getCupInfo(buyId, 5000, cupCacLoai[2], 3)
         break;
       case '43':
-        getCupInfo(buyId, 1, cupCacLoai[3], 4)
+        getCupInfo(buyId, 10000, cupCacLoai[3], 4)
         break;
       case '44':
-        getCupInfo(buyId, 1, cupCacLoai[4], 5)
+        getCupInfo(buyId, 12000, cupCacLoai[4], 5)
         break;
       case '50':
-        getCauCaInfo(buyId, 1, "Cần câu tre", 1)
+        getCauCaInfo(buyId, 1000, "Cần câu tre", 1) 
         break;
       case '51':
-        getCauCaInfo(buyId, 1, "Cần câu xịn", 2)
+        getCauCaInfo(buyId, 2000, "Cần câu xịn", 2)
         break;
       case '52':
-        getCauCaInfo(buyId, 1, "Lưới", 3)
+        getCauCaInfo(buyId, 5000, "Lưới", 3)
         break;
       case '53':
-        getCauCaInfo(buyId, 1, "Lưới vip", 4)
+        getCauCaInfo(buyId, 10000, "Lưới vip", 4)
         break;
       default:
         message.reply('**Không tìm thấy ID của sản phẩm**')

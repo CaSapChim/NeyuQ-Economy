@@ -6,7 +6,7 @@ const buffCauCaModel = require("../../database/models/buffCauCaModel");
 
 module.exports = {
   name: "cauca",
-  aliases: ["fish"],
+  aliases: ["fish", "cc"],
   description: "Lệnh cho phép member câu cá trong server",
   cooldown: 60,
   /**
@@ -56,7 +56,7 @@ module.exports = {
         client.truBuffCauCa(message.author.id, 1, 1);
         buffMsg += `Bạn đang bắt cá bằng **cần câu tre** <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> \`(${
           soLuongBuff - 1
-        }/25)\``;
+        }/10)\``;
       } else if (soLuongBuff > 0 && type == 2) {
         rarity = {
           "Very Common": 30, // 90% cá
@@ -68,7 +68,7 @@ module.exports = {
         client.truBuffCauCa(message.author.id, 1, 2);
         buffMsg += `Bạn đang bắt cá bằng **cần câu xịn** <:pro_fishing_rod49:1140523548763500665> \`(${
           soLuongBuff - 1
-        }/50)\``;
+        }/20)\``;
       } else if (soLuongBuff > 0 && type == 3) {
         rarity = {
           "Very Common": 25, // 90% cá
@@ -78,7 +78,7 @@ module.exports = {
           "Very Rare": 7,
         };
         client.truBuffCauCa(message.author.id, 1, 3);
-        buffMsg += `Bạn đang bắt cá bằng **lưới** <:Flimsy_Net_NH_Icon:1140523599170654298> \`(${soLuongBuff - 1}/100)\``;
+        buffMsg += `Bạn đang bắt cá bằng **lưới** <:Flimsy_Net_NH_Icon:1140523599170654298> \`(${soLuongBuff - 1}/50)\``;
       } else if (soLuongBuff > 0 && type == 4) {
         rarity = {
           "Very Common": 25, // 95% cá
@@ -90,7 +90,7 @@ module.exports = {
         client.truBuffCauCa(message.author.id, 1, 4);
         buffMsg += `Bạn đang bắt cá bằng **lưới vip** <:Golden_Net_NH_Inv_Icon:1140523506656874496> \`(${
           soLuongBuff - 1
-        }/200)\``;
+        }/100)\``;
       }
     }
 
@@ -168,6 +168,7 @@ module.exports = {
         )
         .setFooter({ text: `${result.catch}` })
         .setThumbnail(`${result.image}`);
+        await client.addTien(message.author.id, result.price)
       message.reply({ embeds: [fishEmbed], content: `${buffMsg}` });
     } else {
       const fail = fishData.fail;

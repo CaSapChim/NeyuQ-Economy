@@ -201,7 +201,7 @@ module.exports = {
   
   else if (id === '124' || id === 'cupkimcuong' || id === 'cupkc' ) {
     if (cup5 < 1) return message.reply('Bạn không có **cúp kim cương** <:diamond_pickaxe:1134749671613550592> nào để dùng!')
-    await cup("Cúp kim cương", 400, 5)
+    await cup("Cúp kim cương", 300, 5)
   }
 
   let canCauTre = await client.toolCauCa(message.author.id, "Cần câu tre")
@@ -221,22 +221,22 @@ module.exports = {
 
   if (id === '130' || id === 'cancautre') {
     if ( canCauTre < 1) return message.reply('Bạn không có **Cần câu tre** <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> nào để dùng!')
-    await cauca("Cần câu tre", 25, 1)
+    await cauca("Cần câu tre", 10, 1)
   } 
   
   else if (id === '131' || id === 'cancauxin') {
     if ( canCauXin < 1) return message.reply('Bạn không có **Cần câu xịn** <:pro_fishing_rod49:1140523548763500665> nào để dùng!')
-    await cauca("Cần câu xịn", 50, 2)
+    await cauca("Cần câu xịn", 20, 2)
   } 
   
   else if (id === '132' || id === 'luoi') {
     if ( luoi < 1) return message.reply('Bạn không có **Lưới** <:Flimsy_Net_NH_Icon:1140523599170654298> nào để dùng!')
-    await cauca("Lưới", 100, 3)
+    await cauca("Lưới", 50, 3)
   }
   
   else if (id === '133' || id === 'luoivip') {
     if ( luoiVip < 1) return message.reply('Bạn không có **Lưới vip** <:Golden_Net_NH_Inv_Icon:1140523506656874496> nào để dùng**')
-    await cauca("Lưới vip", 200, 4)
+    await cauca("Lưới vip", 100, 4)
   }
 }
 };

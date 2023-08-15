@@ -7,7 +7,7 @@ const BUFF_CUPS = {
   6: { emoji: '<:905609866691891220:1134749977529299014>', count: 50 },
   9: { emoji: '<:mcmine:1134750599188062350>', count: 100 },
   12: { emoji: '<:Gold_Pickaxe:1134749444785578034>', count: 200 },
-  15: { emoji: '<:diamond_pickaxe:1134749671613550592>', count: 400 }
+  15: { emoji: '<:diamond_pickaxe:1134749671613550592>', count: 300 }
 };
 
 const RESOURCE_EMOJIS = {

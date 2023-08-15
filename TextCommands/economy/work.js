@@ -4,19 +4,19 @@ const { Captcha } = require('../../Utils/captchaUtils')
 module.exports = {
   name: 'work',
   aliases: ['w', 'lamviec'],
-  cooldown: 15,
+  cooldown: 5,
 
   run: async (client, message, args) => {
     await Captcha(client, message)
 
     const jobs = [
-      { name: 'quét rác', minCoins: 5, maxCoins: 10, chance: 90 },
-      { name: 'bán vé số', minCoins: 5, maxCoins: 10, chance: 80 },
-      { name: 'phục vụ', minCoins: 5, maxCoins: 10, chance: 80 },
-      { name: 'marketing', minCoins: 5, maxCoins: 20, chance: 10 },
-      { name: 'xây dựng', minCoins: 5, maxCoins: 30, chance: 5 },
-      { name: 'viết code', minCoins: 5, maxCoins: 40, chance: 5 },
-      { name: 'bác sĩ', minCoins: 5, maxCoins: 50, chance: 2 },
+      { name: 'quét rác', minCoins: 5, maxCoins: 20, chance: 90 },
+      { name: 'bán vé số', minCoins: 5, maxCoins: 20, chance: 80 },
+      { name: 'phục vụ', minCoins: 5, maxCoins: 20, chance: 80 },
+      { name: 'marketing', minCoins: 5, maxCoins: 30, chance: 10 },
+      { name: 'xây dựng', minCoins: 5, maxCoins: 40, chance: 5 },
+      { name: 'viết code', minCoins: 5, maxCoins: 50, chance: 5 },
+      { name: 'bác sĩ', minCoins: 5, maxCoins: 60, chance: 2 },
     ];
 
     const job = getRandomJob();

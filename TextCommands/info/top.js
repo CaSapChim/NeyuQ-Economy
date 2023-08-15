@@ -52,7 +52,7 @@ module.exports = {
 
             const embed = new Discord.EmbedBuilder()
                 .setColor('Blue')
-                .setTitle(`TOP ${soluong} MARRY LEVEL`)
+                .setTitle(`TOP ${soluong} ĐIỂM THÂN MẬT`)
                 .setDescription(leaderboard)
                 .setFooter({ text: 'Càng chân thành với nhau thì top 1 càng về gần bạn!'})
                 .setTimestamp();

@@ -16,7 +16,8 @@ module.exports = {
           { label: "Nhẫn", description: "Quầy bán nhẫn", value: "ring", emoji: "<:Nhnvng:1124056797238534375>" },
           { label: "Role", description: "Quầy bán role", value: "role", emoji: "<:shoprole:1124059582805856267>" },
           { label: "Rương", description: "Quầy bán rương", value: "chest", emoji: "<:rng:1124057508177256598>" },
-          { label: "Dụng cụ", description: "Quầy bán dụng cụ", value: "tool", emoji: "<:tools31:1140599375043764254>" }
+          { label: "Cúp", description: "Quầy bán cúp", value: "tool", emoji: "<:tools31:1140599375043764254>" },
+          { label: "Cần câu", description: "Quầy bán câu cá", value: "toolCC", emoji: "<:Golden_Rod_NH_Inv_Icon:1140523530618929172>" }
         ])
     );
 
@@ -34,6 +35,13 @@ module.exports = {
 
         <:rng:1124057508177256598> **Quầy Gacha**
         ㅤㅤ• Mua các loại rương gacha
+
+        <:tools31:1140599375043764254> **Quầy bán cúp**
+        ㅤㅤ• Mua các loại cúp để mine
+
+        <:Golden_Rod_NH_Inv_Icon:1140523530618929172> **Quầy bán cần câu**
+        ㅤㅤ• Mua các loại dụng cụ để câu cá 
+
       `)
       .setColor("Green")
       .setImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ceab6b05-066e-4f6b-82ab-d8d718e2cbb5/dc5eydb-6e88187a-9aae-4800-a8b8-65c488b4f3fe.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2NlYWI2YjA1LTA2NmUtNGY2Yi04MmFiLWQ4ZDcxOGUyY2JiNVwvZGM1ZXlkYi02ZTg4MTg3YS05YWFlLTQ4MDAtYThiOC02NWM0ODhiNGYzZmUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.0kOLnE_p2Wd8wfzKxZU426XYjVS-mnrXbT1m-jO9fas')
@@ -77,7 +85,7 @@ module.exports = {
                               
               <:chamvang:1125863859740225556> \`26\` <:Nhnvng:1124056797238534375> Nhẫn Vàng: | \`150,000\` <:O_o:1135831601205481523> coins 
                           
-              <:chamvang:1125863859740225556> \`27\` <:nhan:1124415305347780720> Nhẫn Hồng: | \`250,000\` <:O_o:1135831601205481523> coins
+              <:chamvang:1125863859740225556> \`27\` <:nhan:1124415305347780720> Nhẫn Hồng: | \`200,000\` <:O_o:1135831601205481523> coins
               `)
               .setColor(0xe49300)
               .setImage('https://64.media.tumblr.com/6f39e453ebb570672af6ebcd0478cac6/tumblr_inline_plss2yuzfK1tiiqk5_540.gif')
@@ -119,29 +127,38 @@ module.exports = {
               .setColor("Random")
               .setFooter({ text: 'Chúc bạn một ngày tốt lành'})
               .setTimestamp()
-          } else if (interaction.value[0] === 'tool' ) {
+          } else if (interaction.values[0] === 'tool' ) {
             responseEmbed = new EmbedBuilder()
               .setTitle('Quần bán dụng cụ')
               .setDescription(`
-              <:chamxanh:1124058113742479400> \`40\` <:wooden_pickaxe:1134750444854444042> | <:O_o:1135831601205481523> coins
+              <:chamxanh:1124058113742479400> \`40\` <:wooden_pickaxe:1134750444854444042> Cúp gỗ | 1000 <:O_o:1135831601205481523> coins
 
-              <:chamxanh:1124058113742479400> \`41\` <:905609866691891220:1134749977529299014> | <:O_o:1135831601205481523> coins
+              <:chamxanh:1124058113742479400> \`41\` <:905609866691891220:1134749977529299014> Cúp đá | 2000 <:O_o:1135831601205481523> coins
 
-              <:chamxanh:1124058113742479400> \`42\` <:mcmine:1134750599188062350> | <:O_o:1135831601205481523> coins
+              <:chamxanh:1124058113742479400> \`42\` <:mcmine:1134750599188062350> Cúp sắt | 5000 <:O_o:1135831601205481523> coins
 
-              <:chamxanh:1124058113742479400> \`43\` <:Gold_Pickaxe:1134749444785578034> | <:O_o:1135831601205481523> coins
+              <:chamxanh:1124058113742479400> \`43\` <:Gold_Pickaxe:1134749444785578034> Cúp vàng | 10000 <:O_o:1135831601205481523> coins
 
-              <:chamxanh:1124058113742479400> \`44\` <:diamond_pickaxe:1134749671613550592> | <:O_o:1135831601205481523> coins
+              <:chamxanh:1124058113742479400> \`44\` <:diamond_pickaxe:1134749671613550592> Cúp kim cương | 15000 <:O_o:1135831601205481523> coins
 
-              <:chamxanh:1124058113742479400> \`50\` <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> | <:O_o:1135831601205481523> coins
-
-              <:chamxanh:1124058113742479400> \`51\` <:pro_fishing_rod49:1140523548763500665> | <:O_o:1135831601205481523> coins
-
-              <:chamxanh:1124058113742479400> \`52\` <:Flimsy_Net_NH_Icon:1140523599170654298> | <:O_o:1135831601205481523> coins
-              
-              <:chamxanh:1124058113742479400> \`53\` <:Golden_Net_NH_Inv_Icon:1140523506656874496> | <:O_o:1135831601205481523> coins
               `)
               .setTimestamp()
+              .setImage('https://i.pinimg.com/originals/c5/24/88/c524883fb8d7bf0e26529db473a31a8e.gif')
+              .setFooter({ text: 'Chúc bạn một ngày tốt lành'})
+          } else if (interaction.values[0] === 'toolCC' ) {
+            responseEmbed = new EmbedBuilder()
+              .setTitle('Quần bán dụng cụ câu cá')
+              .setDescription(`
+              <:chamxanh:1124058113742479400> \`50\` <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> Cần câu tre | 1000 <:O_o:1135831601205481523> coins
+
+              <:chamxanh:1124058113742479400> \`51\` <:pro_fishing_rod49:1140523548763500665> Cần câu xịn | 2000 <:O_o:1135831601205481523> coins
+
+              <:chamxanh:1124058113742479400> \`52\` <:Flimsy_Net_NH_Icon:1140523599170654298> Lưới | 5000 <:O_o:1135831601205481523> coins
+              
+              <:chamxanh:1124058113742479400> \`53\` <:Golden_Net_NH_Inv_Icon:1140523506656874496> Lưới vip | 10000 <:O_o:1135831601205481523> coins
+              `)
+              .setTimestamp()
+              .setImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/80c3dffd-c628-49d1-844e-5960a300911b/dec5a92-c7133b22-e89a-4467-8706-166bcbc679ec.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzgwYzNkZmZkLWM2MjgtNDlkMS04NDRlLTU5NjBhMzAwOTExYlwvZGVjNWE5Mi1jNzEzM2IyMi1lODlhLTQ0NjctODcwNi0xNjZiY2JjNjc5ZWMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Ym0HwecdEfO6pvoG4SbJA1AIBEWczJiwHGd-erNVluE')
               .setFooter({ text: 'Chúc bạn một ngày tốt lành'})
           }
 

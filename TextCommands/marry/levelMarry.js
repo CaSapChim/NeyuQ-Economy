@@ -55,11 +55,11 @@ module.exports = {
             ctx.drawImage(heartImage, 128, 0, 128, 128);
             ctx.drawImage(partnerAvatar, 256, 0, 128, 128)
 
-            const marryEmbed = new Discord.EmbedBuilder()
-                .setTitle('Xem Level Mối Quan Hệ') 
+            const marryEmbed = new Discord.EmbedBuilder() // userId1: Mèo
+                .setTitle('Xem Level Mối Quan Hệ')        // userId2: Cá
                 .setDescription(`
                 • Huy hiệu đang có: ${huyHieu.join(' ')}
-                • Bạn đã kêt hôn với: <@${existMarry.userId2}>
+                • Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}>
                 • Điểm thân mật hiện tại: ${level} 
                 • Bạn đã kết hôn được: ${currentDay - existMarry.marriedAt.getDate()} ngày
                 • Ngày kỉ niệm: ${moment(existMarry.marriedAt).format('DD/MM/YYYY')}`)
@@ -86,7 +86,7 @@ module.exports = {
             .setTitle('Xem Level Mối Quan Hệ') 
             .setDescription(`
             <:mauxanh:1136716708363640862> Huy hiệu đang có: ${huyHieu.join(' ')}
-            <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2}>
+            <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}>
             <:mauxanh:1136716708363640862> Điểm thân mật hiện tại: **${level}** 
             <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
             <:mauxanh:1136716708363640862> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
@@ -130,7 +130,7 @@ module.exports = {
                <:ll:1137053770774229043><:__:1137053857621483671><:vv:1137053893960933528><:ee:1137053939855020083>`) 
                .setDescription(`
                <:maucam:1136722890042134558> Huy hiệu đang có: ${huyHieu.join(' ')}
-               <:maucam:1136722890042134558> Bạn đã kêt hôn với: <@${existMarry.userId2}>
+               <:maucam:1136722890042134558> Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}>
                <:maucam:1136722890042134558> Điểm thân mật hiện tại: **${level}**
                <:maucam:1136722890042134558> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
                <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
@@ -172,7 +172,7 @@ module.exports = {
                 <:L_:1136726934911463444><:00:1136727704071327835><:V_:1136728323658088700><:E_:1136728342851227648>`)
                 .setDescription(`
                 > <:huyhieuj:1137002449736040528> | Huy hiệu đang có: ${huyHieu.join(' ')}
-                > <:kethon:1137002986472747160> | Bạn đã kêt hôn với: <@${existMarry.userId2}> 
+                > <:kethon:1137002986472747160> | Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}> 
                 > <:thanmat:1137004383008194631> | Điểm thân mật hiện tại: **${level}** 
                 > <:daymarry:1137003685659033631> | Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
                 > <:day:1137004327848914954> | Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**

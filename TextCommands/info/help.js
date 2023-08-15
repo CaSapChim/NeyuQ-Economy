@@ -58,6 +58,12 @@ const {
               emoji: "<:tiu:1135830334664085554>",
             }, 
             {
+              label: "Game",
+              description: "Xem các lệnh về game",
+              value: "game",
+              emoji: "<:player55:1140617255349141606>",
+            }, 
+            {
               label: "Friends",
               description: "Xem các lệnh về bạn bè",
               value: "friends",
@@ -92,11 +98,13 @@ const {
       );
   
       let helpEmbed = new EmbedBuilder()
-        .setTitle('Xin chào, tôi có thể hỗ trợ gì cho bạn?')
+        .setTitle('BẢNG HELP LỆNH')
         .setDescription(`
             **Prefix hiện tại:** : \`nqg\`
 
             <:tiu:1135830334664085554> **Economy:** \`4 lệnh\`
+
+            <:player55:1140617255349141606> **Game:** \`2 lệnh\`
 
             <:banbe2:1122443390580166676> **Friends:** \`3 lệnh\`
 
@@ -141,9 +149,21 @@ const {
         
                 await a.edit({ embeds: [infoEmbed]})
         
-                } else if (interaction.values[0] === "friends") {
+                } else if (interaction.values[0] === 'game') {
+                  const gameEmbed = new EmbedBuilder()
+                    .setTitle("Các lệnh về bạn bè")
+                    .setDescription(
+                      "`fish`, `mine`"
+                    )
+                    .addFields(
+                      { name: '**Cách dùng:** `nqg mine`', value: 'Đào khoáng sản. Các bạn có thể bán các khoáng sản mình bằng `**nqg sell than|sat|vang|kc|nlb <số lượng>**`', inline: false },
+                      { name: '**Cách dùng:** `nqg fish`', value: 'Câu cá. Mỗi loại cá có nhiều độ hiếm khác nhau và giá tiền nhận được cũng tương ứng với độ hiếm. ', inline: false },
+                    )
+                    .setColor("Random");
         
-                
+                    await a.edit({ embeds: [gameEmbed]})
+                }
+                else if (interaction.values[0] === "friends") {
         
                     const modEmbed = new EmbedBuilder()
                     .setTitle("Các lệnh về bạn bè")
@@ -218,11 +238,12 @@ const {
                 const funEmbed = new EmbedBuilder()
                     .setTitle("Các lệnh khác")
                     .setDescription(
-                         "`top`, `help`, `prefix`, `ping`, `confession`"
+                         "`top`, `help`,`time`, `prefix`, `ping`, `confession`"
                     )
                     .addFields(
                       { name: '**Cách dùng:** `nqg top <bal|marry>`', value: 'Xem top tiền hoặc marry.', inline: false },
                       { name: '**Cách dùng:** `nqg help`', value: 'Mở bảng hỗ trợ', inline: false },
+                      { name: '**Cách dùng:** `nqg time`', value: 'Xem thời gian ảo hiện tại để bắt cá.', inline: false},
                       { name: '**Cách dùng:** `nqg prefix <prefix>`', value: 'Đổi prefix cho máy chủ.', inline: false},
                       { name: '**Cách dùng:** `nqg ping`', value: 'Xem độ trễ của bot. Rút gọn: `p`, `ms`', inline: false},
                       { name: '**Cách dùng:** `/confession`', value: 'Gửi confession.', inline: false},
