@@ -37,20 +37,17 @@ module.exports = {
         }
 
         const getKSInfo = async (author, price, itemName) => {
-            let amount = parseInt(args[1]) || 'all'.toLowerCase()
-            if ( amount < 0 ) return message.reply(`Bạn không được nhập số âm `)
-            if (amount === 'all'.toLowerCase()) { 
-                amount = await client.khoangsan(author, itemName)
-                if ( amount < 0 ) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
-                await client.truKS(author, itemName, amount)
-                await client.addTien(author, amount * price)
-            } else {
-                let a = await client.khoangsan(author, itemName)
-                if (a < 1) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
-                await client.truKS(author, itemName, amount)
-                await client.addTien(author, amount * price)
-            }
-            message.reply(`<:very:1137010214835597424> **|** Đã bán thành công **${amount} ${emojiKS[itemName]}** với giá **${price.toLocaleString('En-Us') * amount} <:O_o:1135831601205481523> coins**`)
+            let amount = args[1]
+            if ( amount != 'all'.toLowerCase()) return message.reply(`Cách dùng \`nqg sell <tên> all\``)
+
+            amount = await client.khoangsan(author, itemName)
+
+            if ( amount <= 0 ) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
+
+            await client.truKS(author, itemName, amount)
+            await client.addTien(author, price * amount)
+
+            await message.reply(`<:very:1137010214835597424> **|** Đã bán thành công **${amount} ${emojiKS[itemName]}** với giá **${price.toLocaleString('En-Us') * amount} <:O_o:1135831601205481523> coins**`)
         }
         if ( id === '106' || id === 'nhanbac'.toLowerCase()) {
             getItemInfo(35000, "Nhẫn bạc")
@@ -59,10 +56,10 @@ module.exports = {
         } else if ( id === '108' || id === 'nhanhong'.toLowerCase()) {
             getItemInfo(105000, "Nhẫn hồng")
         }
-        else if ( id === 'than'.toLowerCase() ) await getKSInfo(author, 5, "Than")
-        else if ( id === 'sat'.toLowerCase() ) await getKSInfo(author, 7, "Sắt")
-        else if ( id === 'vang'.toLowerCase() ) await getKSInfo(author, 15, "Vàng")
-        else if ( id === 'kimcuong'.toLowerCase() || id === 'kc'.toLowerCase() ) await getKSInfo(author, 25, "Kim cương")
+        else if ( id === 'than'.toLowerCase() ) await getKSInfo(author, 10, "Than")
+        else if ( id === 'sat'.toLowerCase() ) await getKSInfo(author, 15, "Sắt")
+        else if ( id === 'vang'.toLowerCase() ) await getKSInfo(author, 25, "Vàng")
+        else if ( id === 'kimcuong'.toLowerCase() || id === 'kc'.toLowerCase() ) await getKSInfo(author, 35, "Kim cương")
         else if ( id === 'ngoclucbao'.toLowerCase() || id === 'nlb'.toLowerCase() ) await getKSInfo(author, 50, "Ngọc lục bảo")
         else {
             message.channel.send('**Không tìm thấy ID của sản phẩm\nHiện tại chỉ được phép bán nhẫn và các loại khoáng sản!**')

@@ -127,7 +127,7 @@ module.exports = {
         break;
       case "27":
         if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`sell <id> soluong`**')
-        getItemInfo(buyId, 250000, nhanCacLoai[2], 4);
+        getItemInfo(buyId, 200000, nhanCacLoai[2], 4);
         break;
 
       ////////////////////////////////////////////////////////// Role

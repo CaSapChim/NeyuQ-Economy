@@ -1,15 +1,16 @@
 const Discord = require("discord.js");
 const fishData = require("../../data/fish.json");
 const ownerId = require("../../config.json").OWNER_ID;
-const timeData = require("../../data/time.json");
+const timeModel = require('../../database/models/timeModel')
 const buffCauCaModel = require("../../database/models/buffCauCaModel");
 const { Captcha } = require('../../Utils/captchaUtils')
+const caScoreModel = require("../../database/models/caScoreModel")
 
 module.exports = {
   name: "cauca",
   aliases: ["fish", "cc"],
   description: "Lệnh cho phép member câu cá trong server",
-  cooldown: 0,
+  cooldown: 60,
   /**
    *
    * @param {Discord.Client} client
@@ -23,6 +24,19 @@ module.exports = {
     let data = await buffCauCaModel.findOne({
       userId: message.author.id,
     });
+
+    let timeData = await timeModel.findOne()
+
+    let caScore = await caScoreModel.findOne({
+      userId: message.author.id
+    })
+
+    if (!caScore) {
+      caScore = new caScoreModel({
+        userId: message.author.id,
+        score: 0
+      })
+    }
 
     let rarity = {
       "Very Common": 35,
@@ -89,9 +103,10 @@ module.exports = {
         rarity = {
           "Very Common": 25, // 100% cá
           "Common": 25,
-          "Uncommon": 20,
+          "Uncommon": 30,
           "Rare": 20,
           "Very Rare": 10,
+          "Legendary": 2
         };
         client.truBuffCauCa(message.author.id, 1, 4);
         buffMsg += `Bạn đang bắt cá bằng **lưới vip** <:Golden_Net_NH_Inv_Icon:1140523506656874496> \`(${
@@ -103,14 +118,26 @@ module.exports = {
     const veryCommonFish = fishData.fish.filter(
       (fish) => fish.rarity === "Very Common"
     );
-    const commonFish = fishData.fish.filter((fish) => fish.rarity === "Common");
+
+    const commonFish = fishData.fish.filter(
+      (fish) => fish.rarity === "Common"
+    );
+
     const unCommonFish = fishData.fish.filter(
       (fish) => fish.rarity === "Uncommon"
     );
-    const rareFish = fishData.fish.filter((fish) => fish.rarity === "Rare");
+
+    const rareFish = fishData.fish.filter(
+      (fish) => fish.rarity === "Rare"
+    );
+
     const veryRareFish = fishData.fish.filter(
       (fish) => fish.rarity === "Very Rare"
     );
+
+    const legendFish = fishData.fish.filter(
+      (fish) => fish.rarity === 'Lengendary'
+    )
 
     function getRandomRarity() {
       const randomNum = Math.random() * 100;
@@ -146,27 +173,36 @@ module.exports = {
     switch (randomRarity) {
       case "Very Common":
         result = getRandomFish(veryCommonFish);
+        caScore.score = caScore.score + 20
         break;
       case "Common":
         result = getRandomFish(commonFish);
+        caScore.score = caScore.score + 30
         break;
       case "Uncommon":
         result = getRandomFish(unCommonFish);
+        caScore.score = caScore.score + 40
         break;
       case "Rare":
         result = getRandomFish(rareFish);
+        caScore.score = caScore.score + 50
         break;
       case "Very Rare":
         result = getRandomFish(veryRareFish);
+        caScore.score = caScore.score + 70
+        break;
+      case "Legendary":
+        result = getRandomFish(legendFish);
+        caScore.score = caScore.score + 200
         break;
     }
-
+    await caScore.save()
     if (result) {
       const fishEmbed = new Discord.EmbedBuilder()
         .setColor("Blue")
         .setTitle(`Bạn đã bắt được \`${result.name}\``)
         .setDescription(
-          `Độ hiếm: **${result.rarity}** ${result.rarity === 'Very Common' ? ':black_circle:' : result.rarity === 'Common' ? ':white_circle:' : result.rarity === "Uncommon" ? ':green_circle:' : result.rarity === "Rare" ? ':blue_circle:' : ':purple_circle:'}
+          `Độ hiếm: **${result.rarity}** ${result.rarity === 'Very Common' ? ':black_circle:' : result.rarity === 'Common' ? ':white_circle:' : result.rarity === "Uncommon" ? ':green_circle:' : result.rarity === "Rare" ? ':blue_circle:' : result.rarity === "Legendary" ? ':yellow_circle:' : ':purple_circle:'}
           \n \
           Kích thước: **${result.size[Math.floor(Math.random() * result.size.length)]} cm** 
           \n \
@@ -175,7 +211,7 @@ module.exports = {
         .setFooter({ text: `${result.catch}` })
         .setThumbnail(`${result.image}`);
         await client.addTien(message.author.id, result.price)
-      message.reply({ embeds: [fishEmbed], content: `${buffMsg}` });
+      message.reply({ embeds: [fishEmbed], content: `${buffMsg} - Điểm: ${caScore.score} <a:Minecraft_Fish7:1141240605800939650>` });
     } else {
       const fail = fishData.fail;
       const failEmbed = new Discord.EmbedBuilder()

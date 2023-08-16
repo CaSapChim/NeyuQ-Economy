@@ -72,8 +72,6 @@ for (const folder of folders) {
   }
 }
 
-require('./fakeTime.js').doTime();
-
 (async () =>{
   await initializeMongoose()
   await client.login(TOKEN)

@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const balanceModel = require('../../database/models/balanceModel');
 const marryModel = require('../../database/models/marryModel');
 const dropGiftModel = require('../../database/models/dropGiftModel')
+const caScoreModel = require('../../database/models/caScoreModel')
 
 module.exports = {
     name: 'top',
@@ -69,7 +70,7 @@ module.exports = {
                 .slice(0, soluong)
                 .map((user, index) => {
                     const positionEmoji = getMedalEmoji(index);
-                    return `${positionEmoji} ${client.users.cache.get(user.userId)}- ${user.mayman} điểm may mắn <:t_:1138458437559263323>`;
+                    return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.mayman} điểm may mắn <:t_:1138458437559263323>`;
                 })
                 .join('\n');
 
@@ -78,6 +79,29 @@ module.exports = {
                 .setTitle(`TOP ${soluong} ĐIỂM MAY MẮN`)
                 .setDescription(leaderboard)
                 .setFooter({ text: 'Chat càng nhiều, cơ hội nhận rương may mắn càng cao!'})
+                .setTimestamp();
+
+            message.channel.send({ embeds: [embed] });
+        }
+
+        if (['cauca','cc', 'fish'].includes(type)) {
+            let soluong = parseInt(args[1]) || 10
+            if (soluong > 25) soluong = 25
+            
+            let diemCauCa = await caScoreModel.find().sort({ score: -1 });
+            let leaderboard = diemCauCa
+                .slice(0, soluong)
+                .map((user, index) => {
+                    const positionEmoji = getMedalEmoji(index);
+                    return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.score} điểm <a:Minecraft_Fish7:1141240605800939650>`;
+                })
+                .join('\n');
+
+            const embed = new Discord.EmbedBuilder()
+                .setColor('Green')
+                .setTitle(`TOP ${soluong} ĐIỂM CÂU CÁ`)
+                .setDescription(leaderboard)
+                .setFooter({ text: 'Câu càng nhiều, điểm càng cao!'})
                 .setTimestamp();
 
             message.channel.send({ embeds: [embed] });

@@ -1,10 +1,11 @@
 const Captcha = async (client, message) => {
     if (message.author.bot || !message.content) return;
-  
+    const user = message.author
+
     const Canvas = require('canvas');
     const Discord = require('discord.js');
 
-    let limit = 200
+    let limit = 10000
     const a = Math.floor(Math.random() * 500)
     const b = Math.floor(Math.random() * 500)
 
@@ -69,13 +70,13 @@ const Captcha = async (client, message) => {
         const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name:'captcha.png' });
         const content = result.join('');
     
-        await message.channel.send({
+        await user.send({
         files: [attachment],
-        content: `**<@${message.author.id}>, bạn có phải là con người không?\nBạn có 1 phút để nhập đúng mã captcha bên dưới.**`
+        content: `**<@${message.author.id}>, bạn có phải là con người không?\nBạn có 3 phút để nhập đúng mã captcha bên dưới.**`
         });
     
         const filter = m => m.author.id === message.author.id && m.content.toLowerCase().trim().slice(-6) === result.join('').trim();
-        const collector = message.channel.createMessageCollector({ filter, time: 60000 });
+        const collector = user.dmChannel.createMessageCollector({ filter, time: 180000 });
     
         collector.on('collect', async m => {
         if (m.content.toLowerCase() == content) {
@@ -86,7 +87,7 @@ const Captcha = async (client, message) => {
     
         collector.on('end', async collected => {
             if (collected.size < 1) {
-                await message.channel.send(`**<@${message.author.id}>, đã trôi qua 1 phút, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ ... để được xem xét gỡ ban!**`); 
+                await message.channel.send(`**<@${message.author.id}>, đã trôi qua 3 phút, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ ... để được xem xét gỡ ban!**`); 
                 await client.ban(message.author.id)       
             }
         });

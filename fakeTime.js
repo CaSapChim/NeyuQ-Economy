@@ -1,37 +1,34 @@
-const fs = require("fs");
+const timeModel = require('./database/models/timeModel')
+ 
 
-var weather = [
-  
-]
+const doTime = async function() {
+    const duration = 10000; //vl quen 10p = 1 hour ._.
+    let data = await timeModel.findOne()
 
-function date(time) {
-    time.hour++;
-    if (time.hour === 23) {
-      time.day++;
-      time.hour = 0;
+    if (!data) {
+      data = new timeModel({
+        hour: 0,
+        day: 1,
+        month: 1,
+        year: 0
+      })
     }
-    if (time.day === 31) {
-      time.day = 1;
-      time.month++;
-    }
-    if (time.month === 12) {
-      time.year++;
-      time.month = 1;
-    }
-  }
 
-  
-
-const doTime = function() {
-    const duration = 600000; //vl quen 10p = 1 hour ._.
-    setInterval(() => {
-      fs.readFile("./data/time.json", "utf-8", (err, data) => {
-        if (err) console.log(err);
-        let timeObj = JSON.parse(data);
-        date(timeObj);
-        let json = JSON.stringify(timeObj);
-        fs.writeFile("./data/time.json", json, "utf-8", function () {});
-      });
+    data.hour++;
+    if (data.hour === 23) {
+      data.day++;
+      data.hour = 0;
+    }
+    if (data.day === 31) {
+      data.day = 1;
+      data.month++;
+    }
+    if (data.month === 12) {
+      data.year++;
+      data.month = 1;
+    }
+    setInterval(async () => {
+        await timeModel.findOneAndUpdate({}, data)
     }, duration);
   }
 module.exports = { doTime } 

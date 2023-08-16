@@ -1,12 +1,14 @@
-const timeData = require("../../data/time.json");
 const { EmbedBuilder } = require("discord.js");
 const fishData = require("../../data/fish.json");
+const timeModel = require('../../database/models/timeModel')
 
 module.exports = {
   name: "time",
   description: "Xem thời gian ảo của server",
 
   run: async (client, message, args, userData) => {
+    let data = await timeModel.findOne()
+
     const toDate = function (date) {
       return `${date.hour}${date.hour > 12 ? "pm" : "am"} ngày ${date.day} tháng ${
         date.month
@@ -31,7 +33,7 @@ module.exports = {
       .setAuthor({
         name: `⏰ THÔNG BÁO THỜI GIAN ⏰`
       })
-      .setTitle(`Thời gian hôm nay : ${toDate(timeData)}`)
+      .setTitle(`Thời gian hôm nay : ${toDate(data)}`)
       .setDescription(
         `Các loài cá có thể câu được hôm nay:
 

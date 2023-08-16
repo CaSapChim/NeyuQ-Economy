@@ -18,8 +18,8 @@ const {
      * @returns
      */
     run: async (client, message, args, userData) => {
-      const hoa = args[0]
-      if (hoa == 'hoa') {
+      const type = args[0]
+      if (type == 'gift') {
         const hoaEmbed = new EmbedBuilder()
           .setColor('LuminousVividPink')
           .setTitle('Điểm thân mật của từng loại quà')
@@ -36,12 +36,41 @@ const {
 
             **Gấu bông:** \`+100 điểm\`
 
-            **=> Bạn có thể sở hữu các loại quà này ở \`shop\`**
+            **=> Bạn có thể sở hữu các loại quà này ở \`shop hoa\`**
           `)
           .setTimestamp()
           .setFooter({ text: 'Chúc bạn thật nhiều sức khỏe'})
-          message.channel.send({ embeds: [hoaEmbed] })
+          message.reply({ embeds: [hoaEmbed] })
           return
+      }
+
+      if (type == 'ca') {
+        const caEmbed = new EmbedBuilder()
+        .setColor('Aqua')
+        .setTitle('Điểm nhận được của từng loại cá')
+        .setDescription(`
+          > **Điểm này sẽ cộng vào điểm cá của bạn khi bắt được cá**
+
+          Mỗi loài cá sẽ xuất hiện vào những khung giờ khác nhau: <#1140994771331076257>
+
+          **Very common:** \`+20 điểm\` <a:Minecraft_Fish7:1141240605800939650>
+
+          **Common:** \`+30 điểm\` <a:Minecraft_Fish7:1141240605800939650>
+
+          **Uncommon:** \`+40 điểm\` <a:Minecraft_Fish7:1141240605800939650>
+
+          **Rare:** \`+50 điểm\` <a:Minecraft_Fish7:1141240605800939650>
+
+          **Very Rare:** \`+70 điểm\` <a:Minecraft_Fish7:1141240605800939650>
+
+          **Legendary:** \`+200 điểm\` <a:Minecraft_Fish7:1141240605800939650>
+
+          **Lưu ý: Loài cá Lengendary chỉ bắt được bằng \`Lưới vip\`**
+        `)
+        .setTimestamp()
+        .setFooter({ text: 'Chúc bạn thật nhiều sức khỏe'})
+        message.reply({ embeds: [caEmbed] })
+        return
       }
 
       let helpMenu = new ActionRowBuilder().addComponents(

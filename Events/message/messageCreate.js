@@ -31,11 +31,6 @@ module.exports = {
       if (ban.userId == message.author.id) return;
     }
 
-    // prefix
-    let data = await prefixModel.findOne({
-      guildId: message.guild.id,
-    });
-
     let prefix = '!'
 
 
