@@ -5,7 +5,7 @@ const Captcha = async (client, message) => {
     const Canvas = require('canvas');
     const Discord = require('discord.js');
 
-    let limit = 10000
+    let limit = 100
     const a = Math.floor(Math.random() * 500)
     const b = Math.floor(Math.random() * 500)
 
@@ -70,28 +70,32 @@ const Captcha = async (client, message) => {
         const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name:'captcha.png' });
         const content = result.join('');
     
-        await user.send({
-        files: [attachment],
-        content: `**<@${message.author.id}>, bạn có phải là con người không?\nBạn có 3 phút để nhập đúng mã captcha bên dưới.**`
-        });
+        try {
+            const dmChannel = await user.createDM(); // Tạo hoặc lấy dmChannel của người dùng
+            await dmChannel.send({
+                files: [attachment],
+                content: `**<@${message.author.id}>, bạn có phải là con người không?\nBạn có 3 phút để nhập đúng mã captcha bên dưới.**`
+            });
     
-        const filter = m => m.author.id === message.author.id && m.content.toLowerCase().trim().slice(-6) === result.join('').trim();
-        const collector = user.dmChannel.createMessageCollector({ filter, time: 180000 });
+            const filter = m => m.author.id === message.author.id && m.content.toLowerCase().trim().slice(-6) === result.join('').trim();
+            const collector = dmChannel.createMessageCollector({ filter, time: 180000 });
     
-        collector.on('collect', async m => {
-        if (m.content.toLowerCase() == content) {
-            await m.reply(`**Cảm ơn bạn đã xác nhận! Bạn có thể tiếp tục sử dụng bot.**`);
-            collector.stop()
+            collector.on('collect', async m => {
+                if (m.content.toLowerCase() == content) {
+                    await m.reply(`**Cảm ơn bạn đã xác nhận! Bạn có thể tiếp tục sử dụng bot.**`);
+                    collector.stop();
+                }
+            });
+    
+            collector.on('end', async collected => {
+                if (collected.size < 1) {
+                    await dmChannel.send(`**<@${message.author.id}>, đã trôi qua 3 phút, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ ... để được xem xét gỡ ban!**`);
+                    await client.ban(message.author.id);
+                }
+            });
+        } catch (error) {
+            console.error('Lỗi captcha:', error);
         }
-        });
-    
-        collector.on('end', async collected => {
-            if (collected.size < 1) {
-                await message.channel.send(`**<@${message.author.id}>, đã trôi qua 3 phút, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ ... để được xem xét gỡ ban!**`); 
-                await client.ban(message.author.id)       
-            }
-        });
-    
         function randomColor() {
         let r = Math.floor(Math.random() * 256);
         let g = Math.floor(Math.random() * 256);

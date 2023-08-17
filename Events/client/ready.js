@@ -6,7 +6,8 @@ const {
   Message,
 } = require("discord.js");
 const { initializeMongoose } = require("../../database/mongoose");
-const timeModel = require("../../database/models/timeModel");
+const timeModelTest = require("../../database/models/test/timeModelTest");
+
 const fishData = require("../../data/fish.json");
 
 module.exports = {
@@ -28,14 +29,14 @@ module.exports = {
     sendTime();
     setInterval(() => {
       sendTime();
-    }, 300000);
+    }, 600000);
 
     async function sendTime() {
       const channel = client.channels.cache.get("1129314158555443231");
       if (channel) {
-        let data = await timeModel.findOne({});
+        let data = await timeModelTest.findOne({});
         if (!data) {
-          data = new timeModel({
+          data = new timeModelTest({
             hour: 0,
             day: 1,
             month: 1,
@@ -116,7 +117,7 @@ module.exports = {
           )
           .setFooter({ text: "Đây là thời gian ảo của bot" });
         channel.send({ embeds: [dateEmbed] });
-        console.log("Đã 5 phút trôi qua");
+        console.log("Đã 10 phút trôi qua");
       }
     }
   },

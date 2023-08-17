@@ -34,7 +34,7 @@ module.exports = {
     let prefix = '!'
 
 
-    if (message.channelId == '1129012498855636992') {
+    if (message.channelId == '1070274984750100522') {
       const recieveGift = await dropGift(message.author.id)
       if (recieveGift) {
         return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `nqg mayman` ngay!**')
@@ -47,7 +47,17 @@ module.exports = {
     const cmd = args.shift();
     const command =
       client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-    if (!command) return;  
+    if (!command) return;
+
+    if (!message.guild) return
+
+    let arr = ['cash', 'bal', 'money', 'ping', 'p']
+    let allowed = false
+
+    arr.forEach(i => {
+      if (i === cmd) allowed = true
+    })
+    if (message.channel.id === '1070274984750100522' && (!allowed && !ownerId.includes(message.author.id))) return
 
     // Lấy thông tin người dùng và chuyển đến lệnh
     let userData;

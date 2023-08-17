@@ -132,32 +132,40 @@ module.exports = {
 
       ////////////////////////////////////////////////////////// Role
       case '28':
-        if (balance < 25000) return message.channel.send(msgKoDuTien);
+        if (balance < 25000) return message.reply(msgKoDuTien);
         await client.truTien(author, 25000);
         let role1 = message.guild.roles.cache.find((role) => role.name === "1124062125229346920" || role.id === "1124062125229346920");
         await message.member.roles.add(role1)
-        await message.channel.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[0]}`)
+        let roleEmbed1 = new Discord.EmbedBuilder()
+          .setDescription(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[0]}`)
+        await message.reply({ embeds: [roleEmbed1] })
         break; 
       case '29':  
-        if (balance < 50000) return message.channel.send(msgKoDuTien);
+        if (balance < 50000) return message.reply(msgKoDuTien);
         await client.truTien(author, 50000);
         let role2 = message.guild.roles.cache.find((role) => role.name === "1125641678913548299" || role.id === "1125641678913548299");
         await message.member.roles.add(role2)
-        await message.channel.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[1]}`)
+        let roleEmbed2 = new Discord.EmbedBuilder()
+          .setDescription(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[1]}`)
+        await message.reply({ embeds: [roleEmbed2] })
         break;
       case '30':
-        if (balance < 100000) return message.channel.send(msgKoDuTien);
+        if (balance < 100000) return message.reply(msgKoDuTien);
         await client.truTien(author, 100000);
         let role3 = message.guild.roles.cache.find((role) => role.name === "1125641802574209055" || role.id === "1125641802574209055");
         await message.member.roles.add(role3)
-        await message.channel.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[2]}`)
+        let roleEmbed3 = new Discord.EmbedBuilder()
+        .setDescription(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[2]}`)
+      await message.reply({ embeds: [roleEmbed3] })
         break;
       case '31':
-        if (balance < 150000) return message.channel.send(msgKoDuTien);
+        if (balance < 150000) return message.reply(msgKoDuTien);
         await client.truTien(author, 150000);
         let role4 = message.guild.roles.cache.find((role) => role.name === "1125641989174595594" || role.id === "1125641989174595594");
         await message.member.roles.add(role4)
-        await message.channel.send(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[3]}`)
+        let roleEmbed4 = new Discord.EmbedBuilder()
+          .setDescription(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[3]}`)
+        await message.reply({ embeds: [roleEmbed4] })
         break;
 
       /////////////////////////////////////////////////// Rương

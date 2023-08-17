@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { mine } = require('../../Utils/mineUtils');
 const { OWNER_ID } = require('../../config.json');
 const { Captcha } = require('../../Utils/captchaUtils')
+const trackingMineModel = require('../../database/models/trackingMineModel')
 
 const BUFF_CUPS = {
   3: { emoji: '<:wooden_pickaxe:1134750444854444042>', count: 25 },
@@ -22,7 +23,7 @@ const RESOURCE_EMOJIS = {
 module.exports = {
   name: 'mine',
   description: 'Đập tí đá',
-  cooldown: 60,
+  cooldown: 30,
   /**
    * 
    * @param {Discord.Client} client 
@@ -34,6 +35,7 @@ module.exports = {
       await Captcha(client, message)
       const minedResources = await mine(client, message);
 
+      
       if (minedResources.length === 0) {
         message.reply('Bạn chưa sử dụng cúp để đào')
         return
@@ -63,6 +65,24 @@ module.exports = {
           await message.reply(`**${message.author.username},**\n**|** Bạn đang dùng cúp: ${emoji} \`(${buff - 1}/${count})\`\n**|** Bạn đào được:${resourceNames}`);
         } 
       }
+
+      let dataMine = await trackingMineModel.findOne({
+        userId: message.author.id
+      })
+  
+      if (!dataMine) {
+        dataMine = new trackingMineModel({
+            userId: message.author.id,
+        })
+      }
+      await dataMine.save()
+      
+      if (dataMine.enable == true) {
+        setTimeout(() => {
+          message.reply(`${dataMine.text.length === 0 ? `\`nqg mine\` đã sẵn sàng!` : dataMine.text}`)
+        }, 30000);
+      }
+
     } catch (err) {
       console.log('Lỗi lệnh mine: ', err);
     }
