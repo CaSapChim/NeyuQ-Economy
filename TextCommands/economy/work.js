@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { Captcha } = require('../../Utils/captchaUtils')
+const verifiedModel = require('../../database/models/verifiedModel')
 
 module.exports = {
   name: 'work',
@@ -7,6 +8,9 @@ module.exports = {
   cooldown: 5,
 
   run: async (client, message, args) => {
+    let verifyData = await verifiedModel.findOne({ userId: message.author.id })
+    if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
+    
     await Captcha(client, message)
 
     const jobs = [

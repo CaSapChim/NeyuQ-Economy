@@ -8,6 +8,7 @@ const khoangSanModel = require('../../database/models/khoangSanModel')
 const caModel = require('../../database/models/caModel')
 const buffCauCaModel = require('../../database/models/buffCauCaModel')
 const toolCauCaModel = require('../../database/models/toolCauCaModel')
+const warnModel = require('../../database/models/warnModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {
@@ -142,15 +143,42 @@ module.exports = (client) => {
   }
 
   //////////////////////////////////////////////////////////////////////////////// Ban
-  client.ban = async userId => {
+  client.ban = async (userId, username) => {
     try {
       let data = new banModel({
+        username: username,
         userId: userId
       })
 
       await data.save()
     } catch(err) {
       console.log('Lỗi ban:', err)
+    }
+  }
+
+  client.warn = async (userId) => new Promise(async ful => {
+    const data = await warnModel.findOne({ userId: userId});
+    if (!data) return ful(0);
+    ful(data.soLuong);
+  })
+
+  client.addWarn = async (userId, username, soLuong) => {
+    try {
+      let data = await warnModel.findOne({
+        userId: userId
+      })
+      if (!data) {
+        data = new warnModel({
+          userId: userId,
+          username: username,
+          soLuong: soLuong  
+        })
+      } else {
+        data.soLuong = data.soLuong + soLuong
+      }
+      await data.save()
+    } catch(err) {
+      console.log('Lỗi add warn:', err)
     }
   }
 

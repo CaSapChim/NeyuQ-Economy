@@ -51,13 +51,14 @@ module.exports = {
 
     if (!message.guild) return
 
-    let arr = ['cash', 'bal', 'money', 'ping', 'p']
-    let allowed = false
+    let allowedCommand = ['cash', 'bal', 'money', 'ping', 'p', 'hun', 'give', 'marry', 'totinh', 'rela', 'banbe', 'ketban', 'mayman', 'fa', 'gift']
+    let allowedChannelId = ['1105078320644755486', '1141248052200472586', '1117459580927086622', '1117459513923096597']
 
-    arr.forEach(i => {
-      if (i === cmd) allowed = true
-    })
-    if (message.channel.id === '1070274984750100522' && (!allowed && !ownerId.includes(message.author.id))) return
+    if (!allowedCommand.includes(cmd) && !ownerId.includes(message.author.id)) {
+      if (!allowedChannelId.includes(message.channel.id)) {
+        return
+      }  
+    } 
 
     // Lấy thông tin người dùng và chuyển đến lệnh
     let userData;

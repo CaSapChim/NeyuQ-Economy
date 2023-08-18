@@ -32,9 +32,27 @@ module.exports = {
    */
   run: async (client, message) => {
     try {
+      let verifyData = await verifiedModel.findOne({ userId: message.author.id })
+      if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
       await Captcha(client, message)
       const minedResources = await mine(client, message);
 
+      let dataMine = await trackingMineModel.findOne({
+        userId: message.author.id
+      })
+  
+      if (!dataMine) {
+        dataMine = new trackingMineModel({
+            userId: message.author.id,
+        })
+      }
+      await dataMine.save()
+      
+      if (dataMine.enable == true) {
+        setTimeout(() => {
+          message.reply(`${dataMine.text.length === 0 ? `\`nqg mine\` đã sẵn sàng!` : dataMine.text}`)
+        }, 30000);
+      }
       
       if (minedResources.length === 0) {
         message.reply('Bạn chưa sử dụng cúp để đào')
@@ -64,23 +82,6 @@ module.exports = {
 
           await message.reply(`**${message.author.username},**\n**|** Bạn đang dùng cúp: ${emoji} \`(${buff - 1}/${count})\`\n**|** Bạn đào được:${resourceNames}`);
         } 
-      }
-
-      let dataMine = await trackingMineModel.findOne({
-        userId: message.author.id
-      })
-  
-      if (!dataMine) {
-        dataMine = new trackingMineModel({
-            userId: message.author.id,
-        })
-      }
-      await dataMine.save()
-      
-      if (dataMine.enable == true) {
-        setTimeout(() => {
-          message.reply(`${dataMine.text.length === 0 ? `\`nqg mine\` đã sẵn sàng!` : dataMine.text}`)
-        }, 30000);
       }
 
     } catch (err) {

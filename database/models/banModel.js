@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const banSchema = new mongoose.Schema({
+    username: String,
     userId: String
 })
 

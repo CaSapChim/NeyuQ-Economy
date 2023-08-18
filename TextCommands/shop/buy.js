@@ -29,6 +29,7 @@ const roleCacLoai = [
   "<@&1125641678913548299>",
   "<@&1125641802574209055>",
   "<@&1125641989174595594>",
+  '<@&1141981735442186240>'
 ];
 
 const ruongCacLoai = [
@@ -167,15 +168,25 @@ module.exports = {
           .setDescription(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[3]}`)
         await message.reply({ embeds: [roleEmbed4] })
         break;
+      case '32':
+        if (balance < 300000) return message.reply(msgKoDuTien);
+        await client.truTien(author, 300000);
+        let role5 = message.guild.roles.cache.find((role) => role.name === "1141981735442186240" || role.id === "1141981735442186240");
+        await message.member.roles.add(role5)
+        let roleEmbed5 = new Discord.EmbedBuilder()
+          .setDescription(`**<:very:1137010214835597424> | ${message.author.username}**, Bạn đã mua thành công role ${roleCacLoai[4]}`)
+        await message.reply({ embeds: [roleEmbed5] })
+        break;
+
 
       /////////////////////////////////////////////////// Rương
-      case '32':
+      case '35':
         getItemInfo(buyId, 15000, ruongCacLoai[0], 3);
         break;
-      case '33':
+      case '36':
         getItemInfo(buyId, 30000, ruongCacLoai[1], 3);
         break;
-      case '34':
+      case '37':
         getItemInfo(buyId, 50000, ruongCacLoai[2], 3);
         break;
 

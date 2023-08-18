@@ -20,6 +20,8 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
+    let verifyData = await verifiedModel.findOne({ userId: message.author.id })
+    if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
     await Captcha(client, message)
 
     let data = await buffCauCaModel.findOne({
@@ -107,8 +109,8 @@ module.exports = {
         buffMsg += `Bạn đang bắt cá bằng **lưới** <:Flimsy_Net_NH_Icon:1140523599170654298> \`(${soLuongBuff - 1}/50)\``;
       } else if (soLuongBuff >= 1 && type == 4) {
         rarity = {
-          "Very Common": 25, 
-          "Common": 25,
+          "Very Common": 15, 
+          "Common": 23,
           "Uncommon": 30,
           "Rare": 20,
           "Very Rare": 10,
@@ -202,7 +204,7 @@ module.exports = {
 
       if (result.rarity === "Very Common") caScore.score += 20
       if (result.rarity === "Common") caScore.score += 30
-      if (result.rarity === "Unommon") caScore.score += 40
+      if (result.rarity === "Uncommon") caScore.score += 40
       if (result.rarity === "Rare") caScore.score += 50
       if (result.rarity === "Very Rare") caScore.score += 70
       if (result.rarity === "Legendary") caScore.score += 200
