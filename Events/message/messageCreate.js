@@ -31,8 +31,14 @@ module.exports = {
       if (ban.userId == message.author.id) return;
     }
 
-    let prefix = '!'
-
+    let prefix
+    let data = await prefixModel.findOne({ guildId: message.guildId, botId: client.user.id })
+    
+    if (data) {
+      prefix = data.prefix
+    } else {
+      prefix = '!'
+    }
 
     if (message.channelId == '1070274984750100522') {
       const recieveGift = await dropGift(message.author.id)
@@ -51,14 +57,14 @@ module.exports = {
 
     if (!message.guild) return
 
-    let allowedCommand = ['cash', 'bal', 'money', 'ping', 'p', 'hun', 'give', 'marry', 'totinh', 'rela', 'banbe', 'ketban', 'mayman', 'fa', 'gift']
-    let allowedChannelId = ['1105078320644755486', '1141248052200472586', '1117459580927086622', '1117459513923096597']
+    // let allowedCommand = ['cash', 'bal', 'money', 'ping', 'p', 'hun', 'give', 'marry', 'totinh', 'rela', 'banbe', 'ketban', 'mayman', 'fa', 'gift']
+    // let allowedChannelId = ['1105078320644755486', '1141248052200472586', '1117459580927086622', '1117459513923096597']
 
-    if (!allowedCommand.includes(cmd) && !ownerId.includes(message.author.id)) {
-      if (!allowedChannelId.includes(message.channel.id)) {
-        return
-      }  
-    } 
+    // if (!allowedCommand.includes(cmd) && !ownerId.includes(message.author.id)) {
+    //   if (!allowedChannelId.includes(message.channel.id)) {
+    //     return
+    //   }  
+    // } 
 
     // Lấy thông tin người dùng và chuyển đến lệnh
     let userData;

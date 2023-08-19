@@ -14,8 +14,9 @@ module.exports = {
     run: async(client, message, args) => {
         if (!ownerId.includes(message.author.id)) return message.reply('**Bạn không có quyền để làm điều này!**')
 
-        const data = prefixModel.findOne({
-            guildId: message.guild.id
+        let data = await prefixModel.findOne({
+            guildId: message.guildId,
+            botId: client.user.id
         })
 
         const prefixName = args[0];
@@ -23,25 +24,18 @@ module.exports = {
         if(prefixName.length > 5) return message.channel.send('Prefix tối đa 5 kí tự!')
 
         if (data) {
-            await prefixModel.findOneAndRemove({
-                guildId: message.guild.id
-            })
+            data.prefix = prefixName
 
-            let newPrefix = new prefixModel({
-                prefix: prefixName,
-                guildId: message.guild.id
-            })
-            newPrefix.save()
             message.channel.send(`Prefix mới bây giờ là **\`${prefixName}\`**`)
             
-        } else if (!data) {
-            message.channel.send(`Prefix mới bây giờ là **\`${prefixName}\`**`);
-      
-            let newPrefix = new prefixModel({
+        } else {
+            data = new prefixModel({
               prefix: prefixName,
-              guildId: message.guild.id,
+              botId: client.user.id,
+              guildId: message.guildId,
             });
-            newPrefix.save();
-          }
+            message.channel.send(`Prefix mới bây giờ là **\`${prefixName}\`**`);
+        }
+        data.save()
     }
 }

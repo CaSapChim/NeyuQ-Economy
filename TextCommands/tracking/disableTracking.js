@@ -25,7 +25,7 @@ module.exports = {
                 userId: message.author.id
             })
 
-            if (!dataMine) {
+            if (!dataMine || dataMine.enable == false) {
               return message.reply('Chưa bật mà đòi tắt, xàm lul +1')
             }    
 
@@ -43,7 +43,7 @@ module.exports = {
                 userId: message.author.id
             })
 
-            if (!dataCa) {
+            if (!dataCa || dataCa.enable == false) {
               return message.reply('Chưa bật mà đòi tắt, xàm lul +1')
             }    
 

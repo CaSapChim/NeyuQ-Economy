@@ -3,6 +3,7 @@ const { mine } = require('../../Utils/mineUtils');
 const { OWNER_ID } = require('../../config.json');
 const { Captcha } = require('../../Utils/captchaUtils')
 const trackingMineModel = require('../../database/models/trackingMineModel')
+const verifiedModel = require('../../database/models/verifiedModel')
 
 const BUFF_CUPS = {
   3: { emoji: '<:wooden_pickaxe:1134750444854444042>', count: 25 },

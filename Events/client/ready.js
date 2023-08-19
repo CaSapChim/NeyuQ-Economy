@@ -7,7 +7,6 @@ const {
 } = require("discord.js");
 const { initializeMongoose } = require("../../database/mongoose");
 const timeModelTest = require("../../database/models/test/timeModelTest");
-
 const fishData = require("../../data/fish.json");
 
 module.exports = {
@@ -30,7 +29,6 @@ module.exports = {
     setInterval(() => {
       sendTime();
     }, 600000);
-
     async function sendTime() {
       const channel = client.channels.cache.get("1129314158555443231");
       if (channel) {

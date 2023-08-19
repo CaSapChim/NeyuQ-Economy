@@ -9,6 +9,7 @@ const caModel = require('../../database/models/caModel')
 const buffCauCaModel = require('../../database/models/buffCauCaModel')
 const toolCauCaModel = require('../../database/models/toolCauCaModel')
 const warnModel = require('../../database/models/warnModel')
+const xoSoUserModel = require('../../database/models/xoSoUserModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {

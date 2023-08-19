@@ -102,7 +102,7 @@ const Captcha = async (client, message) => {
                     await client.addWarn(message.author.id, message.author.username, 1)
                     let data = await client.warn(message.author.id)
                     await verifiedModel.deleteOne({ userId: message.author.id })
-                    await dmChannel.send(`**<@${message.author.id}>, đã trôi qua 5 phút, bạn đã bị nhận \`${data}\` lần cảnh cáo\nBạn còn ${3 - data} lần nữa sẽ bị BAN**`)
+                    await dmChannel.send(`**<@${message.author.id}>, đã trôi qua 5 phút, bạn đã bị nhận \`${data}\` lần cảnh cáo\nBạn còn \`${3 - data}\` lần nữa sẽ bị BAN**`)
                     if ( data >= 3 ) {
                         await client.ban(message.author.id, message.author.username)   
                         await dmChannel.send(`**<@${message.author.id}>, đã 3 lần nhận cảnh cáo, bạn đã bị BAN vì sử dụng phần mềm thứ ba! Hãy liên hệ Cá hoặc Hàu để được xem xét gỡ ban!**`);

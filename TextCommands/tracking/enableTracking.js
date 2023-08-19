@@ -34,12 +34,12 @@ module.exports = {
             await dataMine.save()
 
             if (content) {
-                await trackingMineModel.findOneAndUpdate({
+                await dataMine.updateOne({
                     userId: message.author.id,
                     text: content
                 })
             } else {
-                await trackingMineModel.findOneAndUpdate({
+                await dataMine.updateOne({
                     userId: message.author.id,
                     text: ''
                 })
@@ -69,12 +69,12 @@ module.exports = {
             await dataCa.save()
 
             if (content) {
-                await trackingCaModel.findOneAndUpdate({
+                await dataCa.updateOne({
                     userId: message.author.id,
                     text: content
                 })
             } else {
-                await trackingCaModel.findOneAndUpdate({
+                await dataCa.updateOne({
                     userId: message.author.id,
                     text: ''
                 })

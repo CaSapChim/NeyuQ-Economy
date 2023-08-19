@@ -54,6 +54,7 @@ module.exports = {
 
         const dongYEmbed = new Discord.EmbedBuilder()
             .setDescription(`${user2} đã đồng ý chia tay`)
+            .setDescription('- **Nếu có duyên mong chúng ta có thể quay lại với nhau nhé**')
             .setColor('Green')
             .setThumbnail('https://i.pinimg.com/originals/fc/35/26/fc3526ea3315b365d1b5838b937ebb6d.gif')
             .setTimestamp()
@@ -61,6 +62,8 @@ module.exports = {
         const tuChoiEmbed = new Discord.EmbedBuilder()
             .setDescription(`${user2} đã từ chối lời chia tay`)
             .setColor('Red')
+            .setDescription(`- **Chúng ta bắt đầu như thế nào?**
+            - **Để rồi kết thúc như thế này**`)
             .setTimestamp()
 
         const sentMessage = await message.channel.send({ embeds: [embed], components: [row] });

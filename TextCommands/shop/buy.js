@@ -22,7 +22,7 @@ const cupCacLoai = [
 
 const nhanCacLoai = ['Nhẫn bạc', 'Nhẫn vàng', 'Nhẫn hồng'];
 
-const hoaCacLoai = ["Bông hoa", "Bó hoa", "Cục kẹo", "Socola", "Gấu bông"];
+const hoaCacLoai = ["Bông hoa", "Bó bông", "Cục kẹo", "Socola", "Gấu bông"];
 
 const roleCacLoai = [
   "<@&1124062125229346920>",

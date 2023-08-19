@@ -13,6 +13,7 @@ module.exports = {
         const toGiveUser = message.mentions.users.first()
         const coinsToGive = parseInt(args[1])
         if (!coinsToGive) return message.reply('Cần nhập số tiền muốn chuyển')
+        if (coinsToGive < 0) return message.reply('Không được nhập số âm')
 
         let coins = await client.xemTien(message.author.id)
         if (coins < coinsToGive) return message.reply(`**Nghèo còn bày đặt cho tiền người khác.\nXem lại ví tiền mình đi!**`)

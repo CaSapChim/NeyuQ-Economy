@@ -6,6 +6,7 @@ const buffCauCaModel = require("../../database/models/buffCauCaModel");
 const { Captcha } = require('../../Utils/captchaUtils')
 const caScoreModel = require("../../database/models/caScoreModel")
 const trackingCaModel = require('../../database/models/trackingCaModel')
+const verifiedModel = require('../../database/models/verifiedModel')
 
 module.exports = {
   name: "cauca",
@@ -110,11 +111,11 @@ module.exports = {
       } else if (soLuongBuff >= 1 && type == 4) {
         rarity = {
           "Very Common": 15, 
-          "Common": 23,
+          "Common": 24,
           "Uncommon": 30,
           "Rare": 20,
           "Very Rare": 10,
-          "Legendary": 2
+          "Legendary": 1
         };
         client.truBuffCauCa(message.author.id, 1, 4);
         buffMsg += `Bạn đang bắt cá bằng **lưới vip** <:Golden_Net_NH_Inv_Icon:1140523506656874496> \`(${
