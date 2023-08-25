@@ -25,6 +25,8 @@ module.exports = {
     console.log(
       `✅ Đăng Nhập Thành Công Vào ${client.user.tag}`.bold.brightBlue
     );
+
+///////////////////////////////////////////////////////////////// time câu cá
     sendTime();
     setInterval(() => {
       sendTime();
@@ -42,7 +44,7 @@ module.exports = {
           });
         }
         data.hour = data.hour + 1
-        if (data.hour === 23) {
+        if (data.hour === 24) {
           data.day++;
           data.hour = 0;
         }

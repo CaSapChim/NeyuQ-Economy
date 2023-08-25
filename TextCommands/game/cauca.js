@@ -110,10 +110,10 @@ module.exports = {
         buffMsg += `Bạn đang bắt cá bằng **lưới** <:Flimsy_Net_NH_Icon:1140523599170654298> \`(${soLuongBuff - 1}/50)\``;
       } else if (soLuongBuff >= 1 && type == 4) {
         rarity = {
-          "Very Common": 15, 
+          "Very Common": 20, 
           "Common": 24,
           "Uncommon": 30,
-          "Rare": 20,
+          "Rare": 25,
           "Very Rare": 10,
           "Legendary": 1
         };

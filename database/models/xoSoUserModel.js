@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const xoSoUserSchema = new mongoose.Schema({
     userId: String,
-    soLuong: [Number]
+    soLuong: [String]
 })
 
 const xoSoUserModel = mongoose.model('xosouser', xoSoUserSchema)
