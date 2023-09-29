@@ -55,7 +55,7 @@ module.exports = {
                 * <:daymarry:1137003685659033631> Điểm thân mật hiện tại của bạn được cộng thêm ${amount * level} điểm`
                 )
                 .setColor('Green')
-            return message.channel.send({ embed: [giftembed] })
+            return message.channel.send({ embeds: [giftembed] })
         };
 
         switch (type) {

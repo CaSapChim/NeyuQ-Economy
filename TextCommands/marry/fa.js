@@ -22,7 +22,7 @@ module.exports = {
 
         if (user2.id === message.author.id) return ;
 
-        const existingMarriage = await marryModel.findOne({ $or: [{ userId1: user1.id }, { userId2: user1.id }] });
+        const existingMarriage = await marryModel.findOne({ $or: [{ userId1: user1.id }, { userId2: user1.id }, { userId1: user2.id }, { userId2: user2.id }] });
         if (!existingMarriage) 
           return message.channel.send('Bạn Đã Có Người Yêu Đâu Mà ChiaTay LÊU LÊU <a:NQG_leuleu:1136579769429925939><a:NQG_leuleu:1136579769429925939>');
             
@@ -62,15 +62,15 @@ module.exports = {
         const tuChoiEmbed = new Discord.EmbedBuilder()
             .setDescription(`${user2} đã từ chối lời chia tay`)
             .setColor('Red')
-            .setDescription(`- **Chúng ta bắt đầu như thế nào?**
-            - **Để rồi kết thúc như thế này**`)
+            .setDescription(`**Chúng ta bắt đầu như thế nào?\n**
+            **Để rồi kết thúc như thế này**`)
             .setTimestamp()
 
         const sentMessage = await message.channel.send({ embeds: [embed], components: [row] });
 ////////////////////////////////////////////
 collector.on('collect', async (button) => {
     try {
-        if (button.user.id !== user2.id ) return interaction.reply({ content: "Này, nút này không phải dành cho bạn!", ephemeral: true })
+        if (button.user.id !== user2.id ) return button.reply({ content: "Này, nút này không phải dành cho bạn!", ephemeral: true })
         if (button.customId === 'accept') {
             await marryModel.deleteOne({ userId1: user1.id}) 
             await marryModel.deleteOne({ userId2: user2.id})

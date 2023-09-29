@@ -118,6 +118,6 @@ function getMedalEmoji(index) {
         case 2:
             return '<:NQGTop3:1138175169324658849>';
         default:
-            return `${index + 1}`;
+            return `${index + 1}.`;
     }
 }

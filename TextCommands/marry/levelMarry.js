@@ -19,27 +19,41 @@ module.exports = {
         if (!existMarry) return message.channel.send('Có NY Đâu Mà Coi Level LÊU LÊU <a:NQG_leuleu:1136579769429925939><a:NQG_leuleu:1136579769429925939> ')
         const level = await client.marryLevel(message.author.id)
 
-        const currentDay = new Date(Date.now()).getDate()
+        const currentDay = new Date()
+        const timeDifference = currentDay - existMarry.marriedAt
+        const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
 
         const nhanBac = await client.item(message.author.id, 'Nhẫn bạc')
         const nhanVang = await client.item(message.author.id, 'Nhẫn vàng')
         const nhanHong = await client.item(message.author.id, 'Nhẫn hồng')
 
-        let arr = []
-
-        const TYCB = await client.item(message.author.id, "Tình Yêu Cháy Bỏng")
-        const HHTK = await client.item(message.author.id, "Huy Hiệu Tri Kỉ") 
-        const HHTT = await client.item(message.author.id, "Huy Hiệu Thân Thiết")
-        const Valentine = await client.item(message.author.id, "Tri Kỉ Valentine")
-        const Vday = await client.item(message.author.id, "Huy Hiệu VDay")
-        const HHCD = await client.item(message.author.id, "Huy Hiệu Cặp Đôi")
-        
-        if (TYCB > 0) arr.push('<:tinhyeuchaybong:1136568485166718986>')
-        if (HHTK > 0) arr.push('<:trik:1122444231223558174>')
-        if (HHTT > 0) arr.push('<:banbe:1136575697909989426>')
-        if (Valentine > 0) arr.push('<:triki:1136577819409907793>')
-        if (Vday > 0) arr.push('<:valnetine:1136578277570510929>')
-        if (HHCD > 0) arr.push('<:trikivalentine:1136577479679688815>')
+        const [
+            TYCB,
+            HHTK,
+            HHTT,
+            Valentine,
+            Vday,
+            HHCD,
+            HHTY
+          ] = await Promise.all([
+            client.item(message.author.id, "Tình Yêu Cháy Bỏng"),
+            client.item(message.author.id, "Huy Hiệu Tri Kỉ"),
+            client.item(message.author.id, "Huy Hiệu Thân Thiết"),
+            client.item(message.author.id, "Tri Kỉ Valentine"),
+            client.item(message.author.id, "Huy Hiệu VDay"),
+            client.item(message.author.id, "Huy Hiệu Cặp Đôi"),
+            client.item(message.author.id, "Huy Hiệu Tình Yêu")
+          ]);
+          
+          const arr = [];
+          
+          if (TYCB > 0) arr.push('<:tinhyeuchaybong:1136568485166718986>');
+          if (HHTK > 0) arr.push('<:trik:1122444231223558174>');
+          if (HHTT > 0) arr.push('<:banbe:1136575697909989426>');
+          if (Valentine > 0) arr.push('<:triki:1136577819409907793>');
+          if (Vday > 0) arr.push('<:valnetine:1136578277570510929>');
+          if (HHCD > 0) arr.push('<:trikivalentine:1136577479679688815>');
+          if (HHTY > 0) arr.push('<:NQG_traitimne:1155502689057259621>');
 
         const huyHieu = arr
 
@@ -61,7 +75,7 @@ module.exports = {
                 • Huy hiệu đang có: ${huyHieu.join(' ')}
                 • Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}>
                 • Điểm thân mật hiện tại: ${level} 
-                • Bạn đã kết hôn được: ${currentDay - existMarry.marriedAt.getDate()} ngày
+                • Bạn đã kết hôn được: ${daysDifference} ngày
                 • Ngày kỉ niệm: ${moment(existMarry.marriedAt).format('DD/MM/YYYY')}`)
                 .setTimestamp()
                 .setImage('attachment://married.png')
@@ -88,7 +102,7 @@ module.exports = {
             <:mauxanh:1136716708363640862> Huy hiệu đang có: ${huyHieu.join(' ')}
             <:mauxanh:1136716708363640862> Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}>
             <:mauxanh:1136716708363640862> Điểm thân mật hiện tại: **${level}** 
-            <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
+            <:mauxanh:1136716708363640862> Bạn đã kết hôn được: **${daysDifference} ngày**
             <:mauxanh:1136716708363640862> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
             <:mauxanh:1136716708363640862> Độc Quyền: Nhẫn Bạc`)
             .setTimestamp()
@@ -132,7 +146,7 @@ module.exports = {
                <:maucam:1136722890042134558> Huy hiệu đang có: ${huyHieu.join(' ')}
                <:maucam:1136722890042134558> Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}>
                <:maucam:1136722890042134558> Điểm thân mật hiện tại: **${level}**
-               <:maucam:1136722890042134558> Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
+               <:maucam:1136722890042134558> Bạn đã kết hôn được: **${daysDifference} ngày**
                <:maucam:1136722890042134558> Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
                <:maucam:1136722890042134558> Độc Quyền: Nhẫn Vàng
                
@@ -174,7 +188,7 @@ module.exports = {
                 > <:huyhieuj:1137002449736040528> | Huy hiệu đang có: ${huyHieu.join(' ')}
                 > <:kethon:1137002986472747160> | Bạn đã kêt hôn với: <@${existMarry.userId2 === message.author.id ? existMarry.userId1 : existMarry.userId2}> 
                 > <:thanmat:1137004383008194631> | Điểm thân mật hiện tại: **${level}** 
-                > <:daymarry:1137003685659033631> | Bạn đã kết hôn được: **${currentDay - existMarry.marriedAt.getDate()} ngày**
+                > <:daymarry:1137003685659033631> | Bạn đã kết hôn được: **${daysDifference} ngày**
                 > <:day:1137004327848914954> | Ngày kỉ niệm: **${moment(existMarry.marriedAt).format('DD/MM/YYYY')}**
                 > <:laplanh:1137007267439460474> | Độc quyền: Nhẫn Hồng 
                 

@@ -37,7 +37,7 @@ module.exports = {
     if (data) {
       prefix = data.prefix
     } else {
-      prefix = '!'
+      prefix = '.'
     }
 
     if (message.channelId == '1070274984750100522') {

@@ -10,6 +10,11 @@ const buffCauCaModel = require('../../database/models/buffCauCaModel')
 const toolCauCaModel = require('../../database/models/toolCauCaModel')
 const warnModel = require('../../database/models/warnModel')
 const xoSoUserModel = require('../../database/models/xoSoUserModel')
+const invTTModel = require('../../database/models/eventTrungThu/invTTModel')
+const plantModel = require('../../database/models/eventTrungThu/plantModel')
+const landModel = require('../../database/models/eventTrungThu/landModel')
+const feedAnimalModel = require('../../database/models/eventTrungThu/feedAnimalModel')
+const animalModel = require('../../database/models/eventTrungThu/animalModel')
 
 module.exports = (client) => {
   client.item = (userId, name) => new Promise(async ful => {
@@ -356,6 +361,247 @@ module.exports = (client) => {
   
       } catch(err) {
         console.log("Lỗi trừ tool câu cá: ",err)
+      }
+    }
+
+
+
+
+
+
+
+
+    client.nongSan = (userId, name) => new Promise(async ful => {
+      const data = await invTTModel.findOne({ userId: userId, name: name });
+      if (!data) return ful(0);
+      ful(data.soLuong);
+    })
+
+    client.addNongSan = async (userId, name, soLuong) => {
+      try {
+        let data = await invTTModel.findOne({ userId: userId, name: name});
+        if (data) {
+          data.soLuong += soLuong; 
+        } else {
+          data = new invTTModel({
+            userId: userId,
+            name: name,
+            soLuong: soLuong
+          })
+        }
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi add nông sản: ', err);
+      }
+    }
+
+    client.truNongSan = async (userId, name, soLuong) => {
+      try {
+        let data = await invTTModel.findOne({ userId: userId, name: name});
+        if (data) {
+          data.soLuong -= soLuong;
+        } else return;
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi trừ nông sản: ', err);
+      }
+    }
+    
+    client.trongCay = async (userId, name, soLuong) => {
+      try { 
+        let data = await plantModel.findOne({ userId: userId, plantName: name})
+        if (!data) {
+          data = new plantModel({
+            userId: userId,
+            plantName: name,
+            soLuongPlanted: soLuong,
+            planted: true,
+            plantedAt: new Date()
+          })
+        } else if(!data.plantedAt) {
+          await plantModel.findOneAndUpdate(
+            {userId: userId, plantName: name},
+            {plantedAt: new Date(), soLuongPlanted: soLuong}
+          )
+        } else {
+          data.soLuongPlanted += soLuong;
+        }
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi trồng cây: ', err);
+      }
+    }
+
+    client.thuHoach = async (userId, name) => {
+      try {
+        let data = await plantModel.findOne({ userId: userId, plantName: name});
+        if (!data || !data.plantedAt) { 
+            data = new plantModel({
+            userId: userId,
+            planted: false,
+            plantedAt: new Date(),
+            plantName: name
+          });
+        } else {
+          await plantModel.findOneAndUpdate(
+            {userId: userId, plantName: name},
+            {planted : false, soLuongPlanted: 0, $unset: {plantedAt: 1}}
+          )
+          await data.save();
+        }
+      } catch(err) {
+        console.log('Lỗi thu hoạch: ', err);
+      }
+    }
+
+    client.xemDat = (userId) => new Promise(async ful => {
+      let data = await landModel.findOne({ userId: userId });
+      if (!data) {
+        data = new landModel({ userId: userId });
+        ful(data.soLuong);
+      } else { 
+       ful(data.soLuong);
+      }
+    })
+
+    client.addDat = async (userId, soLuong) => {
+      try {
+        let data = await landModel.findOne({ userId: userId });
+        if (!data) {
+          data = new landModel({ userId: userId });
+          data.soLuong += soLuong;
+        } else {
+          data.soLuong += soLuong;
+        }
+        await data.save();
+      } catch (err) {
+        console.log('Lỗi add đất');
+      }
+    }
+
+    client.truDat = async (userId, soLuong) => {
+      try {
+        let data = await landModel.findOne({ userId: userId });
+        if (data) {
+          data.soLuong -= soLuong;
+        } else {
+          data = new landModel({
+            userId: userId
+          })
+          data.soLuong -= soLuong;
+        }
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi trừ đất: ', err);
+      }
+    }
+
+    // Xem số lượng cây đã được trồng
+    client.plant = (userId, name) => new Promise(async ful => {
+      let data = await plantModel.findOne({ userId: userId, plantName: name });
+      if (!data) return ful(0);
+      ful(data.soLuongPlanted);
+    })
+
+    client.xemAnimal = (userId, name) => new Promise(async ful => {
+      let data = await animalModel.findOne({ userId: userId, name: name });
+      if (!data) {
+        return ful(0);
+      }
+      ful(data.soLuong);
+    })
+
+    client.choAn = async (userId, name, soLuong) => {
+      try { 
+        let data = await feedAnimalModel.findOne({ userId: userId, name: name})
+        if (!data) {
+          data = new feedAnimalModel({
+            userId: userId,
+            name: name,
+            soLuong: soLuong,
+            fed: true,
+            fedAt: new Date()
+          })
+        } else if (!data.fedAt) {
+          await feedAnimalModel.findOneAndUpdate(
+            {userId: userId, name: name},
+            {fedAt: new Date(), soLuong: soLuong}
+          )
+        } else {
+          data.soLuong += soLuong;
+        }
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi cho ăn: ', err);
+      }
+    }
+
+    client.addAnimal = async(userId, name, soLuong) => {
+      try {
+        let data = await animalModel.findOne({ userId: userId, name: name});
+        if(!data) {
+          data = new animalModel({
+            userId: userId,
+            name: name,
+            soLuong: soLuong
+          })
+        } else data.soLuong += soLuong;
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi add động vật: ', err);
+      }
+    }
+
+    client.vatSua = async(userId, name) => {
+      try {
+        let data = await feedAnimalModel.findOne({ userId: userId, name: name});
+        if (!data || !data.fedAt) {
+          data = new feedAnimalModel({
+            userId: userId,
+            name: name,
+            fed: false,
+            fedAt: new Date()
+          })
+        } else {
+          await feedAnimalModel.findOneAndUpdate(
+            {userId: userId, name: name},
+            {fed: false, soLuong: 0, $unset: {fedAt: 1}}
+          )
+        }
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi vắt sữa: ', err);
+      }
+    }
+
+    client.layTrung = async(userId, name) => {
+      try {
+        let data = await feedAnimalModel.findOne({ userId: userId, name: name});
+        if (!data || !data.fedAt) {
+          data = new feedAnimalModel({
+            userId: userId,
+            name: name,
+            fed: false,
+            fedAt: new Date()
+          })
+        } else {
+          await feedAnimalModel.findOneAndUpdate(
+            {userId: userId, name: name},
+            {fed: false, soLuong: 0, $unset: {fedAt: 1}}
+          )
+        }
+        await data.save();
+      } catch(err) {
+        console.log('Lỗi lấy trứng: ', err);
+      }
+    }
+
+    client.checkTime = async(userId, name) => {
+      try {
+        let data = await plantModel.findOne({ userId: userId, plantName: name});
+        
+      } catch(err) {
+        console.log('Lỗi check time cây:', err);
       }
     }
 }

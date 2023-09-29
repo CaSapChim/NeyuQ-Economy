@@ -60,5 +60,10 @@ module.exports = {
             message.channel.send(`**Đã chuyển cho ${toGiveUser} ${amount} rương đặc biệt**`)
             await client.addItem(toGiveUser.id, "Rương đặc biệt", amount, 3)
         }
+
+        else if (type == 'hhty') {
+            message.channel.send(`**Đã chuyển cho ${toGiveUser} huy hiệu tình yêu** <:NQG_traitimne:1155502689057259621>`)
+            await client.addItem(toGiveUser.id, "Huy Hiệu Tình Yêu", 1, 5)
+        }
     }
 }

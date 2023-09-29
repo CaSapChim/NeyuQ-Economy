@@ -236,12 +236,12 @@ module.exports = {
             } else if (interaction.customId == "back-page1") {
               interaction.deferUpdate()
               trangHienTai = 0;
-              queueEmbed.edit({ content: `**Current Page - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+              queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
             else if (interaction.customId == "next-page1") {
               interaction.deferUpdate()
               trangHienTai = embeds.length - 1;
-              queueEmbed.edit({ content: `**Current Page - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+              queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
           }
       );
