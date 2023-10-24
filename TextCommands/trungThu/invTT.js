@@ -22,8 +22,9 @@ module.exports = {
         const botBanhDauXanh = await client.nongSan(message.author.id, "bột bánh đậu xanh");
         const botBanhThapCam = await client.nongSan(message.author.id, "bột bánh thập cẩm");
         const nhanDauXanh = await client.nongSan(message.author.id, "nhân đậu xanh");
+        const nhanThapCam = await client.nongSan(message.author.id, "nhân thập cẩm");
         const banhTTDauXanh = await client.nongSan(message.author.id, "bánh trung thu nhân đậu xanh");
-        const banhTTThapCam = await client.nongSan(message.author.id, "nhân trung thu nhân thập cẩm");
+        const banhTTThapCam = await client.nongSan(message.author.id, "bánh trung thu nhân thập cẩm");
         const longDen = await client.nongSan(message.author.id, "lồng đèn");
         const thoBong = await client.nongSan(message.author.id, "thỏ bông");
         const thoCungTrang = await client.nongSan(message.author.id, "thỏ cung trăng");
@@ -61,12 +62,13 @@ module.exports = {
             \`201\` <:Minecraft_Egg:1156555165189550101> Trứng: ${trung}
             \`202\` <:6289_flour:1155701022891704360> Bột mì: ${botMi}
             \`203\` <:botxanhremovebgpreview:1156914386917671032> Bột bánh đậu xanh: ${botBanhDauXanh}
-            \`204\` <:botBanhThapCAm:1157113151251292230> Bột bánh thập cẩm: ${botBanhThapCam}
+            \`204\` <:botBanhThapCAm:1157333983374364682> Bột bánh thập cẩm: ${botBanhThapCam}
             \`205\` <:botxanh2removebgpreview:1156915468267946004> Nhân đậu xanh: ${nhanDauXanh}
-            \`206\` <:banhdauxanh_1:1156609030165377035> Bánh Trung Thu nhân đậu xanh: ${banhTTDauXanh}
-            \`207\` <:banhtrungthu_1:1156609035794124870> Bánh Trung Thu nhân thập cẩm: ${banhTTThapCam}
-            \`208\` <:lapXuong:1157312775077494794> Lạp xưởng: ${lapXuong}
-            \`209\` <:butter:1157312769234845736> Bơ: ${bo}
+            \`206\` <:botBanhThapCAm:1157113151251292230> Nhân thập cẩm: ${nhanThapCam}
+            \`207\` <:banhdauxanh_1:1156609030165377035> Bánh Trung Thu nhân đậu xanh: ${banhTTDauXanh}
+            \`208\` <:banhtrungthu_1:1156609035794124870> Bánh Trung Thu nhân thập cẩm: ${banhTTThapCam}
+            \`209\` <:lapXuongTT:1157319283341283348> Lạp xưởng: ${lapXuong}
+            \`210\` <:butter:1157312769234845736> Bơ: ${bo}
             `)
             .setTimestamp()
             .setColor("Blue")
@@ -75,9 +77,9 @@ module.exports = {
         const giftEmbed = new Discord.EmbedBuilder()
             .setTitle(`Túi quà của ${message.author.username}`)
             .setDescription(`
-            \`210\` <:longDenNgoiSao:1156949930632560701> Lồng đèn: ${longDen}
-            \`211\` <:thoBongTT:1156949943001559120>  Thỏ bông: ${thoBong}
-            \`212\` <:thoCungTrang:1156964829064597504> Thỏ cung trăng: ${thoCungTrang}
+            \`220\` <:longDenNgoiSao:1156949930632560701> Lồng đèn: ${longDen}
+            \`221\` <:thoBongTT:1156949943001559120>  Thỏ bông: ${thoBong}
+            \`222\` <:thoCungTrang:1156964829064597504> Thỏ cung trăng: ${thoCungTrang}
             `)
 
         let embeds = [nongSanEmbed, hatGiongEmbed, nguyenLieuEmbed, giftEmbed];

@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
+const scoreTTModel = require('../../database/models/eventTrungThu/scoreTTModel');
 
 module.exports = {
-    name: "nguyenlieu",
-    aliases: ['nl'],
+    name: 'doinl',
     /**
      * 
      * @param {Discord.Client} client 
@@ -10,157 +10,88 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
-        let type = args[0];
-        if (!type) return message.reply('`nqg nguyenlieu dauxanh/thapcam`')
-        const lua = await client.nongSan(message.author.id, "lúa");
-        const dau = await client.nongSan(message.author.id, "đậu");
-        const bi = await client.nongSan(message.author.id, "bí");
-        const trung = await client.nongSan(message.author.id, "trứng");
-        const sua = await client.nongSan(message.author.id, "sữa");
-        const botMi = await client.nongSan(message.author.id, "bột mì");
-        const nhanDauXanh = await client.nongSan(message.author.id, "nhân đậu xanh");
-        const botBanhDauXanh = await client.nongSan(message.author.id, "bột bánh đậu xanh");
-        const nhanThapCam = await client.nongSan(message.author.id, "nhân thập cẩm");
-        const botBanhThapCam = await client.nongSan(message.author.id, "bột bánh thập cẩm");
+        let typeId = parseInt(args[0]);
+        let soLuong = parseInt(args[1]) || 1;
+        if (isNaN(typeId) && isNaN(soLuong)) return;
+        if (!typeId) return message.reply('`nqg doinl <id> <số lượng>`');
+        
+        const author = message.author.id;
+        let scoreData = await scoreTTModel.findOne({ userId: author });
+        if (!scoreData) scoreData = new scoreTTModel({ userId: author });
+        await scoreData.save();
 
-        if (type === 'dauxanh') {
-            const nguyenLieuEmbed = new  Discord.EmbedBuilder()
-            .setTitle('Bảng nguyên liệu làm bánh nhân đậu xanh')
-            .setColor('Green')
-            .setDescription(`
-                32 <:LC_Wheat:1155701062670504037> => 1 <:6289_flour:1155701022891704360>
-                16 <:6289_flour:1155701022891704360> + 32 <:Minecraft_Egg:1156555165189550101> + 32 <:eje_minecraft_milk:1156555171493597204> => 1 bột bánh <:botxanhremovebgpreview:1156914386917671032>
-                64 <:daunh_1:1156608655060381760> + 16 <:eje_minecraft_milk:1156555171493597204> => 1 nhân đậu xanh <:botxanh2removebgpreview:1156915468267946004>
-                2 <:botxanh2removebgpreview:1156915468267946004> + 2 <:botxanhremovebgpreview:1156914386917671032> => 1 <:banhdauxanh_1:1156609030165377035>
-            `)
-            .setThumbnail('https://media.discordapp.net/attachments/1138141730928070736/1156607690714386432/banhdauxanh_1.png?ex=6515965a&is=651444da&hm=b1d118a6622ae5828cbcf0af8389369e4aa40619d4e7ed5c4e9505c6f6487650&=&width=625&height=625')
-            .setTimestamp()
-            .setFooter({ text: 'Chọn các nút bên dưới để ghép nguyên liệu'})
-            let buttonRow1 = new Discord.ActionRowBuilder()
-                .addComponents(
-                new Discord.ButtonBuilder()
-                .setStyle(Discord.ButtonStyle.Secondary)
-                .setEmoji('<:6289_flour:1155701022891704360>')
-                .setCustomId('botMi'),
-                new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Secondary)
-                    .setCustomId('botBanhDauXanh')
-                    .setEmoji('<:botxanhremovebgpreview:1156914386917671032>'),
-                new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Secondary)
-                    .setCustomId('nhanDauXanh')
-                    .setEmoji('<:botxanh2removebgpreview:1156915468267946004>'),
-                new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Secondary)
-                    .setCustomId('banhTTDauXanh')
-                    .setEmoji('<:banhdauxanh_1:1156609030165377035>')
-                )  
-            const reply = await message.channel.send({embeds: [nguyenLieuEmbed], components: [buttonRow1]});
+        const lua = await client.nongSan(author, "lúa");
+        const dau = await client.nongSan(author, "đậu");
+        const bi = await client.nongSan(author, "bí");
+        const trung = await client.nongSan(author, "trứng");
+        const sua = await client.nongSan(author, "sữa");
+        const botMi = await client.nongSan(author, "bột mì");
+        const nhanDauXanh = await client.nongSan(author, "nhân đậu xanh");
+        const botBanhDauXanh = await client.nongSan(author, "bột bánh đậu xanh");
+        const nhanThapCam = await client.nongSan(author, "nhân thập cẩm");
+        const botBanhThapCam = await client.nongSan(author, "bột bánh thập cẩm");
+        const lapXuong = await client.nongSan(author, "lạp xưởng");
+        const bo = await client.nongSan(author, "bơ");
 
-            var collector = reply.createMessageComponentCollector({
-            filter: interaction => (interaction.isButton() || interaction.isSelectMenu()) && interaction.message.author.id == client.user.id,
-            })
-            collector.on('collect', interaction => {
-                if (interaction.user.id !== message.author.id) return interaction.reply({ content: "Bạn không thể dùng nút này!", ephemeral: true })
-                if (interaction.customId == 'botMi') {
-                    if (lua < 32) return interaction.reply({ content: "Bạn không đủ 32 lúa <:LC_Wheat:1155701062670504037>"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:6289_flour:1155701022891704360>", ephemeral: true});
-                    client.addNongSan(message.author.id, "bột mì", 1);
-                    client.truNongSan(message.author.id, "lúa", 32);
-                }
-                else if (interaction.customId == 'botBanhDauXanh') {
-                    if (botMi < 16 || sua < 32 || trung < 32) return interaction.reply({ content: "Bạn không đủ nguyên liệu để làm"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:botxanhremovebgpreview:1156914386917671032>"});
-                    client.addNongSan(message.author.id, "bột bánh đậu xanh", 1);
-                    client.truNongSan(message.author.id, "bột mì", 16);
-                    client.truNongSan(message.author.id, "sữa", 32);
-                    client.truNongSan(message.author.id, "trứng", 32);
-                }
-                else if (interaction.customId == 'nhanDauXanh') {
-                    if (dau < 32 || sua < 16) return interaction.reply({ content: "Bạn không đủ nguyên liệu để làm"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:botxanh2removebgpreview:1156915468267946004>"});
-                    client.addNongSan(message.author.id, "nhân đậu xanh", 1);
-                    client.truNongSan(message.author.id, "sữa", 16);
-                    client.truNongSan(message.author.id, "đậu", 32);
-                }
-                else if (interaction.customId == 'banhTTDauXanh') {
-                    if (botBanhDauXanh < 2 || nhanDauXanh < 2) return interaction.reply({ content: "Bạn không đủ nguyên liệu để làm"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:banhdauxanh_1:1156609030165377035>"});
-                    client.addNongSan(message.author.id, "bánh trung thu nhân đậu xanh", 1);
-                    client.truNongSan(message.author.id, "bột bánh đậu xanh", 2);
-                    client.truNongSan(message.author.id, "nhân đậu xanh", 2);
-                }
-            })
+        if (typeId == 202) {
+            if (lua < soLuong) return message.reply(`Bạn không đủ **${soLuong}** <:LC_Wheat:1155701062670504037> để làm.`);
+            await client.addNongSan(author, "bột mì", soLuong);
+            await client.truNongSan(author, "lúa", soLuong);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong}** <:6289_flour:1155701022891704360>.`);
+        } 
+        else if(typeId == 203) {
+            if (botMi < 16 || trung < 16 || sua < 16 || bo < 5) return message.reply(`Bạn không đủ <:eje_minecraft_milk:1156555171493597204>, <:Minecraft_Egg:1156555165189550101>, <:6289_flour:1155701022891704360> <:butter:1157312769234845736> để làm bột bánh đậu xanh.`);
+            await client.addNongSan(author, "bột bánh đậu xanh", soLuong);
+            await client.truNongSan(author, "trứng", soLuong * 16);
+            await client.truNongSan(author, "sữa", soLuong * 16);
+            await client.truNongSan(author, "bơ", soLuong * 5);
+            await client.truNongSan(author, "bột mì", soLuong * 16);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong} bột bánh đậu xanh** <:botxanhremovebgpreview:1156914386917671032>`);
         }
-
-        if (type === 'thapcam') {
-            const nguyenLieuEmbed = new  Discord.EmbedBuilder()
-            .setTitle('Bảng nguyên liệu làm bánh nhân thập cẩm')
-            .setColor('Green')
-            .setDescription(`
-                32 <:LC_Wheat:1155701062670504037> => 1 <:6289_flour:1155701022891704360>
-                16 <:6289_flour:1155701022891704360> + 32 <:Minecraft_Egg:1156555165189550101> + 32 <:eje_minecraft_milk:1156555171493597204> => 1 bột bánh <:botBanhThapCAm:1157113151251292230>
-                32 <:mc_carved_pumpkin45:1155704587462922272> + 16 <:Minecraft_Egg:1156555165189550101> => 1 nhân thập cẩm <:botxanh2removebgpreview:1156915468267946004>
-                2 <:botxanh2removebgpreview:1156915468267946004> + 2 <:botxanhremovebgpreview:1156914386917671032> => 1 <:banhtrungthu_1:1156609035794124870>
-            `)
-            .setThumbnail('https://media.discordapp.net/attachments/1138141730928070736/1156607714609340496/banhtrungthu_1.png?ex=6516e7df&is=6515965f&hm=4810eb52b545b01da1f77b8fe350e896344fb61369aadd86cd0229bc975e7800&=&width=625&height=625')
-            .setTimestamp()
-            .setFooter({ text: 'Chọn các nút bên dưới để ghép nguyên liệu'})
-            let buttonRow1 = new Discord.ActionRowBuilder()
-                .addComponents(
-                new Discord.ButtonBuilder()
-                .setStyle(Discord.ButtonStyle.Secondary)
-                .setEmoji('<:6289_flour:1155701022891704360>')
-                .setCustomId('botMi'),
-                new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Secondary)
-                    .setCustomId('botBanhThapCam')
-                    .setEmoji('<:botBanhThapCAm:1157113151251292230>'),
-                new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Secondary)
-                    .setCustomId('nhanThapCam')
-                    .setEmoji('<:botBanhThapCAm:1157113151251292230>'),
-                new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Secondary)
-                    .setCustomId('banhTTThapCam')
-                    .setEmoji('<:banhtrungthu_1:1156609035794124870>')
-                )  
-            const reply = await message.channel.send({embeds: [nguyenLieuEmbed], components: [buttonRow1]});
-
-            var collector = reply.createMessageComponentCollector({
-            filter: interaction => (interaction.isButton() || interaction.isSelectMenu()) && interaction.message.author.id == client.user.id,
-            })
-            collector.on('collect', interaction => {
-                if (interaction.user.id !== message.author.id) return interaction.reply({ content: "Bạn không thể dùng nút này!", ephemeral: true })
-                if (interaction.customId == 'botMi') {
-                    if (lua < 32) return interaction.reply({ content: "Bạn không đủ 32 lúa <:LC_Wheat:1155701062670504037>"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:6289_flour:1155701022891704360>", ephemeral: true});
-                    client.addNongSan(message.author.id, "bột mì", 1);
-                    client.truNongSan(message.author.id, "lúa", 32);
-                }
-                else if (interaction.customId == 'botBanhThapCam') {
-                    if (botMi < 16 || sua < 32 || trung < 32) return interaction.reply({ content: "Bạn không đủ nguyên liệu để làm"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:botxanhremovebgpreview:1156914386917671032>"});
-                    client.addNongSan(message.author.id, "bột bánh đậu xanh", 1);
-                    client.truNongSan(message.author.id, "bột mì", 16);
-                    client.truNongSan(message.author.id, "sữa", 32);
-                    client.truNongSan(message.author.id, "trứng", 32);
-                }
-                else if (interaction.customId == 'nhanThapCam') {
-                    if (dau < 32 || sua < 16) return interaction.reply({ content: "Bạn không đủ nguyên liệu để làm"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:botxanh2removebgpreview:1156915468267946004>"});
-                    client.addNongSan(message.author.id, "nhân đậu xanh", 1);
-                    client.truNongSan(message.author.id, "sữa", 16);
-                    client.truNongSan(message.author.id, "đậu", 32);
-                }
-                else if (interaction.customId == 'banhTTThapCam') {
-                    if (botBanhDauXanh < 2 || nhanDauXanh < 2) return interaction.reply({ content: "Bạn không đủ nguyên liệu để làm"});
-                    interaction.reply({ content: "Bạn đã làm thành công 1 <:banhdauxanh_1:1156609030165377035>"});
-                    client.addNongSan(message.author.id, "bánh trung thu nhân đậu xanh", 1);
-                    client.truNongSan(message.author.id, "bột bánh đậu xanh", 2);
-                    client.truNongSan(message.author.id, "nhân đậu xanh", 2);
-                }
-            })
+        else if(typeId == 204) {
+            if (botMi < 16 || trung < 16 || sua < 16 || bo < 5) return message.reply(`Bạn không đủ <:eje_minecraft_milk:1156555171493597204>, <:Minecraft_Egg:1156555165189550101>, <:6289_flour:1155701022891704360> <:butter:1157312769234845736> để làm bột bánh thập cẩm.`);
+            await client.addNongSan(author, "bột bánh thập cẩm", soLuong);
+            await client.truNongSan(author, "trứng", soLuong * 16);
+            await client.truNongSan(author, "sữa", soLuong * 16);
+            await client.truNongSan(author, "bơ", soLuong * 5);
+            await client.truNongSan(author, "bột mì", soLuong * 16);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong} bột bánh thập cẩm** <:botBanhThapCAm:1157333983374364682>`);
+        }
+        else if (typeId == 205) {
+            if (dau < 16 || sua < 8) return message.reply(`Bạn không đủ <:eje_minecraft_milk:1156555171493597204>, <:daunh_1:1156608655060381760> để làm nhân bánh đậu xanh`);
+            await client.addNongSan(author, "nhân đậu xanh", soLuong);
+            await client.truNongSan(author, "đậu", soLuong * 16);
+            await client.truNongSan(author, "sữa", soLuong * 8);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong} nhân bánh đậu xanh** <:botxanh2removebgpreview:1156915468267946004>`);
+        }
+        else if (typeId == 206) {
+            if (trung < 8 || bi < 8 < lapXuong < 16) return message.reply(`Bạn không đủ <:Minecraft_Egg:1156555165189550101>, <:mc_carved_pumpkin45:1155704587462922272>, <:lapXuongTT:1157319283341283348> để làm nhân thập cẩm.`);
+            await client.addNongSan(author, "nhân thập cẩm", soLuong);
+            await client.truNongSan(author, "bí", soLuong * 8);
+            await client.truNongSan(author, "trứng", soLuong * 8);
+            await client.truNongSan(author, "lạp xưởng", soLuong * 16);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong} nhân bánh thập cẩm** <:botBanhThapCAm:1157113151251292230>`)
+        }
+        else if (typeId == 207) {
+            if (botBanhDauXanh < 1 || nhanDauXanh < 1) return message.reply(`Bạn không đủ <:botxanhremovebgpreview:1156914386917671032> và <:botxanh2removebgpreview:1156915468267946004> để làm bánh trung thu nhân đậu xanh.`);
+            await client.addNongSan(author, "bánh trung thu nhân đậu xanh", soLuong);
+            await client.truNongSan(author, "nhân đậu xanh", soLuong);
+            await client.truNongSan(author, "bột bánh đậu xanh", soLuong);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong} bánh trung thu nhân đậu xanh <:banhdauxanh_1:1156609030165377035>**`);
+            scoreData.score += 1;
+            scoreData.save();
+        }
+        else if (typeId == 208) {
+            if (botBanhThapCam < 1 || nhanThapCam < 1) return message.reply(`Bạn không đủ <:botxanhremovebgpreview:1156914386917671032> và <:botxanh2removebgpreview:1156915468267946004> để làm bánh trung thu nhân đậu xanh.`);
+            await client.addNongSan(author, "bánh trung thu nhân thập cẩm", soLuong);
+            await client.truNongSan(author, "nhân thập cẩm", soLuong);
+            await client.truNongSan(author, "bột bánh thập cẩm", soLuong);
+            message.reply(`Bạn đã sản xuất thành công **${soLuong} bánh trung thu nhân đậu xanh <:banhtrungthu_1:1156609035794124870>**`);
+            scoreData.score += 1;
+            scoreData.save();
+        }
+        else {
+            message.reply(`Lệnh không hợp lệ.\n Cách dùng \`nqg doinl <id> <số lượng>\``);
         }
     }
 }

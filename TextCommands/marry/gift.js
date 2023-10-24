@@ -3,7 +3,6 @@ const marryModel = require('../../database/models/marryModel')
 
 module.exports = {
     name: 'gift',
-    aliases: ['tangqua'],
     /**
      * 
      * @param {Discord.Client} client 
@@ -51,8 +50,8 @@ module.exports = {
                 await client.truItem(message.author.id, itemName, amount) 
             }
             const giftembed = new Discord.EmbedBuilder()
-                .setDescription(`* <a:NQG_giftbox:1142364127172497510> <@${message.author.id}> đã tặng **${amount} ${emoji[itemName]}** cho <@${mention.id}>
-                * <:daymarry:1137003685659033631> Điểm thân mật hiện tại của bạn được cộng thêm ${amount * level} điểm`
+                .setDescription(` <a:NQG_giftbox:1142364127172497510> <@${message.author.id}> đã tặng **${amount} ${emoji[itemName]}** cho <@${mention.id}>
+                 <:daymarry:1137003685659033631> Điểm thân mật hiện tại của bạn được cộng thêm ${amount * level} điểm`
                 )
                 .setColor('Green')
             return message.channel.send({ embeds: [giftembed] })

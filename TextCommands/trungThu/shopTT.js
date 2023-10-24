@@ -40,8 +40,8 @@ module.exports = {
             .setTitle('Shop quà Trung Thu')
             .setColor('White')
             .setDescription(`
-            <:chamxanh:1124058113742479400> \`1300\` <:thoBongTT:1156949943001559120> Thỏ bông | \`15,000\` <:O_o:1135831601205481523> coins
-            <:chamxanh:1124058113742479400> \`1301\` <:longDenNgoiSao:1156949930632560701> Lồng đèn | \`20,000\` <:O_o:1135831601205481523> coins
+            <:chamxanh:1124058113742479400> \`1300\` <:thoBongTT:1156949943001559120> Thỏ bông | \`20,000\` <:O_o:1135831601205481523> coins
+            <:chamxanh:1124058113742479400> \`1301\` <:longDenNgoiSao:1156949930632560701> Lồng đèn | \`15,000\` <:O_o:1135831601205481523> coins
             <:chamxanh:1124058113742479400> \`1302\` <:thoCungTrang:1156964829064597504> Thỏ cung trăng | \`30,000\` <:O_o:1135831601205481523> coins
             `)
             .setTimestamp() 
@@ -52,9 +52,10 @@ module.exports = {
             .setTitle('Shop nguyên liệu làm bánh')
             .setColor('Aqua')
             .setDescription(`
-            <:chamxanh:1124058113742479400> \`1400\` <:lapXuong:1157312775077494794> Lạp xưởng | \`0000\` <:O_o:1135831601205481523> coins
-            <:chamxanh:1124058113742479400> \`1401\` <:butter:1157312769234845736> Bơ | \`0000\` <:O_o:1135831601205481523> coins
+            <:chamxanh:1124058113742479400> \`1400\` <:lapXuongTT:1157319283341283348> Lạp xưởng | \`1000\` <:O_o:1135831601205481523> coins
+            <:chamxanh:1124058113742479400> \`1401\` <:butterTT:1157319277335035974> Bơ | \`3000\` <:O_o:1135831601205481523> coins
             `)
+            .setImage('https://i.pinimg.com/originals/cc/0e/08/cc0e08e8ffab3bd0dd53d3a0a6b363fd.gif')
             .setTimestamp()
 
             let embeds = [hatEmbed, nguyenLieuEmbed, animalEmbed, giftTrungThu];

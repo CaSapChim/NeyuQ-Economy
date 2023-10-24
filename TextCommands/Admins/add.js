@@ -65,5 +65,15 @@ module.exports = {
             message.channel.send(`**Đã chuyển cho ${toGiveUser} huy hiệu tình yêu** <:NQG_traitimne:1155502689057259621>`)
             await client.addItem(toGiveUser.id, "Huy Hiệu Tình Yêu", 1, 5)
         }
+
+        else if (type == 'banhttnhandauxanh') {
+            message.channel.send(`**Đã chuyển thành công ${amount} bánh trung thu nhân đậu xanh cho ${toGiveUser}.**`)
+            await client.addNongSan(toGiveUser.id, "bánh trung thu nhân đậu xanh", amount);
+        }
+
+        else if (type == 'banhttnhanthapcam') {
+            message.channel.send(`**Đã chuyển thành công ${amount} bánh trung thu nhân thập cẩm cho ${toGiveUser}.**`)
+            await client.addNongSan(toGiveUser.id, "bánh trung thu nhân thập cẩm", amount);
+        }
     }
 }

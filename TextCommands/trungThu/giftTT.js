@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const marryModel = require('../../database/models/marryModel');
 
 module.exports = {
-    name: 'giftt',
+    name: 'tangqua',
     /**
      * 
      * @param {Discord.Client} client 
@@ -18,9 +18,15 @@ module.exports = {
         if (!mention) return;
         if (!soLuong || soLuong < 0) return;
         
-        if (typeId == '1300') getItem(author, mention.id, "lồng đèn", soLuong, 150 * soLuong);
-        if (typeId == '1301') getItem(author, mention.id, "thỏ bông", soLuong, 150 * soLuong);
-        if (typeId == '1302') getItem(author, mention.id, "thỏ cung trăng", soLuong, 150 * soLuong);
+        const giftEmoji = {
+            'thỏ bông': '<:thoBongTT:1156949943001559120>',
+            'lồng đèn': '<:longDenNgoiSao:1156949930632560701>',
+            'thỏ cung trăng': '<:thoCungTrang:1156964829064597504>',
+        }
+
+        if (typeId == '220') getItem(author, mention.id, "lồng đèn", soLuong, 150 * soLuong);
+        if (typeId == '221') getItem(author, mention.id, "thỏ bông", soLuong, 200 * soLuong);
+        if (typeId == '222') getItem(author, mention.id, "thỏ cung trăng", soLuong, 250 * soLuong);
         
         async function getItem(userId1, userId2, item, soLuong, level) {
             let existMarry = await marryModel.findOne({ $or: [{ userId1: mention.id, userId2: message.author.id }, { userId1: message.author.id, userId2: mention.id }] })
@@ -28,9 +34,10 @@ module.exports = {
             let data = await client.nongSan(author, item);
             if (data < soLuong) return message.reply("Bạn không đủ món quà để tặng");
             await client.addMarryLevel(userId1, userId2, level);
+            await client.truNongSan(userId1, item, soLuong);
             const successEmbed = new Discord.EmbedBuilder()
                 .setColor('Green')
-                .setDescription(`Bạn đã tặng thành công **${soLuong} ${item}** cho ${userId2}`)
+                .setDescription(`Bạn đã tặng thành công **${soLuong} ${giftEmoji[item]}** cho <@${userId2}>`)
                 .setTimestamp()
             await message.reply({ embeds: [successEmbed] });
         }

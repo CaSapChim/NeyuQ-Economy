@@ -5,11 +5,9 @@ const banModel = require('../../database/models/banModel')
 const buffMineModel = require('../../database/models/buffMineModel')
 const cupModel = require('../../database/models/cupModel')
 const khoangSanModel = require('../../database/models/khoangSanModel')
-const caModel = require('../../database/models/caModel')
 const buffCauCaModel = require('../../database/models/buffCauCaModel')
 const toolCauCaModel = require('../../database/models/toolCauCaModel')
 const warnModel = require('../../database/models/warnModel')
-const xoSoUserModel = require('../../database/models/xoSoUserModel')
 const invTTModel = require('../../database/models/eventTrungThu/invTTModel')
 const plantModel = require('../../database/models/eventTrungThu/plantModel')
 const landModel = require('../../database/models/eventTrungThu/landModel')
@@ -421,7 +419,7 @@ module.exports = (client) => {
         } else if(!data.plantedAt) {
           await plantModel.findOneAndUpdate(
             {userId: userId, plantName: name},
-            {plantedAt: new Date(), soLuongPlanted: soLuong}
+            {plantedAt: new Date(), soLuongPlanted: soLuong, planted: true}
           )
         } else {
           data.soLuongPlanted += soLuong;
@@ -503,6 +501,7 @@ module.exports = (client) => {
       ful(data.soLuongPlanted);
     })
 
+    // Xem animal mình có
     client.xemAnimal = (userId, name) => new Promise(async ful => {
       let data = await animalModel.findOne({ userId: userId, name: name });
       if (!data) {
@@ -511,9 +510,19 @@ module.exports = (client) => {
       ful(data.soLuong);
     })
 
+    // Xem số vật đã được cho ăn 
+    client.animalFed = (userId, name) => new Promise(async ful => {
+      let data = await feedAnimalModel.findOne({ userId: userId, name: name });
+      if (!data) {
+        return ful(0);
+      }
+      ful(data.soLuong);
+    })
+
     client.choAn = async (userId, name, soLuong) => {
       try { 
-        let data = await feedAnimalModel.findOne({ userId: userId, name: name})
+        let data = await feedAnimalModel.findOne({ userId: userId, name: name});
+        let animal = await animalModel.findOne({ userId: userId, name: name});
         if (!data) {
           data = new feedAnimalModel({
             userId: userId,
@@ -525,12 +534,15 @@ module.exports = (client) => {
         } else if (!data.fedAt) {
           await feedAnimalModel.findOneAndUpdate(
             {userId: userId, name: name},
-            {fedAt: new Date(), soLuong: soLuong}
-          )
+            {fedAt: new Date(), soLuong: soLuong, fed: true}
+          );
+          animal.soLuong -= soLuong;
         } else {
+          animal.soLuong -= soLuong;
           data.soLuong += soLuong;
         }
         await data.save();
+        await animal.save();
       } catch(err) {
         console.log('Lỗi cho ăn: ', err);
       }
@@ -596,12 +608,53 @@ module.exports = (client) => {
       }
     }
 
-    client.checkTime = async(userId, name) => {
-      try {
-        let data = await plantModel.findOne({ userId: userId, plantName: name});
-        
-      } catch(err) {
-        console.log('Lỗi check time cây:', err);
+    client.checkTimePlant = (userId, name) => new Promise(async ful => {
+      let data = await plantModel.findOne({ userId: userId, plantName: name});
+      if (!data) data = new plantModel({
+        userId: userId,
+        plantedAt: null
+      })
+      let lastPlanted = data.plantedAt;
+      const currentTime = new Date();
+      const elapsedMillis = currentTime - lastPlanted;
+      const timeToGrow = 30 * 60 * 1000;
+      if (data && lastPlanted) {
+        if (elapsedMillis < timeToGrow) {
+          const remainingMillis = timeToGrow - elapsedMillis;
+          const remainingHours = Math.floor(remainingMillis / (1000 * 60 * 60));
+          const remainingMinutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
+          const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
+          return ful(`\`${remainingHours}h ${remainingMinutes}p ${remainingSeconds}s\``); 
+        } else {
+          ful(`<a:verified_tick:1130871737580531792> **| Sẵn sàng thu hoạch**`);
+        }
+      } else {
+        ful(`:x: **| Chưa trồng**`);
       }
-    }
+    })
+    
+    client.checkTimeAnimal = (userId, name) => new Promise(async ful => {
+      let data = await feedAnimalModel.findOne({ userId: userId, name: name});
+      if (!data) data = new feedAnimalModel({
+        userId: userId,
+        fedAt: null
+      })
+      let lastFed = data.fedAt;
+      const currentTime = new Date();
+      const elapsedMillis = currentTime - lastFed;
+      const timeToGrow = 30 * 60 * 1000;
+      if (data && lastFed) {
+        if (elapsedMillis < timeToGrow) {
+          const remainingMillis = timeToGrow - elapsedMillis;
+          const remainingHours = Math.floor(remainingMillis / (1000 * 60 * 60));
+          const remainingMinutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
+          const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
+          return ful(`\`${remainingHours}h ${remainingMinutes}p ${remainingSeconds}s\``); 
+        } else {
+          ful(`<a:verified_tick:1130871737580531792> **| Sẵn sàng thu hoạch**`);
+        }
+      } else {
+        ful(`:x: **| Chưa cho ăn**`);
+      }
+    }) 
 }

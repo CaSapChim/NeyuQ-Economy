@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const feedAnimalModel = require('../../database/models/eventTrungThu/feedAnimalModel');
+const animalModel = require('../../database/models/eventTrungThu/animalModel');
 
 module.exports = {
     name: 'vatsua',
@@ -12,11 +13,12 @@ module.exports = {
     run: async(client, message, args) => { 
         const author = message.author.id;
         let data = await feedAnimalModel.findOne({ userId: author, name: "con bò"});
+        let animal = await animalModel.findOne({ userId: author, name: "con bò"});
         if (data && data.fedAt) {
             const currentTime = new Date();
             const lastPlanted = data.fedAt;
             const elapsedMillis = currentTime - lastPlanted;
-            const timeToGrow = 3 * 60 * 60 * 1000;
+            const timeToGrow = 30 * 60 * 1000;
             if (elapsedMillis < timeToGrow) {
 
               const remainingMillis = timeToGrow - elapsedMillis;
@@ -30,9 +32,12 @@ module.exports = {
                 await client.vatSua(author, "con bò");
                 await client.addNongSan(author, "sữa", result);
                 await message.reply(`Bạn đã vắt được **${result} xô sữa <:eje_minecraft_milk:1156555171493597204>**`);
+                animal.soLuong += data.soLuong;
             }
         } else {
             message.reply('Bạn chưa cho bò ăn!');
         }
+        await animal.save();
+        await data.save();
     }
 }

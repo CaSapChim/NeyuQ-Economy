@@ -4,7 +4,7 @@ const landSchema = new mongoose.Schema({
     userId: String,
     soLuong: {
         type: Number,
-        default: 10
+        default: 20
     }
 })
 
