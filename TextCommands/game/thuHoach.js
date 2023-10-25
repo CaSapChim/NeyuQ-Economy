@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const plantModel = require('../../database/models/eventTrungThu/plantModel');
+const plantModel = require('../../database/models/userDataJob/plantModel');
 
 module.exports = {
     name: 'thuhoach',

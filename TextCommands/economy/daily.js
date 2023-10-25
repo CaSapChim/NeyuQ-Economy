@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const userModel = require('../../database/models/userModel')
 
 module.exports = {
   name: "daily",
@@ -26,7 +25,7 @@ module.exports = {
     userData.daily.streak = streak;
     userData.daily.timestamp = currentTime;
 
-    let dailyReward = 100;
+    let dailyReward = 500;
 
     if (streak === 2) {
       dailyReward = 200;
@@ -39,11 +38,11 @@ module.exports = {
     }
 
     const bonusRoles = [
-      { roleId: '1071392984639229984', bonus: 150 }, // booster
-      { roleId: '1113451254195159161', bonus: 50 }, //  donator 1
-      { roleId: '1135968082435788952', bonus: 100 }, // donator 2
-      { roleId: '1076113410355363860', bonus: 50 }, // MC
-      { roleId: '1127613575314284614', bonus: 50 } // girlgang
+      { roleId: '1071392984639229984', bonus: 2000 }, // booster
+      { roleId: '1113451254195159161', bonus: 500 }, //  donator 1
+      { roleId: '1135968082435788952', bonus: 1000 }, // donator 2
+      { roleId: '1076113410355363860', bonus: 500 }, // MC
+      { roleId: '1127613575314284614', bonus: 1500 } // girlgang
     ];
 
     let bonusMoney = 0;

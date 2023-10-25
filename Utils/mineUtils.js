@@ -5,7 +5,11 @@ async function mine(client, message) {
   const buffs = await buffMineModel.find({
     userId: message.author.id
   })
-
+  message.channel.send(`${message.author.username} đang đào...`).then(msg => {
+    setTimeout(() => {
+      msg.delete();
+    }, 3000);
+  })
   for ( let b in buffs ) {
     let buf = buffs[b]
     let soLuongBuff = buf.soLuongBuff
@@ -19,16 +23,22 @@ async function mine(client, message) {
     
         if (randomValue3 <= 1000) {
           resources.push({ name: 'Ngọc lục bảo', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 500);
         } else if (randomValue3 > 2000 && randomValue3 <= 7000) {
           resources.push({ name: 'Sắt', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 20);
         } else if (randomValue3 > 16000 && randomValue3 <= 18000 ) {
           resources.push({ name: 'Vàng', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 50);
         } else if (randomValue3 > 1000 && randomValue3 <= 2000) {
           resources.push({ name: 'Kim cương', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 200);
         } else if (randomValue3 > 11000 && randomValue3 <= 16000) {
           resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
         } else 
-          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 })
+          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
       }
     }
     else if (soLuongBuff > 0 && type === 2) {
@@ -40,16 +50,22 @@ async function mine(client, message) {
     
         if (randomValue3 <= 1000) {
           resources.push({ name: 'Ngọc lục bảo', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 500);
         } else if (randomValue3 > 2000 && randomValue3 <= 7000) {
           resources.push({ name: 'Sắt', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 20);
         } else if (randomValue3 > 16000 && randomValue3 <= 18000 ) {
           resources.push({ name: 'Vàng', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 50);
         } else if (randomValue3 > 1000 && randomValue3 <= 2000) {
           resources.push({ name: 'Kim cương', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 200);
         } else if (randomValue3 > 11000 && randomValue3 <= 16000) {
           resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
         } else 
-          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 })
+          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
       }
     } else if (soLuongBuff > 0 && type == 3) {
       await client.truBuffMine(message.author.id, 1, 3)
@@ -60,16 +76,22 @@ async function mine(client, message) {
     
         if (randomValue3 <= 1000) {
           resources.push({ name: 'Ngọc lục bảo', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 500);
         } else if (randomValue3 > 2000 && randomValue3 <= 7000) {
           resources.push({ name: 'Sắt', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 20);
         } else if (randomValue3 > 16000 && randomValue3 <= 18000 ) {
           resources.push({ name: 'Vàng', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 50);
         } else if (randomValue3 > 1000 && randomValue3 <= 2000) {
           resources.push({ name: 'Kim cương', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 200);
         } else if (randomValue3 > 11000 && randomValue3 <= 16000) {
           resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
         } else 
-          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 })
+          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
       }
     } else if (soLuongBuff > 0 && type == 4) {
       await client.truBuffMine(message.author.id, 1, 4)
@@ -81,16 +103,22 @@ async function mine(client, message) {
     
         if (randomValue3 <= 1000) {
           resources.push({ name: 'Ngọc lục bảo', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 500);
         } else if (randomValue3 > 2000 && randomValue3 <= 7000) {
           resources.push({ name: 'Sắt', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 20);
         } else if (randomValue3 > 16000 && randomValue3 <= 18000 ) {
           resources.push({ name: 'Vàng', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 50);
         } else if (randomValue3 > 1000 && randomValue3 <= 2000) {
           resources.push({ name: 'Kim cương', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 200);
         } else if (randomValue3 > 11000 && randomValue3 <= 16000) {
           resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
         } else 
-          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 })
+          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
       }
     } else if (soLuongBuff > 0 && type == 5) {
       await client.truBuffMine(message.author.id, 1, 5)
@@ -101,16 +129,22 @@ async function mine(client, message) {
     
         if (randomValue3 <= 1000) {
           resources.push({ name: 'Ngọc lục bảo', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 500);
         } else if (randomValue3 > 2000 && randomValue3 <= 7000) {
           resources.push({ name: 'Sắt', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 20);
         } else if (randomValue3 > 16000 && randomValue3 <= 18000 ) {
           resources.push({ name: 'Vàng', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 50); 
         } else if (randomValue3 > 1000 && randomValue3 <= 2000) {
           resources.push({ name: 'Kim cương', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 200);
         } else if (randomValue3 > 11000 && randomValue3 <= 16000) {
           resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
         } else 
-          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 })
+          resources.push({ name: 'Than', soLuong: Math.floor(Math.random() * 1) + 1 });
+          await client.addJobExp(message.author.id, 3);
       }
     } 
   }

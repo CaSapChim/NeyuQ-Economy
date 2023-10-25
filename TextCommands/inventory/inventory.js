@@ -125,44 +125,45 @@ module.exports = {
       if ( itemHuyHieu.name === huyHieuCacLoai[5] ) soLuongHH6  = itemHuyHieu.soLuong
     }  
 
-    const nhanEmbed = new Discord.EmbedBuilder()
-      .setColor('Purple')
-      .setTitle(`Bộ sưu tập nhẫn của ${message.author.username}`)
-      .setDescription(
-          `\`106\` | ${`<:nhnbc:1124056817048240159> ${nhanCacLoai[0]}: **${soLuongNhanBac}**\n`}` +
-          `\`107\` | ${`<:Nhnvng:1124056797238534375> ${nhanCacLoai[1]}: **${soLuongNhanVang}**\n`}` +
-          `\`108\` | ${`<:nhan:1124415305347780720> ${nhanCacLoai[2]}: **${soLuongNhanHong}**\n`}`
-      )
-      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
-      .setTimestamp();
-
+    
     const hoaEmbed = new Discord.EmbedBuilder()
-      .setColor('DarkVividPink')
-      .setTitle(`Túi đựng đồ của ${message.author.username}`)
-      .setDescription(
-          `\`101\` | ${`<a:p_flower22:1135636392374960310> ${hoaCacLoai[0]}: **${soLuongBongHoa}**\n`}` +
-          `\`102\` | ${`<:bbng:1124017699614371890> ${hoaCacLoai[1]}: **${soLuongBoBong}**\n`}` +
-          `\`103\` | ${`<:ko:1124018356949884928> ${hoaCacLoai[2]}: **${soLuongCucKeo}**\n`}` +
-          `\`104\` | ${`<:socola:1124018847511478372> ${hoaCacLoai[3]}: **${soLuongSocola}**\n`}` +
-          `\`105\` | ${`<:gubng:1124018585275211867> ${hoaCacLoai[4]}: **${soLuongGauBong}**\n`}`
+    .setColor(0xaf00fc)
+    .setTitle(`TÚI ĐỰNG ĐỒ`)
+    .setDescription(
+      `\`100\` | ${`<a:p_flower22:1135636392374960310> ${hoaCacLoai[0]}: **${soLuongBongHoa}**\n`}` +
+      `\`101\` | ${`<:bbng:1124017699614371890> ${hoaCacLoai[1]}: **${soLuongBoBong}**\n`}` +
+      `\`102\` | ${`<:ko:1124018356949884928> ${hoaCacLoai[2]}: **${soLuongCucKeo}**\n`}` +
+      `\`103\` | ${`<:socola:1124018847511478372> ${hoaCacLoai[3]}: **${soLuongSocola}**\n`}` +
+      `\`104\` | ${`<:gubng:1124018585275211867> ${hoaCacLoai[4]}: **${soLuongGauBong}**\n`}`
       )
-      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
+      .setFooter({text: 'Chúc bạn chơi vui vẻ'})
       .setTimestamp();
 
+      const nhanEmbed = new Discord.EmbedBuilder()
+        .setColor(0xaf00fc)
+        .setTitle(`BỘ SƯU TẬP NHẪN`)
+        .setDescription(
+            `\`110\` | ${`<:nhnbc:1124056817048240159> ${nhanCacLoai[0]}: **${soLuongNhanBac}**\n`}` +
+            `\`111\` | ${`<:Nhnvng:1124056797238534375> ${nhanCacLoai[1]}: **${soLuongNhanVang}**\n`}` +
+            `\`112\` | ${`<:nhan:1124415305347780720> ${nhanCacLoai[2]}: **${soLuongNhanHong}**\n`}`
+        )
+        .setFooter({text: 'Chúc bạn chơi vui vẻ'})
+        .setTimestamp();
+      
     const ruongEmbed = new Discord.EmbedBuilder()
-      .setColor('DarkVividPink')
-      .setTitle(`Kho báu của ${message.author.username}`)
+      .setColor('Gold')
+      .setTitle(`KHO BÁU`)
       .setDescription(
-          `\`109\` | ${`<:ruongbac:1135643679256756374> ${ruongCacLoai[0]}: **${soLuongRuongBac}**\n`}` +
-          `\`110\` | ${`<:ruongvang:1135643685476896789> ${ruongCacLoai[1]}: **${soLuongRuongVang}**\n`}` +
-          `\`111\` | ${`<:rngkimcuong:1135643691814494278> ${ruongCacLoai[2]}: **${soLuongRuongDacBiet}**\n`}`
+          `\`120\` | ${`<:ruongbac:1135643679256756374> ${ruongCacLoai[0]}: **${soLuongRuongBac}**\n`}` +
+          `\`121\` | ${`<:ruongvang:1135643685476896789> ${ruongCacLoai[1]}: **${soLuongRuongVang}**\n`}` +
+          `\`122\` | ${`<:rngkimcuong:1135643691814494278> ${ruongCacLoai[2]}: **${soLuongRuongDacBiet}**\n`}`
       )
-      .setFooter({text: 'Chúc bạn một ngày tốt lành'})
+      .setFooter({text: 'Chúc bạn chơi vui vẻ'})
       .setTimestamp();
 
     const huyHieuEmbed = new Discord.EmbedBuilder() 
         .setColor('#9cfcf2')
-        .setTitle(`Bộ sưu tập huy hiệu của ${message.author.username}`)
+        .setTitle(`BỘ SƯU TẬP HUY HIỆU`)
         .setDescription(  
           `> ${`<:tinhyeuchaybong:1136568485166718986> | ${huyHieuCacLoai[0]}: **${soLuongHH1}**\n`}`+
           `> ${`<:trik:1122444231223558174> | ${huyHieuCacLoai[1]}: **${soLuongHH2}**\n`}`+
@@ -171,11 +172,11 @@ module.exports = {
           `> ${`<:valnetine:1136578277570510929> | ${huyHieuCacLoai[4]}: **${soLuongHH5}**\n`}`+
           `> ${`<:trikivalentine:1136577479679688815> | ${huyHieuCacLoai[5]}: **${soLuongHH6}**\n`}`
         )
-        .setFooter({text: 'Chúc bạn một ngày tốt lành'})
+        .setFooter({text: 'Chúc bạn chơi vui vẻ'})
         .setTimestamp()
 
     let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, huyHieuEmbed];
-    let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
+    let a = await message.channel.send({ content: `<@${message.author.id}>`, embeds: [embeds[0]] }).catch(e => console.log(e))
     await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
 
     async function chuyen_trang(client, message, authorid, embeds) {
@@ -202,7 +203,7 @@ module.exports = {
           if (embeds.length === 1) return message.edit({ embeds: [embeds[0]] })
           const queueEmbed = await message.edit(
             {
-              content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`,
+              content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`,
               components: [buttonRow1],
               embeds: [embeds[trangHienTai]]
             }
@@ -217,31 +218,31 @@ module.exports = {
               interaction.deferUpdate()
               if (trangHienTai < embeds.length - 1) {
                 trangHienTai++;
-                queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+                queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
               }
               else {
                 trangHienTai = 0
-                queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+                queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
               }
             }
             else if (interaction.customId == "back-page") {
               interaction.deferUpdate()
               if (trangHienTai !== 0) {
                 --trangHienTai;
-                queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+                queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
               } else {
                 trangHienTai = embeds.length - 1
-                queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+                queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
               }
             } else if (interaction.customId == "back-page1") {
               interaction.deferUpdate()
               trangHienTai = 0;
-              queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+              queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
             else if (interaction.customId == "next-page1") {
               interaction.deferUpdate()
               trangHienTai = embeds.length - 1;
-              queueEmbed.edit({ content: `**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
+              queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
           }
       );

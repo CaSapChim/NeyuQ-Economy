@@ -7,10 +7,6 @@ const userSchema = new mongoose.Schema(
         require: true,
         unique: true
     },
-    username: {
-        type: String,
-        require: true
-    },
     serverId: {
         type: String,
         require: true
@@ -19,6 +15,20 @@ const userSchema = new mongoose.Schema(
         streak: { type: Number, default: 0 },
         timestamp: Date,
     },
+    job: {
+        jobType: {
+            type: String, default: "" 
+        },
+        currentExpJob: {
+            type: Number, default: 0
+        },
+        maxExpJob: {
+            type: Number, default: 100
+        },
+        levelJob: {
+            type: Number, default: 1
+        }
+    }
     
 },
     {

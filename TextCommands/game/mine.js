@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const { mine } = require('../../Utils/mineUtils');
-const { OWNER_ID } = require('../../config.json');
 const { Captcha } = require('../../Utils/captchaUtils')
 const trackingMineModel = require('../../database/models/trackingMineModel')
 const verifiedModel = require('../../database/models/verifiedModel')
@@ -33,6 +32,9 @@ module.exports = {
    */
   run: async (client, message) => {
     try {
+      let checkJob = await client.checkJob(message.author.id);
+      if (checkJob != "Thợ mỏ") return;
+
       let verifyData = await verifiedModel.findOne({ userId: message.author.id })
       if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
       await Captcha(client, message)
@@ -59,13 +61,6 @@ module.exports = {
         message.reply('Bạn chưa sử dụng cúp để đào')
         return
       }
-
-      await message.channel.send(`**${message.author.username},** đang đào...`).then(msg =>{
-        setTimeout(async () => {
-          await msg.delete()
-        }, 5000);
-      });
-      await new Promise(resolve => setTimeout(resolve, 5000));
 
       for (const resource of minedResources) {
         await client.addKS(message.author.id, resource.name, resource.soLuong);

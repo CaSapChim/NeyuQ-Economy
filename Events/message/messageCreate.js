@@ -7,7 +7,7 @@ const {
   ButtonStyle,
   ActionRowBuilder,
 } = require("discord.js");
-const userModel = require("../../database/models/userModel.js");
+const userModel = require("../../database/models/userDataJob/userModel.js");
 const prefixModel = require("../../database/models/prefixModel");
 const banModel = require("../../database/models/banModel.js");
 const { dropGift } = require('../../Utils/dropGiftUtil.js')
@@ -70,31 +70,26 @@ module.exports = {
     let userData;
     try {
       userData = await userModel.findOne({ userId: message.author.id });
-
       if (!userData) {
         const tosEmbed = new EmbedBuilder()
-          .setColor("Green")
+          .setColor("Red")
           .setTitle("**ĐIỀU KHOẢN SỬ DỤNG - BOT GAME VÀ HỆ THỐNG KINH TẾ**")
           .setDescription(`
                   Vui lòng đọc kỹ và hiểu rõ các điều khoản sau trước khi sử dụng bot của chúng tôi. Bằng cách sử dụng bot, bạn đồng ý tuân thủ tất cả các điều khoản dưới đây. Nếu bạn không đồng ý với bất kỳ điều khoản nào, vui lòng không sử dụng bot.
     
-                  **1. Gian lận và phần mềm thứ 3**
+                  **1. Gian lận và phần mềm thứ 3: **
     
                   1.1. Chúng tôi không chấp nhận người dùng sử dụng phần mềm thứ 3 dưới mọi hình thức.
     
                   1.2. Phát hiện và lợi dụng bug của bot cho mục đích cá nhân sẽ bị BAN thẳng tay. 
                   
-                  **2. Sự thay đổi và cập nhật**
-                  
-                  2.1. Chúng tôi có quyền thay đổi hoặc cập nhật các tính năng mới cho bot mà không cần báo trước.
-                  
-                  2.2. Do đó hãy theo dõi kênh <#1071425301902544957> thường xuyên để biết thêm những cập nhật mới về bot.
-                  
-                  Bằng cách sử dụng bot, bạn xác nhận đã đọc, hiểu và chấp nhận tất cả các điều khoản sử dụng. Nếu bạn không đồng ý với các điều khoản này, vui lòng không sử dụng bot.
+                  **2. Sự thay đổi và cập nhật: **
+
+                  2.1 Hãy theo dõi kênh <#1118050184312664094> thường xuyên để biết thêm những cập nhật mới về bot.
                   
                   **Liên hệ:**
                   
-                  Nếu bạn có bất kỳ câu hỏi hoặc đề xuất nào về các điều khoản sử dụng này, vui lòng liên hệ với chúng tôi qua [del biết ghi gì].
+                  Nếu bạn có bất kỳ thắc mắc hoặc báo lỗi nào, vui lòng liên hệ <@874321270437728257> hoặc <@942356413546635264>.
                 `);
 
         const tosBtn = new ButtonBuilder()
@@ -105,6 +100,7 @@ module.exports = {
         const row = new ActionRowBuilder().addComponents(tosBtn);
 
         const a = await message.channel.send({
+          content: "**## Bằng cách sử dụng bot, bạn xác nhận đã đọc, hiểu và chấp nhận tất cả các điều khoản sử dụng. Nếu bạn không đồng ý với các điều khoản này, vui lòng không sử dụng bot.**",
           embeds: [tosEmbed],
           components: [row],
         });
@@ -132,13 +128,17 @@ module.exports = {
             });
 
             const embed = new EmbedBuilder()
-              .setColor('Random')
-              .setDescription(`Cảm ơn bạn <@${message.author.id}> đã đồng ý TOS, tặng bạn **100 <:O_o:1135831601205481523> coins**`)
+              .setColor('Green')
+              .setDescription(`
+              > <a:thanks:1166234899443892305> Cảm ơn <@${message.author.id}> đã đồng ý chấp hành luật, tặng bạn **10000 <:O_o:1135831601205481523> coins**
 
-            a.edit({ embeds: [embed], components: [] });
+              > <a:arrow:1165858733474205726>  **\`${prefix} job\`** để chọn nghề cho mình ngay nàooooo <a:Anime:1165861221363355769>
+              `); 
+
+            a.edit({ embeds: [embed], components: [], content: "" });
             await userData.save();
   
-            await client.addTien(message.author.id, 100);
+            await client.addTien(message.author.id, 10000);
           }
         });
 

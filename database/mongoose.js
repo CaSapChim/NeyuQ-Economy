@@ -17,6 +17,6 @@ module.exports = {
         }
     },
      models: {
-        User: require('./models/userModel.js')
+        User: require('./models/userDataJob/userModel.js')
     }
 }

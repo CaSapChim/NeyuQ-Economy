@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const emoji = require('../../emoji.json');
 
 module.exports = {
   name: "use",
@@ -11,37 +12,49 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-
     const id = args[0];
+    let amount = args[1];
+    if (amount < 1 || (isNaN(amount) && amount !== "all")) 
+      return message.reply(`Phắc du <@${message.author.id}> sai định dạng rồi`)
+      .then(msg => setTimeout(() => {
+        msg.delete();
+      }, 3000));
 
     if (!id)
       return message.channel.send(
-        `**${message.author.username}**, bạn phải nhập iD/TÊN món đồ cần dùng!`
+        `**${message.author.username}**, bạn phải nhập **\`id\`** món đồ cần dùng!`
     );
 
-    if ( id === '109' || id === 'ruongbac') {
+    if ( id === '109') {
       const ruongBac = await client.item(message.author.id, "Rương bạc")
-      if ( ruongBac < 1) return message.channel.send(`**${message.author.username}**, bạn không còn rương bạc nào!`)
+      if (amount === "all") amount = ruongBac;  
+      if ( ruongBac < amount || ruongBac == 0) return message.reply(`${emoji.fail} Bạn không còn rương bạc nào!`)
 
-      const moneyRandom = {
-          minMoney: 5000,   
-          maxMoney: 20000, 
-      }
+      let sum = 0;
+      for (let i = 1; i <= amount; i++) {
+        const moneyRandom = {
+            minMoney: 5000,   
+            maxMoney: 20000, 
+          }
+        const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
+        console.log(randomAmount);
+        sum += randomAmount;
+        }
 
-      const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
-      await message.channel.send(`🎉** | ${message.author.username}**, bạn đã nhận được ${randomAmount.toLocaleString('en-Us')} <:O_o:1135831601205481523> coins`)
+      await message.channel.send(`${emoji.congra} **|** <@${message.author.id}> mở **${amount} rương bạc** và nhận được **${sum.toLocaleString('en-Us')}** ${emoji.coin} coins`)
 
-      await client.addTien(message.author.id, randomAmount)
-      await client.truItem(message.author.id, "Rương bạc", 1)
+      await client.addTien(message.author.id, sum)
+      await client.truItem(message.author.id, "Rương bạc", amount)
     } 
 
-    else if ( id === '110' || id === 'ruongvang') {
+    else if ( id === '110') {
       const ruongVang = await client.item(message.author.id, "Rương vàng")
-      if (ruongVang < 1) return message.channel.send(`**${message.author.username}**, bạn không còn rương vàng nào!`)
+      if (amount === "all") amount = ruongVang;
+      if (ruongVang < amount || ruongVang == 0) return message.reply(`${emoji.fail} Bạn không còn rương vàng nào!`)
 
-      const itemRandom = [
+      const item = [
         'Bó bông',   
-        'Bông hoa',     // 20 bông hoa | 10 bó bông | 6 kẹo | 3 socola | 2 Gấu 
+        'Bông hoa',     // 20 bông hoa | 12 bó bông | 6 kẹo | 3 socola | 2 Gấu 
         'Bó bông',
         'Cục kẹo',
         'Socola',
@@ -76,7 +89,7 @@ module.exports = {
         'Cục kẹo',
         'Socola', 
         'Bông hoa',
-        'Bó bông', // TAI NGHE HET PIN CMNR
+        'Bó bông',
         'Bông hoa',
         'Cục kẹo',
         'Bông hoa',
@@ -98,28 +111,44 @@ module.exports = {
       const moneyRandom = {
         minMoney: 20000,   
         maxMoney: 40000, 
+      }
+      let sum = 0;
+      let arr = [];
+      for (let i = 1; i <= amount; i++) {
+        const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney;``
+        const randomItem = Math.floor(Math.random() * item.length);
+        sum += randomAmount;
+        arr.push(item[randomItem]);
+        await client.addItem(message.author.id, item[randomItem], 1, 2);
+      }
+
+      let msg = ``;
+      arr.forEach(i => {
+        msg += `${emojis[i]} `;
+      })
+      await message.channel.send(`${emoji.congra} **|** <@${message.author.id}> đã mở **${amount} rương vàng** và nhận được:\n${sum.toLocaleString('en-Us')} ${emoji.coin}\n${msg}`)
+      
+      await client.addTien(message.author.id, sum);
+      await client.truItem(message.author.id, 'Rương vàng', amount)
+
     }
-
-      const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
-
-      const result = Math.floor(Math.random() * itemRandom.length)
-      message.channel.send(`🎉** | ${message.author.username}**, bạn đã mở rương vàng và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}**\n${randomAmount.toLocaleString('en-Us')} <:O_o:1135831601205481523> coins`)
-
-      await client.addTien(message.author.id, randomAmount)
-      await client.addItem(message.author.id, itemRandom[result], 1, 2)
-      await client.truItem(message.author.id, 'Rương vàng', 1)
-
-    }
-    else if ( id === '111' || id === 'ruongdacbiet') {
-      const ruongDacBiet = await client.item(message.author.id, "Rương đặc biệt")
-      if (ruongDacBiet < 1) return message.channel.send(`**${message.author.username}**, bạn không còn rương vàng nào!`)
+    else if ( id === '111') {
+      const ruongDacBiet = await client.item(message.author.id, "Rương đặc biệt");
+      if (amount === "all") amount = ruongDacBiet;
+      if (ruongDacBiet < amount || amount == 0) return message.reply(`${emoji.fail} Bạn không còn rương đặc biệt nào!`);
 
       const itemRandom = [
         'Tình Yêu Cháy Bỏng', 
+        'Tình Yêu Cháy Bỏng', 
         'Huy Hiệu Tri Kỉ',
         'Huy Hiệu Thân Thiết',
+        'Tình Yêu Cháy Bỏng', 
         'Tri Kỉ Valentine', 
+        'Tình Yêu Cháy Bỏng', 
         'Huy Hiệu VDay',
+        'Huy Hiệu Thân Thiết',
+        'Huy Hiệu VDay',
+        'Tình Yêu Cháy Bỏng', 
         'Huy Hiệu Cặp Đôi',
       ]
 
@@ -137,13 +166,25 @@ module.exports = {
         maxMoney: 70000, 
       }
 
-      const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
-      const result = Math.floor(Math.random() * itemRandom.length)
-      message.channel.send(`🎉** | ${message.author.username}**, Bạn đã mở rương đặc biệt và nhận được\n**${itemRandom[result]} ${emojis[itemRandom[result]]}**\n${randomAmount.toLocaleString('en-Us')} <:O_o:1135831601205481523> coins`)
+      let msg = ``;
+      let arr = [];
+      let sum = 0;
+      for (let i = 1; i<= amount; i++) {
+        const randomAmount = Math.floor(Math.random() * (moneyRandom.maxMoney - moneyRandom.minMoney + 1)) + moneyRandom.minMoney
+        const result = Math.floor(Math.random() * itemRandom.length)
+        sum += randomAmount;
+        arr.push(itemRandom[result]);
+        await client.addItem(message.author.id, itemRandom[result], 1, 5);
+      }
 
-      await client.addTien(message.author.id, randomAmount)
-      await client.addItem(message.author.id, itemRandom[result], 1, 5)
-      await client.truItem(message.author.id, 'Rương đặc biệt', 1)
+      arr.forEach(i => {
+        msg += `${emojis[i]} `;
+      })
+      await message.channel.send(`${emoji.congra} **|** <@${message.author.id}> đã mở **${amount} rương đặc biệt** và nhận được:\n${sum.toLocaleString('en-Us')} ${emoji.coin}\n${msg}`)
+      
+
+      await client.addTien(message.author.id, sum)
+      await client.truItem(message.author.id, 'Rương đặc biệt', amount)
   } 
 
   const emojiCup = {

@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const marryModel = require('../../database/models/marryModel')
+const emoji = require('../../emoji.json');
 
 module.exports = {
     name: 'gift',
@@ -21,7 +22,7 @@ module.exports = {
         const b = await client.item(mention.id, "Nhẫn vàng")
         const c = await client.item(mention.id, "Nhẫn hồng")
 
-        const emoji = {
+        const emojiGift = {
             'Bông hoa' : '<a:p_flower22:1135636392374960310>',
             'Bó bông' : '<:bbng:1124017699614371890>',
             'Cục kẹo' : '<:ko:1124018356949884928>',
@@ -37,7 +38,7 @@ module.exports = {
             if (!existMarry) return message.reply('**Bạn chỉ có thể tặng quà với người đã kết hôn!**')  
 
             if (itemType === 4) {
-                if (a || b || c) return message.channel.send(`**${message.author.username}**, người nhận đã có **1 trong 3** lại nhẫn rồi!`)
+                if (a || b || c) return message.reply(`${emoji.fail} Người bạn tặng đã có **1 trong 3** loại nhẫn rồi!`)
                 amount = 1
                 await client.addItem(mention.id, itemName, amount, itemType)
                 await client.truItem(message.author.id, itemName, amount) 
@@ -45,13 +46,14 @@ module.exports = {
 
             else if ( itemType === 2) {   
                 let data = await client.item(message.author.id, itemName)
-                if (data < amount) return message.channel.send(`**${message.author.username}**, bạn không đủ **${amount} ${emoji[itemName]}** để tặng!`)
+                if (data < amount) return message.reply(`${emoji.fail} Bạn không đủ **${amount} ${emojiGift[itemName]}** để tặng!`)
                 await client.addMarryLevel(message.author.id, mention.id, level * amount)
                 await client.truItem(message.author.id, itemName, amount) 
             }
             const giftembed = new Discord.EmbedBuilder()
-                .setDescription(` <a:NQG_giftbox:1142364127172497510> <@${message.author.id}> đã tặng **${amount} ${emoji[itemName]}** cho <@${mention.id}>
-                 <:daymarry:1137003685659033631> Điểm thân mật hiện tại của bạn được cộng thêm ${amount * level} điểm`
+                .setDescription(` 
+                <a:NQG_giftbox:1142364127172497510> <@${message.author.id}> đã tặng **${amount} ${emojiGift[itemName]}** cho <@${mention.id}>
+                <:daymarry:1137003685659033631> Điểm thân mật của bạn được cộng thêm **${amount * level} điểm**`
                 )
                 .setColor('Green')
             return message.channel.send({ embeds: [giftembed] })

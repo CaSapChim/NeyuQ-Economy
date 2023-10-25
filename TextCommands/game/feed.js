@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const feedAnimalModel = require('../../database/models/eventTrungThu/feedAnimalModel');
+const feedAnimalModel = require('../../database/models/userDataJob/feedAnimalModel');
 
 module.exports = {
     name: 'feed',

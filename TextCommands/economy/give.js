@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const Discord = require('discord.js');
 
 module.exports = {
     name: 'give',
@@ -10,15 +10,20 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
-        const toGiveUser = message.mentions.users.first()
-        const coinsToGive = parseInt(args[1])
-        if (!coinsToGive) return message.reply('Cần nhập số tiền muốn chuyển')
-        if (coinsToGive < 0) return message.reply('Không được nhập số âm')
+        const toGiveUser = message.mentions.users.first();
+        let coinsToGive = args[1];
+        if (coinsToGive < 1 || (isNaN(coinsToGive) && coinsToGive !== "all")) 
+            return message.reply(`Phắc du <@${message.author.id}> sai định dạng rồi`)
+            .then(msg => setTimeout(() => {
+            msg.delete();
+            }, 3000));
+        if (coinsToGive === 'all') coinsToGive = await client.xemTien(message.author.id);
+        if (!toGiveUser) return message.reply('Cách dùng: **`nqg @user <số tiền/all>`**')
 
         let coins = await client.xemTien(message.author.id)
-        if (coins < coinsToGive) return message.reply(`**Nghèo còn bày đặt cho tiền người khác.\nXem lại ví tiền mình đi!**`)
-        if (message.author.id === toGiveUser.id) return message.channel.send(`**<:tiu:1135830334664085554> | ${message.author.username}** đã chuyển cho **${toGiveUser.username} ${coinsToGive.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins.** Huh?...Wait what??`)
-        message.channel.send(`**<:tiu:1135830334664085554> | ${message.author.username}** đã chuyển cho **${toGiveUser.username} ${coinsToGive.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
+        if (coins < coinsToGive || coinsToGive == 0) return message.reply(`<a:MH_x:1166534055819485235> **Xem lại ví tiền mình đi!**`)
+        if (message.author.id === toGiveUser.id) return message.channel.send(`**<a:check:1166534052510187560> | ${message.author.username}** đã chuyển cho **${toGiveUser.username} ${coinsToGive.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins.** Huh?...Wait what??`)
+        message.channel.send(`**<a:check:1166534052510187560> | ${message.author.username}** đã chuyển cho **${toGiveUser.username} ${coinsToGive.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
         await client.truTien(message.author.id, coinsToGive)
         await client.addTien(toGiveUser.id, coinsToGive)
     }

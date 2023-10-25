@@ -1,16 +1,17 @@
-const Discord = require('discord.js')
+const { Client, Message } = require("discord.js");
 
 module.exports = {
-    name: 'ping',
-    aliases: ['p', 'ms'],
-    description: 'Xem độ trễ của bot',
+    name: "ping",
+    aliases: ["p"],
+    description: "Xem độ trễ của bot",
     /**
      * 
-     * @param {Discord.Client} client 
-     * @param {Discord.Message} message 
+     * @param {Client} client 
+     * @param {Message} message 
      * @param {*} args 
      */
-    run: async(client, message, args) => {
-        message.channel.send(`Pong! Độ trễ của bot là ${client.ws.ping}ms`)
-    }
-}
+    run: async (client, message, args) => {
+      const dt = new Date() - new Date(message.createdTimestamp);
+      await message.reply(`**Độ trễ tin nhắn** \`${dt}ms\`\n**Websocket** : \`${client.ws.ping}ms\``)
+  }
+}  

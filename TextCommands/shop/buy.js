@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const emoji = require('../../emoji.json');
 
 /**
  *          Note
@@ -48,17 +49,18 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-
     const author = message.author.id;
+    const checkJob = await client.checkJob(author);
     const balance = await client.xemTien(author);
-    const msgKoDuTien = `**${message.author.username}**, Bạn không có đủ tiền để mua vật phẩm này!`;
+    const msgKoDuTien = `${emoji.fail} Bạn không có đủ tiền để mua vật phẩm này!`;
 
     let buyId = args[0];
     let amount = parseInt(args[1]) || 1;
+    const giaDat = 2000;
 
     const getItemInfo = async (itemId, price, itemName, itemType) => {
-      if ([25, 26, 27, 28, 29, 30, 31].includes(itemId)) amount = 1
-      if (balance < price * amount) return message.channel.send(msgKoDuTien);
+      if ([25, 26, 27, 28, 29, 30, 31, 32].includes(itemId)) amount = 1
+      if (balance < price * amount) return message.reply(msgKoDuTien);
       await client.truTien(author, price * amount);
       if (itemType === 1) await client.addItem(author, itemName, amount, itemType);
       else if (itemType === 2) await client.addItem(author, itemName, amount, itemType);
@@ -66,33 +68,50 @@ module.exports = {
       else if (itemType === 4) {
         await client.addItem(author, itemName, amount, itemType);
       }
-      return message.channel.send(`**<:very:1137010214835597424> ${message.author.username}**, Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+      return message.reply(`${emoji.success} Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
     };
     
-    const getCupInfo = async (itemId, price, itemName, itemType) => {
-      if (balance < price * amount) return message.channel.send(msgKoDuTien);
+    const getCupInfo = async (price, itemName, itemType) => {
+      if (checkJob != "Thợ mỏ") return;
       await client.truTien(author, price * amount);
       if (itemType === 1) await client.addCup(author, itemName, itemType, amount);
       else if (itemType === 2) await client.addCup(author, itemName, itemType, amount);
       else if (itemType === 3) await client.addCup(author, itemName, itemType, amount);
       else if (itemType === 4) await client.addCup(author, itemName, itemType, amount);
-      else if (itemType === 5) await client.addCup(author, itemName, itemType, amount)
-      return message.channel.send(`**<:very:1137010214835597424> ${message.author.username}**, Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+      else if (itemType === 5) await client.addCup(author, itemName, itemType, amount);
+      return message.reply(`${emoji.success} Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
     };
 
-    const getCauCaInfo = async (itemId, price, itemName, itemType) => {
-      if (balance < price * amount) return message.channel.send(msgKoDuTien);
+    const getCauCaInfo = async (price, itemName, itemType) => {
+      if (checkJob != "Ngư dân") return;
+      if (balance < price * amount) return message.reply(msgKoDuTien);
       await client.truTien(author, price * amount);
       if (itemType === 1) await client.addToolCC(author, itemName, itemType, amount);
       else if (itemType === 2) await client.addToolCC(author, itemName, itemType, amount);
       else if (itemType === 3) await client.addToolCC(author, itemName, itemType, amount);
       else if (itemType === 4) await client.addToolCC(author, itemName, itemType, amount);
-      else if (itemType === 5) await client.addToolCC(author, itemName, itemType, amount)
-      return message.channel.send(`**<:very:1137010214835597424> ${message.author.username}**, Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+      else if (itemType === 5) await client.addToolCC(author, itemName, itemType, amount);
+      return message.reply(`${emoji.success} Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+    }
+
+    const getNongSanInfo = async (price, itemName) => {
+      if (checkJob != "Nông dân") return;
+      if (balance < price * amount) return message.reply(msgKoDuTien);
+      await client.truTien(author, price * amount);
+      await client.addNongSan(author, itemName, amount);
+      return message.reply(`${emoji.success} Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+    }
+
+    const getAnimaInfo = async (price, itemName) => {
+      if (checkJob != "Nông dân") return;
+      if (balance < price * amount) return message.reply(msgKoDuTien);
+      await client.truTien(author, price * amount);
+      await client.addAnimal(author, itemName, amount);
+      return message.reply(`${emoji.success} Bạn đã mua thành công **${amount} ${itemName}** với giá **${(amount * price).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
     }
 
     if (!args[0])
-      return message.channel.send("Cách dùng: `!buy <id> <số lượng>`");
+      return message.reply("Cách dùng: `buy <id> <số lượng>`");
 
     const a = await client.item(message.author.id, "Nhẫn bạc") // Ghi sai chính tả thì có nịt mà lưu db
     const b = await client.item(message.author.id, "Nhẫn vàng")
@@ -119,15 +138,15 @@ module.exports = {
 
       ////////////////////////////////////////////// Nhẫn
       case '25':
-        if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`sell <id> soluong`**')
+        if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`Cách bán: sell <id> soluong`**')
         getItemInfo(buyId, 80000, nhanCacLoai[0], 4);
         break;
       case "26":
-        if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`sell <id> soluong`**')
+        if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`Cách bán: sell <id> soluong`**')
         getItemInfo(buyId, 150000, nhanCacLoai[1], 4);
         break;
       case "27":
-        if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`sell <id> soluong`**')
+        if (a || b || c) return message.reply('**Bạn chỉ được sở hữu một loại nhẫn duy nhất\nHãy bán đi nếu muốn mua loại nhẫn khác!\n`Cách bán: sell <id> soluong`**')
         getItemInfo(buyId, 200000, nhanCacLoai[2], 4);
         break;
 
@@ -204,7 +223,7 @@ module.exports = {
         getCupInfo(buyId, 10000, cupCacLoai[3], 4)
         break;
       case '44':
-        getCupInfo(buyId, 12000, cupCacLoai[4], 5)
+        getCupInfo(buyId, 15000, cupCacLoai[4], 5)
         break;
       case '50':
         getCauCaInfo(buyId, 1000, "Cần câu tre", 1) 
@@ -218,6 +237,37 @@ module.exports = {
       case '53':
         getCauCaInfo(buyId, 10000, "Lưới vip", 4)
         break;
+      case '60':
+        getNongSanInfo(5, "hạt lúa");
+        break;
+      case '61':
+        getNongSanInfo(5, "hạt đậu");
+        break;
+      case '62':
+        getNongSanInfo(5, "hạt bí");
+        break;
+      case '63':
+        getNongSanInfo(5, "hạt dưa hấu");
+        break;
+      case '64':
+        getNongSanInfo(5, "khoai tây");
+        break;
+      case '65':
+        getNongSanInfo(5, "cà rốt");
+        break;
+      case '66':
+        if (balance < amount * giaDat) return message.reply(msgKoDuTien);
+        client.addDat(author, amount);
+        client.truTien(author, amount * giaDat);
+        message.reply(`${emoji.success} Bạn đã mua thành công **${amount} mảnh đất <:hand_with_plant:1155701041329872978>** với giá **${(amount * giaDat).toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`);
+        break;
+      case '70':
+        getAnimaInfo(10000, "bò");
+        break;
+      case '71':
+        getAnimaInfo(10000, "gà");
+      case '72':
+        getAnimaInfo(10000, "heo");
       default:
         message.reply('**Không tìm thấy ID của sản phẩm**')
     }
