@@ -75,6 +75,7 @@ module.exports = {
       .setTitle("KHO NÔNG SẢN")
       .setDescription(
         `
+      \`251\` | <:daunh_1:1156608655060381760> Hạt đậu: ${hatDau}
       \`254\` | <:potato45:1166650017264705547> Khoai tây: ${khoaiTay}
       \`255\` | <:Carrot29:1166650013603090432> Cà rốt: ${caRot}
       \`256\` | <:LC_Wheat:1155701062670504037> Lúa: ${lua}

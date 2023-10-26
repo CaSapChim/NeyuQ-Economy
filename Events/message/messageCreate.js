@@ -12,6 +12,7 @@ const prefixModel = require("../../database/models/prefixModel");
 const banModel = require("../../database/models/banModel.js");
 const { dropGift } = require('../../Utils/dropGiftUtil.js')
 const ownerId = require('../../config.json').OWNER_ID
+const emoji = require('../../emoji.json');
 
 module.exports = {
   name: "messageCreate",
@@ -40,19 +41,30 @@ module.exports = {
       prefix = '.'
     }
 
-    if (message.channelId == '1070274984750100522') {
-      const recieveGift = await dropGift(message.author.id)
-      if (recieveGift) {
-        return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `nqg mayman` ngay!**')
-      }
-    }
+    // if (message.channelId == '1070274984750100522') {
+    //   const recieveGift = await dropGift(message.author.id)
+    //   if (recieveGift) {
+    //     return message.reply('**Đang chat thì tự nhiên lụm được <:t_:1138458437559263323>.\nCheck `nqg mayman` ngay!**')
+    //   }
+    // }
 
     const content = message.content.toLowerCase();
     if (!content.startsWith(prefix)) return;
     const args = content.slice(prefix.length).trim().split(/ +/g);
     const cmd = args.shift();
-    const command =
-      client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
+    const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
+    //if (!client.dev.has(command.name)) 
+      client.dev.set(command.name, new Collection()); // client.dev.set(ping, [ownerId]);
+    const isDev = client.dev.get(command.name);
+    if (isDev) {
+      if (!ownerId.includes(message.author.id))
+        return message.reply(`${emoji.fail} Lệnh chỉ dành cho owner và developer!`).then(msg => {
+          setTimeout(() => {
+            msg.delete();
+          }, 3000);
+        });
+    } 
+
     if (!command) return;
 
     if (!message.guild) return
@@ -152,15 +164,14 @@ module.exports = {
     }
 
     ///////////////////////////////////////////////// Cooldown
-    // cooldowns
     if (!client.cooldowns.has(command.name)) {
       client.cooldowns.set(command.name, new Collection());
     }
-
+    
     const now = Date.now();
     const timestamps = client.cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldown || 1) * 1000;
-
+    const cooldownAmount = (command.cooldowns || 1) * 1000;
+    
     if (timestamps.has(message.author.id)) {
       const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 

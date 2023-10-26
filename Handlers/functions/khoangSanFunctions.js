@@ -2,7 +2,10 @@ const khoangSanModel = require('../../database/models/userDataJob/userKSModel');
 
 module.exports = async (client) => {
     client.khoangsan = (userId, name) => new Promise(async ful => {
-        const data = await khoangSanModel.findOne({ userId: userId })
+        const data = await khoangSanModel.findOne({ userId: userId });
+        if(!data) {
+            return ful(0);
+        }
         if (name == "Than")
             return ful(data.khoangSan.than);     
         else if (name == "Sắt")
@@ -17,7 +20,12 @@ module.exports = async (client) => {
     
       client.addKS = async (userId, name, soLuong) => {
         try {
-            let data = await khoangSanModel.findOne({ userId: userId })
+            let data = await khoangSanModel.findOne({ userId: userId });
+            if (!data) {
+                data = new khoangSanModel({
+                    userId: userId
+                });
+            }
             if (name == "Than")
                 data.khoangSan.than += soLuong;
             else if (name == "Sắt")
@@ -36,7 +44,7 @@ module.exports = async (client) => {
     
       client.truKS = async (userId, name, soLuong) => {
         try {
-            let data = await khoangSanModel.findOne({ userId: userId })
+            let data = await khoangSanModel.findOne({ userId: userId });
             if (name == "Than")
                 data.khoangSan.than -= soLuong;
             else if (name == "Sắt")

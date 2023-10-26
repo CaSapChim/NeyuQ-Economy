@@ -6,6 +6,7 @@ const emoji = require('../../emoji.json');
 module.exports = async(client) => {
     client.nongSan = (userId, name) => new Promise(async ful => {
         let data = await userFarmModel.findOne({ userId: userId });
+        if(!data) return ful(0);
         if (name == "hạt lúa")
             return ful(data.plant.hatLua);
         else if (name == "hạt đậu")
@@ -29,6 +30,11 @@ module.exports = async(client) => {
     client.addNongSan = async (userId, name, soLuong) => {
     try {
         let data = await userFarmModel.findOne({ userId: userId });
+        if (!data) {
+            data = new userFarmModel({
+                userId: userId
+            });
+        }
         if (name == "hạt lúa")
             data.plant.hatLua += soLuong;
         else if (name == "hạt đậu")
@@ -169,17 +175,17 @@ module.exports = async(client) => {
 
     // Xem số vật đã được cho ăn 
     client.animalFed = (userId, name) => new Promise(async ful => {
-    let data = await feedAnimalModel.findOne({ userId: userId, name: name });
-    if (!data) {
-        return ful(0);
-    }
-    ful(data.soLuong);
+        let data = await feedAnimalModel.findOne({ userId: userId, name: name });
+        if (!data) {
+            return ful(0);
+        }
+        ful(data.soLuong);
     })
 
     client.choAn = async (userId, name, soLuong) => {
         try { 
             let data = await feedAnimalModel.findOne({ userId: userId, name: name});
-            let animal = await animalModel.findOne({ userId: userId, name: name});
+            let animalData = await userFarmModel.findOne({ userId: userId });
             if (!data) {
             data = new feedAnimalModel({
                 userId: userId,
@@ -188,18 +194,23 @@ module.exports = async(client) => {
                 fed: true,
                 fedAt: new Date()
             })
-            } else if (!data.fedAt) {
-            await feedAnimalModel.findOneAndUpdate(
-                {userId: userId, name: name},
-                {fedAt: new Date(), soLuong: soLuong, fed: true}
-            );
-            animal.soLuong -= soLuong;
+            } 
+            else if (!data.fedAt) {
+                await feedAnimalModel.findOneAndUpdate(
+                    {userId: userId, name: name},
+                    {fedAt: new Date(), soLuong: soLuong, fed: true}
+                );
+                if (name == "bò") animalData.animal.bo -= soLuong;
+                else if (name == "gà") animalData.animal.ga -= soLuong;
+                else if (name == "heo") animalData.animal.heo -= soLuong;
             } else {
-            animal.soLuong -= soLuong;
-            data.soLuong += soLuong;
+                if (name == "bò") animalData.animal.bo -= soLuong;
+                else if (name == "gà") animalData.animal.ga -= soLuong;
+                else if (name == "heo") animalData.animal.heo -= soLuong;
+                data.soLuong += soLuong;
             }
             await data.save();
-            await animal.save();
+            await animalData.save();
         } catch(err) {
                 console.log('Lỗi cho ăn: ', err);
         }

@@ -2,7 +2,8 @@ const caModel = require("../../database/models/userDataJob/userFishModel");
 
 module.exports = async(client) => {
     client.ca = (userId, name) => new Promise(async ful => {
-        const data = await caModel.findOne({ userId: userId })
+        const data = await caModel.findOne({ userId: userId });
+        if(!data) return ful(0);
         if (name == "Very Common")
             return ful(data.ca.veryCommon);     
         else if (name == "Common")
@@ -20,6 +21,11 @@ module.exports = async(client) => {
     client.addCa = async (userId, name, soLuong) => {
         try {   
             let data = await caModel.findOne({ userId: userId });
+            if (!data) {
+                data = new caModel({
+                    userId: userId
+                });
+            }
             if (name == "Very Common")
                 data.ca.veryCommon += soLuong;
             else if (name == "Common") 
