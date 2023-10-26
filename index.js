@@ -61,6 +61,7 @@ client.interactions = new Collection();
 client.cooldowns = new Collection();
 client.commands = new Collection();
 client.aliases = new Collection();
+client.dev = new Collection();
 
 module.exports = client;
 

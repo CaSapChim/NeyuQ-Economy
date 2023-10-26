@@ -32,6 +32,15 @@ module.exports = {
             "255": "cà rốt",
         }
 
+        const emojiHat = {
+            "250": "<:seeds97:1155701097806180372>",
+            "251": "<:daunh_1:1156608655060381760>",
+            "252": "<:gourdpumpkinseedspeeledshellisol:1155704854606532709>",
+            "253": "<:Melon62:1166407956791840919>",
+            "254": "<:potato45:1166650017264705547>",
+            "255": "<:Carrot29:1166650013603090432>",
+        }
+
         const soHat = await client.nongSan(author, idToHat[idHat]);
         if (amount == "all") amount = remainingDat;
         if (remainingDat - amount < 0) return message.reply(`${emoji.fail} Bạn không đủ đất để trồng **${amount} ${idToHat[idHat]}**`);
@@ -39,6 +48,6 @@ module.exports = {
         await client.trongCay(author, idToHat[idHat], amount);
         await client.truNongSan(author, idToHat[idHat], amount); 
         await client.truDat(author, amount);
-        await message.reply(`${emoji.success} Bạn đã trồng thành công **${amount} ${idToHat[idHat]}**`);
+        await message.reply(`${emoji.success} Bạn đã trồng thành công **${amount} ${idToHat[idHat]}** ${emojiHat[idHat]}`);
     }
 }

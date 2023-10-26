@@ -1,5 +1,5 @@
 {
     "TOKEN": "MTE2NjIxODM3MDIyNDUwNDkwNA.GxHl3Y.-vTBQSYgDsd31xtjUcSTPUn9_W8pqJKOmn9RLY",
-    "OWNER_ID": ["874321270437728257", "942356413546635264"],
+    "OWNER_ID": ["874321270437728257", "942356413546635264", "479182625764802560"],
     "MONGO": "mongodb+srv://Kry:mongodbtutorial@cluster0.v17agez.mongodb.net/?retryWrites=true&w=majority"
 }
