@@ -22,6 +22,7 @@ module.exports = {
         const soLuongCaRot = await client.plant(author, "cà rốt");
         //const soLuongBo = await client.animalFed(author, "con bò");
         //const soLuongGa = await client.animalFed(author, "con gà");
+        //const soLuongHeo = await client.animalFed(author, "con gà");
         const soLuongDat = await client.xemDat(author); 
 
         //const tongBo = await client.xemAnimal(author, "con bò");
@@ -33,8 +34,8 @@ module.exports = {
         const timeDuaHau = await client.checkTimePlant(author, "hạt dưa hấu");
         const timeKhoaiTay = await client.checkTimePlant(author, "khoai tây");
         const timeCaRot = await client.checkTimePlant(author, "cà rốt");
-        // const timeBo = await client.checkTimeAnimal(author, "con bò");
-        // const timeGa = await client.checkTimeAnimal(author, "con gà");
+        //const timeBo = await client.checkTimeAnimal(author, "con bò");
+        //const timeGa = await client.checkTimeAnimal(author, "con gà");
 
         function u(plant, time) {
             if (plant > 0 && time == ` `) 
@@ -59,10 +60,10 @@ module.exports = {
                 ${u(soLuongKhoaiTay, timeKhoaiTay)} | <:potato45:1166650017264705547> Khoai tây: ${soLuongKhoaiTay} ${timeKhoaiTay}
                 ${u(soLuongCaRot, timeCaRot)} | <:Carrot29:1166650013603090432> Cà rốt: ${soLuongCaRot} ${timeCaRot}
                 `, inline: false },
-               // { name: 'Vật nuôi đã cho ăn', value: `
-               // <:3331_minecraft_cow:1156555169396428830> Bò: ${soLuongBo} - ${timeBo}
-               // <:Chicken17:1156557573219168307> Gà: ${soLuongGa} - ${timeGa}
-               // `, inline: false }
+                // { name: 'Vật nuôi đã cho ăn', value: `
+                // <:3331_minecraft_cow:1156555169396428830> Bò: ${soLuongBo} - ${timeBo}
+                // <:Chicken17:1156557573219168307> Gà: ${soLuongGa} - ${timeGa}
+                // `, inline: false }
             )
             .setTimestamp();
 
