@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const plantModel = require('../../database/models/userDataJob/plantModel');
-
+const emoji = require('../../emoji.json');
+                                                                            
 module.exports = {
     name: 'thuhoach',
     /**
@@ -11,8 +12,27 @@ module.exports = {
      */
     run: async(client, message, args) => {
         const type = args[0];
-        if (!type) return message.reply('Sai cú pháp.\nCách dùng: `nqg thuhoach lua/bi/dau`');
-        let userPlant = await plantModel.findOne({ userId: message.author.id, plantName: checkHat(type) });
+        if (!type) return message.reply('Sai cú pháp.\nCách dùng: **`nqg thuhoach <id hạt>`**\nVí dụ: **`nqg thuhoach 250`**');
+
+        const idHat = {
+            "250": "hạt lúa",
+            "251": "hạt đậu",
+            "252": "hạt bí",
+            "253": "hạt dưa hấu",
+            "254": "khoai tây",
+            "255": "cà rốt",
+        }
+
+        const idHatToEmojiCay = {
+            "250": "<:LC_Wheat:1155701062670504037>",
+            "251": "<:daunh_1:1156608655060381760>",
+            "252": "<:mc_carved_pumpkin45:1155704587462922272>",
+            "253": "<:Melon8:1166407706496733284>",
+            "254": "<:potato45:1166650017264705547>",
+            "255": "<:Carrot29:1166650013603090432>",
+        }
+
+        let userPlant = await plantModel.findOne({ userId: message.author.id, plantName: idHat[type] });
         if (userPlant && userPlant.plantedAt) {
             const currentTime = new Date();
             const lastPlanted = userPlant.plantedAt;
@@ -25,33 +45,25 @@ module.exports = {
               const remainingMinutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
               const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
        
-              return message.reply(`Cây chưa lớn, vui lòng quay lại sau **${remainingHours} giờ ${remainingMinutes} phút ${remainingSeconds} giây** để thu hoạch.`);
+              return message.reply(`${emoji.fail} Cây chưa lớn, vui lòng quay lại sau **\`${remainingHours}h ${remainingMinutes}p ${remainingSeconds}s\`**`);
             } else {
-                let cayEmoji = {
-                    "lúa" : "cây lúa <:LC_Wheat:1155701062670504037>",
-                    "đậu" : "cây đậu <:Mokoko42:1155701078306852935>",
-                    "bí" : "trái bí <:mc_carved_pumpkin45:1155704587462922272>"
-                };
-                let result = userPlant.soLuongPlanted + Math.round(Math.random() * userPlant.soLuongPlanted);
-                message.reply(`Bạn đã thu hoạch thành công **${result} ${cayEmoji[hatSangCay(type)]}**`);
-                await client.thuHoach(message.author.id, checkHat(type));
+                
+                let result = userPlant.soLuongPlanted * 2;
+                message.reply(`${emoji.success} Bạn đã thu hoạch thành công **${result} ${hatSangCay(type)} ${idHatToEmojiCay[type]}**`);
+                await client.thuHoach(message.author.id, idHat[type]);
                 await client.addNongSan(message.author.id, hatSangCay(type), result);
                 await client.addDat(message.author.id, userPlant.soLuongPlanted);
             }
         }  else {
             message.reply('Bạn chưa trồng cây nào');
         }
-
-        function checkHat(hat) {
-            if (hat == 'lua') return hat = 'hạt lúa';
-            if (hat == 'dau') return hat = 'hạt đậu';
-            if (hat == 'bi') return hat = 'hạt bí';
-        }
-
         function hatSangCay(hat) {
-            if (hat == 'lua') return hat = 'lúa';
-            if (hat == 'dau') return hat = 'đậu';
-            if (hat == 'bi') return hat = 'bí';
+            if (hat == '250') return hat = 'lúa';
+            if (hat == '251') return hat = 'đậu';
+            if (hat == '252') return hat = 'bí';
+            if (hat == '253') return hat = 'dưa hấu';
+            if (hat == '254') return hat = 'khoai tây';
+            if (hat == '255') return hat = 'cà rốt';
         }
     }
 }
