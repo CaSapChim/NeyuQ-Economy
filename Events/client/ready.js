@@ -27,7 +27,7 @@ module.exports = {
     );
 
 ///////////////////////////////////////////////////////////////// time câu cá
-    sendTime();
+ /*   sendTime();
     setInterval(() => {
       sendTime();
     }, 600000);
@@ -119,6 +119,6 @@ module.exports = {
         channel.send({ embeds: [dateEmbed] });
         console.log("Đã 10 phút trôi qua");
       }
-    }
-  },
-};
+    } */
+  }, 
+}; 

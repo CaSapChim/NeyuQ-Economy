@@ -87,7 +87,7 @@ module.exports = {
           .setColor("Red")
           .setTitle("**ĐIỀU KHOẢN SỬ DỤNG - BOT GAME VÀ HỆ THỐNG KINH TẾ**")
           .setDescription(`
-                  Vui lòng đọc kỹ và hiểu rõ các điều khoản sau trước khi sử dụng bot của chúng tôi. Bằng cách sử dụng bot, bạn đồng ý tuân thủ tất cả các điều khoản dưới đây. Nếu bạn không đồng ý với bất kỳ điều khoản nào, vui lòng không sử dụng bot.
+          <a:NA_GeneralUpdates:1166628301817786408> Vui lòng đọc kỹ và hiểu rõ các điều khoản sau trước khi sử dụng bot của chúng tôi. Bằng cách sử dụng bot, bạn đồng ý tuân thủ tất cả các điều khoản dưới đây. Nếu bạn không đồng ý với bất kỳ điều khoản nào, vui lòng không sử dụng bot.<a:NA_GeneralUpdates:1166628301817786408>
     
                   **1. Gian lận và phần mềm thứ 3: **
     
@@ -101,17 +101,18 @@ module.exports = {
                   
                   **Liên hệ:**
                   
-                  Nếu bạn có bất kỳ thắc mắc hoặc báo lỗi nào, vui lòng liên hệ <@874321270437728257> hoặc <@942356413546635264>.
+                  <a:Glitch_warn:1166628298374266971> Nếu bạn có bất kỳ thắc mắc hoặc báo lỗi nào, vui lòng liên hệ <@874321270437728257> hoặc <@942356413546635264>.
                 `);
 
         const tosBtn = new ButtonBuilder()
           .setCustomId("accept")
           .setLabel("Chấp nhận điều khoản")
-          .setStyle(ButtonStyle.Primary);
+          .setStyle(ButtonStyle.Primary)
+          .setEmoji("👍")
 
         const row = new ActionRowBuilder().addComponents(tosBtn);
 
-        const a = await message.channel.send({
+        const a = await message.reply({
           content: "**## Bằng cách sử dụng bot, bạn xác nhận đã đọc, hiểu và chấp nhận tất cả các điều khoản sử dụng. Nếu bạn không đồng ý với các điều khoản này, vui lòng không sử dụng bot.**",
           embeds: [tosEmbed],
           components: [row],
@@ -142,9 +143,9 @@ module.exports = {
             const embed = new EmbedBuilder()
               .setColor('Green')
               .setDescription(`
-              > <a:thanks:1166234899443892305> Cảm ơn <@${message.author.id}> đã đồng ý chấp hành luật, tặng bạn **10000 <:O_o:1135831601205481523> coins**
+              <:pink_reply:1166330261315801158> Cảm ơn <@${message.author.id}> đã đồng ý chấp hành luật, tặng bạn **10000 <:O_o:1135831601205481523> coins**
 
-              > <a:arrow:1165858733474205726>  **\`${prefix} job\`** để chọn nghề cho mình ngay nàooooo <a:Anime:1165861221363355769>
+              <:pink_reply:1166330261315801158>**\`${prefix} job\`** để chọn nghề cho mình ngay nàooooo <a:Anime:1165861221363355769>
               `); 
 
             a.edit({ embeds: [embed], components: [], content: "" });
