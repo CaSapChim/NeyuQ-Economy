@@ -61,26 +61,14 @@ module.exports = {
             if (interaction.user.id != message.author.id) return interaction.reply({ content: "Hey, nút này không dành cho bạn", ephemeral: true});
             if (interaction.customId == "ngudan") {
                 await client.addJob(interaction.user.id, "Ngư dân");
-                const newUserFish = new caModel({
-                    userId: interaction.user.id,
-                });
-                await newUserFish.save();
                 await a.edit({ embeds: [embedHandler("ngư dân <a:Minecraft_Fish:1166253935808499743>", interaction.user.id)], components: [] });
             }
             else if (interaction.customId == 'thomo') {
                 await client.addJob(interaction.user.id, "Thợ mỏ");
-                const newUserKS = new khoangSanModel({
-                    userId: interaction.user.id
-                });
-                await newUserKS.save();
                 await a.edit({ embeds: [embedHandler("thợ mỏ <a:mcenchantedpicka:1166253932545323008>", interaction.user.id)], components: [] });
             }
             else if (interaction.customId == 'nongdan') {
                await client.addJob(interaction.user.id, "Nông dân");
-               const newUserFarm = new userFarmModel({
-                    userId: interaction.user.id
-               })
-               await newUserFarm.save();
                await a.edit({ embeds: [embedHandler("nông dân <a:minecraftenchant:1166253939658866698>", interaction.user.id)], components: [] });             
             }
         })

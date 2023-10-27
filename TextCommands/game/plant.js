@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const emoji = require('../../emoji.json');
+const plantModel = require('../../database/models/userDataJob/plantModel');
 
 module.exports = {
     name: 'plant',
@@ -15,6 +16,8 @@ module.exports = {
         let idHat = args[0];
         let amount = args[1];
         const author = message.author.id;
+        const checkJob = await client.checkJob(author);
+        if (checkJob != "Nông dân") return;
         let remainingDat = await client.xemDat(author);
         if (amount < 0 || (isNaN(amount) && amount != "all")) 
             return message.reply(`${emoji.fail} Phắc du <@${author}> sai định dạng rồi`)
@@ -22,7 +25,8 @@ module.exports = {
                     setTimeout(() => {
                         msg.delete();
                     }, 3000);
-                });
+                }); 
+                
         const idToHat = {
             "250": "hạt lúa",
             "251": "hạt đậu",
@@ -31,7 +35,7 @@ module.exports = {
             "254": "khoai tây",
             "255": "cà rốt",
         }
-
+        
         const emojiHat = {
             "250": "<:seeds97:1155701097806180372>",
             "251": "<:daunh_1:1156608655060381760>",
@@ -40,14 +44,29 @@ module.exports = {
             "254": "<:potato45:1166650017264705547>",
             "255": "<:Carrot29:1166650013603090432>",
         }
-
+        
         const soHat = await client.nongSan(author, idToHat[idHat]);
         if (amount == "all") amount = remainingDat;
         if (remainingDat - amount < 0) return message.reply(`${emoji.fail} Bạn không đủ đất để trồng **${amount} ${idToHat[idHat]}**`);
-        if (soHat < amount || amount == 0) return message.reply(`${emoji.fail} Bạn không đủ **${idToHat[idHat]}** để trồng`)
-        await client.trongCay(author, idToHat[idHat], amount);
-        await client.truNongSan(author, idToHat[idHat], amount); 
-        await client.truDat(author, amount);
-        await message.reply(`${emoji.success} Bạn đã trồng thành công **${amount} ${idToHat[idHat]}** ${emojiHat[idHat]}`);
+        if (soHat < amount || amount == 0) return message.reply(`${emoji.fail} Bạn không đủ **${idToHat[idHat]}** để trồng`);
+
+        const data = await plantModel.findOne({ userId: author, plantName: idToHat[idHat] });
+        if (data && data.soLuongPlanted > 0) {
+            const currentTime = new Date();
+            const lastPlanted = data.plantedAt;
+            const elapsedMillis = currentTime - lastPlanted;
+            const timeToGrow = 30 * 60 * 1000;
+            if (elapsedMillis > timeToGrow) {
+                await client.trongCay(author, idToHat[idHat], amount);
+                await client.truNongSan(author, idToHat[idHat], amount); 
+                await client.truDat(author, amount);
+                await message.reply(`${emoji.success} Bạn đã trồng thành công **${amount} ${idToHat[idHat]}** ${emojiHat[idHat]}`);
+            }
+        } else {
+            await client.trongCay(author, idToHat[idHat], amount);
+            await client.truNongSan(author, idToHat[idHat], amount); 
+            await client.truDat(author, amount);
+            await message.reply(`${emoji.success} Bạn đã trồng thành công **${amount} ${idToHat[idHat]}** ${emojiHat[idHat]}`);
+        }
     }
 }
