@@ -1,85 +1,90 @@
-const userFarmModel = require("../../database/models/userDataJob/userFarmModel");
+const userModel = require("../../database/models/userDataJob/userModel");
 const feedAnimalModel = require("../../database/models/userDataJob/feedAnimalModel");
 const plantModel = require('../../database/models/userDataJob/plantModel');
 const emoji = require('../../emoji.json');
 
 module.exports = async(client) => {
     client.nongSan = (userId, name) => new Promise(async ful => {
-        let data = await userFarmModel.findOne({ userId: userId });
+        let data = await userModel.findOne({ userId: userId });
         if(!data) return ful(0);
-        if (name == "hạt lúa")
-            return ful(data.plant.hatLua);
-        else if (name == "hạt đậu")
-            return ful(data.plant.hatDau);
-        else if (name == "hạt bí")
-            return ful(data.plant.hatBi);
-        else if (name == "hạt dưa hấu")
-            return ful(data.plant.hatDuaHau);
-        else if (name == "khoai tây")
-            return ful(data.plant.khoaiTay);
-        else if (name == "cà rốt")
-            return ful(data.plant.caRot);
-        else if (name == "lúa")
-            return ful(data.plant.lua);
-        else if (name == "bí")
-            return ful(data.plant.bi);
-        else if (name == "dưa hấu")
-            return ful(data.plant.duaHau);
+        const nongSan = {
+            "hạt lúa": "hatLua",
+            "hạt đậu": "hatDau",
+            "hạt bí": "hatBi",
+            "hạt dưa hấu": "hatDuaHau",
+            "khoai tây": "khoaiTay",
+            "cà rốt": "caRot",
+            "lúa": "lua",
+            "bí": "bi",
+            "dưa hấu": "duaHau",
+        };
+        const property = nongSan[name];
+        if (property)
+            return ful(data.plant[property]);
       })
     
     client.addNongSan = async (userId, name, soLuong) => {
-    try {
-        let data = await userFarmModel.findOne({ userId: userId });
-        if (!data) {
-            data = new userFarmModel({
-                userId: userId
-            });
+        try {
+            const nongSan = {
+                "hạt lúa": "hatLua",
+                "hạt đậu": "hatDau",
+                "hạt bí": "hatBi",
+                "hạt dưa hấu": "hatDuaHau",
+                "khoai tây": "khoaiTay",
+                "cà rốt": "caRot",
+                "lúa": "lua",
+                "bí": "bi",
+                "dưa hấu": "duaHau",
+            };
+            let data = await userModel.findOne({ userId: userId });
+            if (!data) {
+                data = new userModel({
+                    userId: userId
+                });
+            }
+           if (!data) {
+               data = new userModel({
+                   userId: userId
+               });
+           }
+
+           const property = nongSan[name];
+           if (property) 
+               data.plant[property] += soLuong;
+            await data.save();
+        } catch(err) {
+            console.log('Lỗi add nông sản: ', err);
         }
-        if (name == "hạt lúa")
-            data.plant.hatLua += soLuong;
-        else if (name == "hạt đậu")
-            data.plant.hatDau += soLuong;
-        else if (name == "hạt bí")
-            data.plant.hatBi += soLuong;
-        else if (name == "hạt dưa hấu")
-            data.plant.hatDuaHau += soLuong;
-        else if (name == "khoai tây")
-            data.plant.khoaiTay += soLuong;
-        else if (name == "cà rốt")
-            data.plant.caRot += soLuong;
-        else if (name == "lúa")
-            data.plant.lua += soLuong;
-        else if (name == "bí")
-            data.plant.bi += soLuong;
-        else if (name == "dưa hấu")
-            data.plant.duaHau += soLuong;
-        await data.save();
-    } catch(err) {
-        console.log('Lỗi add nông sản: ', err);
-    }
     }
 
     client.truNongSan = async (userId, name, soLuong) => {
         try {
-            let data = await userFarmModel.findOne({ userId: userId });
-            if (name == "hạt lúa")
-                data.plant.hatLua -= soLuong;
-            else if (name == "hạt đậu")
-                data.plant.hatDau -= soLuong;
-            else if (name == "hạt bí")
-                data.plant.hatBi -= soLuong;
-            else if (name == "hạt dưa hấu")
-                data.plant.hatDuaHau -= soLuong;
-            else if (name == "khoai tây")
-                data.plant.khoaiTay -= soLuong;
-            else if (name == "cà rốt")
-                data.plant.caRot -= soLuong;
-            else if (name == "lúa")
-                data.plant.lua -= soLuong;
-            else if (name == "bí")
-                data.plant.bi -= soLuong;
-            else if (name == "dưa hấu")
-                data.plant.duaHau -= soLuong;
+            const nongSan = {
+                "hạt lúa": "hatLua",
+                "hạt đậu": "hatDau",
+                "hạt bí": "hatBi",
+                "hạt dưa hấu": "hatDuaHau",
+                "khoai tây": "khoaiTay",
+                "cà rốt": "caRot",
+                "lúa": "lua",
+                "bí": "bi",
+                "dưa hấu": "duaHau",
+            };
+            let data = await userModel.findOne({ userId: userId });
+            if (!data) {
+                data = new userModel({
+                    userId: userId
+                });
+            }
+           if (!data) {
+               data = new userModel({
+                   userId: userId
+               });
+           }
+
+           const property = nongSan[name];
+           if (property) 
+               data.plant[property] -= soLuong;
             await data.save();
         } catch(err) {
             console.log('Lỗi trừ nông sản: ', err);
@@ -134,13 +139,13 @@ module.exports = async(client) => {
     }
 
     client.xemDat = (userId) => new Promise(async ful => {
-        let data = await userFarmModel.findOne({ userId: userId });
+        let data = await userModel.findOne({ userId: userId });
         return ful(data.land);
     })
 
     client.addDat = async (userId, soLuong) => {
         try {
-            let data = await userFarmModel.findOne({ userId: userId });
+            let data = await userModel.findOne({ userId: userId });
             data.land += soLuong;
             await data.save();
         } catch (err) {
@@ -150,7 +155,7 @@ module.exports = async(client) => {
 
     client.truDat = async (userId, soLuong) => {
         try {
-            let data = await userFarmModel.findOne({ userId: userId });
+            let data = await userModel.findOne({ userId: userId });
             data.land -= soLuong;
             await data.save();
         } catch(err) {
@@ -167,7 +172,7 @@ module.exports = async(client) => {
 
     // Xem animal mình có
     client.xemAnimal = (userId, name) => new Promise(async ful => {
-        let data = await userFarmModel.findOne({ userId: userId });
+        let data = await userModel.findOne({ userId: userId });
         if (name == "bò") return ful(data.animal.bo);
         if (name == "gà") return ful(data.animal.ga);
         if (name == "heo") return ful(data.animal.heo);
@@ -185,7 +190,7 @@ module.exports = async(client) => {
     client.choAn = async (userId, name, soLuong) => {
         try { 
             let data = await feedAnimalModel.findOne({ userId: userId, name: name});
-            let animalData = await userFarmModel.findOne({ userId: userId });
+            let animalData = await userModel.findOne({ userId: userId });
             if (!data) {
             data = new feedAnimalModel({
                 userId: userId,
@@ -218,7 +223,7 @@ module.exports = async(client) => {
 
     client.addAnimal = async(userId, name, soLuong) => {
         try {
-            let data = await userFarmModel.findOne({ userId: userId });
+            let data = await userModel.findOne({ userId: userId });
             if (name == "bò") data.animal.bo += soLuong;
             else if (name == "gà") data.animal.ga += soLuong;
             else if (name == "heo") data.animal.heo += soLuong;
