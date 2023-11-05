@@ -32,9 +32,6 @@ module.exports = {
    */
   run: async (client, message) => {
     try {
-      let checkJob = await client.checkJob(message.author.id);
-      if (checkJob != "Thợ mỏ") return;
-
       let verifyData = await verifiedModel.findOne({ userId: message.author.id })
       if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
       await Captcha(client, message)

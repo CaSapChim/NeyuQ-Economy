@@ -14,8 +14,6 @@ module.exports = {
    */
   run: async (client, message, args) => {
     try {
-      let checkJob = await client.checkJob(message.author.id);
-
       const cupCacLoai = [
         "Cúp gỗ",
         "Cúp đá",
@@ -25,6 +23,15 @@ module.exports = {
       ];
   
       const [
+        cup1,
+        cup2,
+        cup3,
+        cup4,
+        cup5,
+        canCauTre,
+        canCauXin,
+        luoi,
+        luoiVip,
         veryCommonFish,
         commonFish,
         unCommonFish,
@@ -46,6 +53,15 @@ module.exports = {
         bi,
         duaHau,
       ] = await Promise.all([
+        client.cup(message.author.id, "Cúp gỗ"),
+        client.cup(message.author.id, "Cúp đá"),
+        client.cup(message.author.id, "Cúp sắt"),
+        client.cup(message.author.id, "Cúp vàng"),
+        client.cup(message.author.id, "Cúp kim cương"),
+        client.toolCauCa(message.author.id, "Cần câu tre"),
+        client.toolCauCa(message.author.id, "Cần câu xịn"),
+        client.toolCauCa(message.author.id, "Lưới"),
+        client.toolCauCa(message.author.id, "Lưới vip"),
         client.ca(message.author.id, "Very Common"),
         client.ca(message.author.id, "Common"),
         client.ca(message.author.id, "Uncommon"),
@@ -65,20 +81,48 @@ module.exports = {
         client.nongSan(message.author.id, "cà rốt"),
         client.nongSan(message.author.id, "lúa"),
         client.nongSan(message.author.id, "bí"),
-        client.nongSan(message.author.id, "dưa hấu"),
+        client.nongSan(message.author.id, "dưa hấu"), 
       ]);
-  
-      const embedKS = new Discord.EmbedBuilder()
-        .setColor(0xff9900)
-        .setTitle(`KHO KHOÁNG SẢN`)
+
+      const cupEmbed = new Discord.EmbedBuilder()
+        .setColor(0x0099ff)
+        .setTitle(`KHO CÚP`)
         .setDescription(
-          `\`230\` | ${`<:905609870114439208:1134500336862765138> Than: ${than}\n`}` +
-            `\`231\` | ${`<:842601384561868810:1134500649548124161> Sắt: ${sat}\n`}`
+          `\`200\` | <:wooden_pickaxe:1134750444854444042> ${cupCacLoai[0]}: ${cup1}\n` +
+            `\`201\` | <:905609866691891220:1134749977529299014> ${cupCacLoai[1]}: ${cup2}\n` +
+            `\`202\` | <:mcmine:1134750599188062350> ${cupCacLoai[2]}: ${cup3}\n` +
+            `\`203\` | <:Gold_Pickaxe:1134749444785578034> ${cupCacLoai[3]}: ${cup4}\n` +
+            `\`204\` | <:diamond_pickaxe:1134749671613550592> ${cupCacLoai[4]}: ${cup5}`
         )
         .setFooter({ text: "Chúc bạn một ngày tốt lành" })
         .setTimestamp();
+      
+      const toolCCEmbed = new Discord.EmbedBuilder()
+        .setColor(0x0099ff)
+        .setTitle(`DỤNG CỤ CÂU CÁ`)
+        .setDescription(
+          `\`210\` | <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> Cần câu tre: ${canCauTre}\n` +
+            `\`211\` | <:pro_fishing_rod49:1140523548763500665> Cần câu xin: ${canCauXin}\n` +
+            `\`212\` | <:Flimsy_Net_NH_Icon:1140523599170654298> Lưới: ${luoi}\n` +
+            `\`213\` | <:Golden_Net_NH_Inv_Icon:1140523506656874496> Lưới vip: ${luoiVip}`
+        )
+        .setFooter({ text: "Chúc bạn một ngày tốt lành" })
+        .setTimestamp();
+
+      const khoangSanEmbed = new Discord.EmbedBuilder()
+      .setColor(0xff9900)
+      .setTitle(`KHO KHOÁNG SẢN`)
+      .setDescription(
+        `\`230\` | ${`<:905609870114439208:1134500336862765138> Than: ${than}\n`}` +
+          `\`231\` | ${`<:842601384561868810:1134500649548124161> Sắt: ${sat}\n`}` +
+          `\`232\` | ${`<:905609869485289482:1134500596871868588> Vàng: ${vang}\n`}` +
+          `\`233\` | ${`<:943215979935187074:1134500706095743150> Kim cương: ${kc}\n`}` +
+          `\`234\` | ${`<:905609867769839637:1134500619898593380> Ngọc lục bảo: ${nlb}\n`}`
+      )
+      .setFooter({ text: "Chúc bạn một ngày tốt lành" })
+      .setTimestamp();
   
-      const embedCa = new Discord.EmbedBuilder()
+      const caEmbed = new Discord.EmbedBuilder()
         .setColor("Blue")
         .setTitle(`KHO CÁ`)
         .setDescription(
@@ -92,12 +136,18 @@ module.exports = {
         .setFooter({ text: "Chúc bạn một ngày tốt lành" })
         .setTimestamp();
   
-        const embedNongSan = new Discord.EmbedBuilder()
+        const nongSanEmbed = new Discord.EmbedBuilder()
         .setColor("Green")
-        .setTitle("KHO NÔNG SẢN")
+        .setTitle("KHO NÔNG SẢN VÀ THỨC ĂN VẬT NUÔI")
         .setDescription(
           `
+        \`300\` | <:04c48f45474c4130a2fb5ff3a3939268:1166927884187877417> Thức ăn bò: 
+        \`301\` | <:chickenFeed:1166927888336027748> Thức ăn gà: 
+        \`302\` | <:pigFeed:1166929189681766461> Thức ăn heo: 
+        \`250\` | <:seeds97:1155701097806180372> Hạt lúa: ${hatLua}
         \`251\` | <:daunh_1:1156608655060381760> Hạt đậu: ${hatDau}
+        \`252\` | <:gourdpumpkinseedspeeledshellisol:1155704854606532709> Hạt bí: ${hatBi}
+        \`253\` | <:Melon62:1166407956791840919> Hạt dưa hấu: ${hatDuaHau}
         \`254\` | <:potato45:1166650017264705547> Khoai tây: ${khoaiTay}
         \`255\` | <:Carrot29:1166650013603090432> Cà rốt: ${caRot}
         \`256\` | <:LC_Wheat:1155701062670504037> Lúa: ${lua}
@@ -108,7 +158,7 @@ module.exports = {
         .setFooter({ text: "Chúc bạn một ngày tốt lành" })
         .setTimestamp();
   
-        const embedSanPham = new Discord.EmbedBuilder()
+        const sanPhamEmbed= new Discord.EmbedBuilder()
           .setColor("Green")
           .setTitle("KHO SẢN PHẨM")
           .setDescription(
@@ -124,8 +174,7 @@ module.exports = {
             `
           )
   
-      let embeds = [];
-      await checkJobEmbed(checkJob);
+      let embeds = [cupEmbed, toolCCEmbed, khoangSanEmbed, caEmbed, nongSanEmbed, sanPhamEmbed];
       let a = await message
         .reply({ content: `<@${message.author.id}>`, embeds: [embeds[0]] })
         .catch((e) => console.log(e));
@@ -236,90 +285,6 @@ module.exports = {
             });
           }
         });
-      }
-      async function checkJobEmbed(nameJob) {
-        if (nameJob == "Thợ mỏ") {
-          const cup1 = await client.cup(message.author.id, "Cúp gỗ");
-          const cup2 = await client.cup(message.author.id, "Cúp đá");
-          const cup3 = await client.cup(message.author.id, "Cúp sắt");
-          const cup4 = await client.cup(message.author.id, "Cúp vàng");
-          const cup5 = await client.cup(message.author.id, "Cúp kim cương");
-  
-          const cupEmbed = new Discord.EmbedBuilder()
-            .setColor(0x0099ff)
-            .setTitle(`KHO CÚP`)
-            .setDescription(
-              `\`200\` | <:wooden_pickaxe:1134750444854444042> ${cupCacLoai[0]}: ${cup1}\n` +
-                `\`201\` | <:905609866691891220:1134749977529299014> ${cupCacLoai[1]}: ${cup2}\n` +
-                `\`202\` | <:mcmine:1134750599188062350> ${cupCacLoai[2]}: ${cup3}\n` +
-                `\`203\` | <:Gold_Pickaxe:1134749444785578034> ${cupCacLoai[3]}: ${cup4}\n` +
-                `\`204\` | <:diamond_pickaxe:1134749671613550592> ${cupCacLoai[4]}: ${cup5}`
-            )
-            .setFooter({ text: "Chúc bạn một ngày tốt lành" })
-            .setTimestamp();
-  
-          const khoangSanEmbed = new Discord.EmbedBuilder()
-            .setColor(0xff9900)
-            .setTitle(`KHO KHOÁNG SẢN`)
-            .setDescription(
-              `\`230\` | ${`<:905609870114439208:1134500336862765138> Than: ${than}\n`}` +
-                `\`231\` | ${`<:842601384561868810:1134500649548124161> Sắt: ${sat}\n`}` +
-                `\`232\` | ${`<:905609869485289482:1134500596871868588> Vàng: ${vang}\n`}` +
-                `\`233\` | ${`<:943215979935187074:1134500706095743150> Kim cương: ${kc}\n`}` +
-                `\`234\` | ${`<:905609867769839637:1134500619898593380> Ngọc lục bảo: ${nlb}\n`}`
-            )
-            .setFooter({ text: "Chúc bạn một ngày tốt lành" })
-            .setTimestamp();
-          return embeds.push(cupEmbed, khoangSanEmbed, embedCa, embedSanPham, embedNongSan);
-        } else if (nameJob == "Ngư dân") {
-          const canCauTre = await client.toolCauCa(
-            message.author.id,
-            "Cần câu tre"
-          );
-          const canCauXin = await client.toolCauCa(
-            message.author.id,
-            "Cần câu xịn"
-          );
-          const luoi = await client.toolCauCa(message.author.id, "Lưới");
-          const luoiVip = await client.toolCauCa(message.author.id, "Lưới vip");
-  
-          const toolCCEmbed = new Discord.EmbedBuilder()
-            .setColor(0x0099ff)
-            .setTitle(`DỤNG CỤ CÂU CÁ`)
-            .setDescription(
-              `\`210\` | <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> Cần câu tre: ${canCauTre}\n` +
-                `\`211\` | <:pro_fishing_rod49:1140523548763500665> Cần câu xin: ${canCauXin}\n` +
-                `\`212\` | <:Flimsy_Net_NH_Icon:1140523599170654298> Lưới: ${luoi}\n` +
-                `\`213\` | <:Golden_Net_NH_Inv_Icon:1140523506656874496> Lưới vip: ${luoiVip}`
-            )
-            .setFooter({ text: "Chúc bạn một ngày tốt lành" })
-            .setTimestamp();
-  
-          return embeds.push(toolCCEmbed, embedCa, embedNongSan, embedSanPham, embedKS);
-        } else if (nameJob == "Nông dân") {
-          const nongSanEmbed = new Discord.EmbedBuilder()
-            .setColor("Green")
-            .setTitle("KHO NÔNG SẢN VÀ THỨC ĂN VẬT NUÔI")
-            .setDescription(
-              `
-            \`300\` | <:04c48f45474c4130a2fb5ff3a3939268:1166927884187877417> Thức ăn bò: 
-            \`301\` | <:chickenFeed:1166927888336027748> Thức ăn gà: 
-            \`302\` | <:pigFeed:1166929189681766461>Thức ăn heo: 
-            \`250\` | <:seeds97:1155701097806180372> Hạt lúa: ${hatLua}
-            \`251\` | <:daunh_1:1156608655060381760> Hạt đậu: ${hatDau}
-            \`252\` | <:gourdpumpkinseedspeeledshellisol:1155704854606532709> Hạt bí: ${hatBi}
-            \`253\` | <:Melon62:1166407956791840919> Hạt dưa hấu: ${hatDuaHau}
-            \`254\` | <:potato45:1166650017264705547> Khoai tây: ${khoaiTay}
-            \`255\` | <:Carrot29:1166650013603090432> Cà rốt: ${caRot}
-            \`256\` | <:LC_Wheat:1155701062670504037> Lúa: ${lua}
-            \`257\` | <:mc_carved_pumpkin45:1155704587462922272> Bí: ${bi} 
-            \`258\` | <:Melon8:1166407706496733284> Dưa hấu: ${duaHau}
-            `
-            )
-            .setFooter({ text: "Chúc bạn một ngày tốt lành" })
-            .setTimestamp();
-          return embeds.push(nongSanEmbed, embedSanPham, embedCa, embedKS);
-        }
       }
     } catch(err) {
       console.log("Lỗi lệnh kho:", err);

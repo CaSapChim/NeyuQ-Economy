@@ -21,8 +21,6 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-    let checkJob = await client.checkJob(message.author.id);
-    if (checkJob != "Ngư dân") return;
     
     let verifyData = await verifiedModel.findOne({ userId: message.author.id })
     if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
@@ -188,32 +186,26 @@ module.exports = {
       case "Very Common":
         result = getRandomFish(veryCommonFish);
         await client.addCa(message.author.id, "Very Common", 1);
-        client.addJobExp(message.author.id, 50);
         break;
       case "Common":
         result = getRandomFish(commonFish);
         await client.addCa(message.author.id, "Common", 1);
-        client.addJobExp(message.author.id, 100);
         break;
       case "Uncommon":
         result = getRandomFish(unCommonFish);
         await client.addCa(message.author.id, "Uncommon", 1);
-        client.addJobExp(message.author.id, 200);
         break;
       case "Rare":
         result = getRandomFish(rareFish);
         await client.addCa(message.author.id, "Rare", 1);
-        client.addJobExp(message.author.id, 500);
         break;
       case "Very Rare":
         result = getRandomFish(veryRareFish);
         await client.addCa(message.author.id, "Very Rare", 1);
-        client.addJobExp(message.author.id, 1000);
         break;
       case "Legendary":
         result = getRandomFish(legendFish);
         await client.addCa(message.author.id, "Legendary", 1);
-        client.addJobExp(message.author.id, 2000);
         break;
     }
     if (result) {
@@ -233,7 +225,7 @@ module.exports = {
           \n \
           Kích thước: **${result.size[Math.floor(Math.random() * result.size.length)]} cm** 
           \n \
-          Giá: **${result.price}**  <:O_o:1135831601205481523> coins`
+`
         )
         .setFooter({ text: `${result.catch}` })
         .setThumbnail(`${result.image}`);
