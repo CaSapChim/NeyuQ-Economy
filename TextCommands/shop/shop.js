@@ -14,9 +14,10 @@ module.exports = {
    * @returns 
    */
   run: async (client, message, args, userData) => {
-    const checkJob = await client.checkJob(message.author.id);
-
-    const hoaEmbed = new EmbedBuilder()
+    let type = args[0];
+    if (!type) return message.reply("**Cách dùng: `nqg shop <taphoa/tool/farm>`**")
+    if (type == 'taphoa') {
+        const hoaEmbed = new EmbedBuilder()
         .setTitle("QUẦY BÁN HOA")
         .setDescription(`
             <:chamxanh:1124058113742479400> \`20\` <a:p_flower22:1135636392374960310> Bông Hoa | \`1,500\` <:O_o:1135831601205481523> coins 
@@ -83,9 +84,90 @@ module.exports = {
         .setFooter({ text: 'Chúc bạn chơi vui vẻ'})
 
         let embeds = [hoaEmbed, nhanEmbed, roleEmbed, ruongEmbed];
-        checkJobEmbed(checkJob)
         let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
         await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
+    }
+
+    else if (type == 'tool') {
+        const toolCauCaEmbed = new EmbedBuilder()
+            .setTitle('QUẦN BÁN DỤNG CỤ CÂU CÁ')
+            .setDescription(`
+            <:chamxanh:1124058113742479400> \`50\` <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> Cần câu tre | \`1000\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`51\` <:pro_fishing_rod49:1140523548763500665> Cần câu xịn | \`2000\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`52\` <:Flimsy_Net_NH_Icon:1140523599170654298> Lưới | \`5000\` <:O_o:1135831601205481523> coins
+            
+            <:chamxanh:1124058113742479400> \`53\` <:Golden_Net_NH_Inv_Icon:1140523506656874496> Lưới vip | \`10000\` <:O_o:1135831601205481523> coins
+            `)
+            .setTimestamp()
+            .setImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/80c3dffd-c628-49d1-844e-5960a300911b/dec5a92-c7133b22-e89a-4467-8706-166bcbc679ec.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzgwYzNkZmZkLWM2MjgtNDlkMS04NDRlLTU5NjBhMzAwOTExYlwvZGVjNWE5Mi1jNzEzM2IyMi1lODlhLTQ0NjctODcwNi0xNjZiY2JjNjc5ZWMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Ym0HwecdEfO6pvoG4SbJA1AIBEWczJiwHGd-erNVluE')
+            .setFooter({ text: 'Chúc bạn chơi vui vẻ'})
+        const toolMineEmbed = new EmbedBuilder()
+            .setTitle('Quần bán cúp')
+            .setDescription(`
+            <:chamxanh:1124058113742479400> \`40\` <:wooden_pickaxe:1134750444854444042> Cúp gỗ | \`1000\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`41\` <:905609866691891220:1134749977529299014> Cúp đá | \`2000\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`42\` <:mcmine:1134750599188062350> Cúp sắt | \`5000\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`43\` <:Gold_Pickaxe:1134749444785578034> Cúp vàng | \`10000\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`44\` <:diamond_pickaxe:1134749671613550592> Cúp kim cương | \`15000\` <:O_o:1135831601205481523> coins
+
+            `)
+            .setTimestamp()
+            .setImage('https://i.pinimg.com/originals/c5/24/88/c524883fb8d7bf0e26529db473a31a8e.gif')
+            .setFooter({ text: 'Chúc bạn chơi vui vẻ'})
+
+        let embeds = [toolCauCaEmbed, toolMineEmbed];
+        let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
+        await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
+    }
+
+    else if (type == 'farm') {
+        const hatEmbed = new EmbedBuilder()
+        .setTitle("SHOP CÂY TRỒNG")
+        .setDescription(`
+            <:chamxanh:1124058113742479400> \`60\` <:seeds97:1155701097806180372> Hạt lúa | \`5,00\` <:O_o:1135831601205481523> coins 
+            
+            <:chamxanh:1124058113742479400> \`61\` <:Mokoko42:1155701078306852935> Hạt đậu | \`5,00\` <:O_o:1135831601205481523> coins
+            
+            <:chamxanh:1124058113742479400> \`62\` <:gourdpumpkinseedspeeledshellisol:1155704854606532709> Hạt bí | \`5,00\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`63\` <:Melon62:1166407956791840919> Hạt dưa hấu | \`5,00\` <:O_o:1135831601205481523> coins
+            
+            <:chamxanh:1124058113742479400> \`64\` <:potato45:1166650017264705547> Khoai tây | \`5,00\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`65\` <:Carrot29:1166650013603090432> Cà rốt | \`5,00\` <:O_o:1135831601205481523> coins
+
+            <:chamxanh:1124058113742479400> \`66\` <:hand_with_plant:1155701041329872978> Đất | \`2000\` <:O_o:1135831601205481523> coins
+
+        `)
+        .setColor('Green')
+        .setImage('https://opengameart.org/sites/default/files/crops-preview-animated.gif')
+        .setTimestamp()
+        .setFooter({ text: "Chúc bạn một ngày tốt lành"})
+
+        const animalEmbed = new EmbedBuilder()
+            .setTitle("SHOP VẬT NUÔI")
+            .setColor("Green")
+            .setDescription(` 
+                <:chamxanh:1124058113742479400> \`70\` <:3331_minecraft_cow:1156555169396428830> Con bò | \`10,000\` <:O_o:1135831601205481523> coins
+
+                <:chamxanh:1124058113742479400> \`71\` <:Chicken17:1156557573219168307> Con gà | \`10,000\` <:O_o:1135831601205481523> coins
+
+                <:chamxanh:1124058113742479400> \`72\` <:technoblade64:1166408637623844924> Con heo | \`10,000\` <:O_o:1135831601205481523> coins
+            `)
+            .setImage('https://media.discordapp.net/attachments/1129012498855636992/1156413823956299878/2ce11169f769ee257dbe2f55d7d2d781.jpg?ex=6514e1cc&is=6513904c&hm=5cf221f79e393f31b9c3000154cf358e814fcef2cfbf33e40fabf8ca2d5a18aa&=&width=481&height=317')
+            .setTimestamp()
+            .setFooter({ text: "Chúc bạn một ngày tốt lành"})
+
+        let embeds = [hatEmbed, animalEmbed];
+        let a = await message.channel.send({ embeds: [embeds[0]] }).catch(e => console.log(e))
+        await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
+    }
 
     async function chuyen_trang(client, message, authorid, embeds) {
         let trangHienTai = 0
@@ -154,84 +236,6 @@ module.exports = {
             }
             }
         );
-    }
-    function checkJobEmbed(nameJob) {
-        let jobEmbed;
-        if (nameJob == "Ngư dân") {
-            jobEmbed = new EmbedBuilder()
-                .setTitle('QUẦN BÁN DỤNG CỤ CÂU CÁ')
-                .setDescription(`
-                <:chamxanh:1124058113742479400> \`50\` <:Flimsy_Fishing_Rod_NH_Icon:1140523577821626438> Cần câu tre | \`1000\` <:O_o:1135831601205481523> coins
-    
-                <:chamxanh:1124058113742479400> \`51\` <:pro_fishing_rod49:1140523548763500665> Cần câu xịn | \`2000\` <:O_o:1135831601205481523> coins
-    
-                <:chamxanh:1124058113742479400> \`52\` <:Flimsy_Net_NH_Icon:1140523599170654298> Lưới | \`5000\` <:O_o:1135831601205481523> coins
-                
-                <:chamxanh:1124058113742479400> \`53\` <:Golden_Net_NH_Inv_Icon:1140523506656874496> Lưới vip | \`10000\` <:O_o:1135831601205481523> coins
-                `)
-                .setTimestamp()
-                .setImage('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/80c3dffd-c628-49d1-844e-5960a300911b/dec5a92-c7133b22-e89a-4467-8706-166bcbc679ec.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzgwYzNkZmZkLWM2MjgtNDlkMS04NDRlLTU5NjBhMzAwOTExYlwvZGVjNWE5Mi1jNzEzM2IyMi1lODlhLTQ0NjctODcwNi0xNjZiY2JjNjc5ZWMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Ym0HwecdEfO6pvoG4SbJA1AIBEWczJiwHGd-erNVluE')
-                .setFooter({ text: 'Chúc bạn chơi vui vẻ'})
-            return embeds.push(jobEmbed);
-        } else if (nameJob == "Thợ mỏ") {
-            jobEmbed = new EmbedBuilder()
-                .setTitle('Quần bán cúp')
-                .setDescription(`
-                <:chamxanh:1124058113742479400> \`40\` <:wooden_pickaxe:1134750444854444042> Cúp gỗ | \`1000\` <:O_o:1135831601205481523> coins
-    
-                <:chamxanh:1124058113742479400> \`41\` <:905609866691891220:1134749977529299014> Cúp đá | \`2000\` <:O_o:1135831601205481523> coins
-    
-                <:chamxanh:1124058113742479400> \`42\` <:mcmine:1134750599188062350> Cúp sắt | \`5000\` <:O_o:1135831601205481523> coins
-    
-                <:chamxanh:1124058113742479400> \`43\` <:Gold_Pickaxe:1134749444785578034> Cúp vàng | \`10000\` <:O_o:1135831601205481523> coins
-    
-                <:chamxanh:1124058113742479400> \`44\` <:diamond_pickaxe:1134749671613550592> Cúp kim cương | \`15000\` <:O_o:1135831601205481523> coins
-    
-                `)
-                .setTimestamp()
-                .setImage('https://i.pinimg.com/originals/c5/24/88/c524883fb8d7bf0e26529db473a31a8e.gif')
-                .setFooter({ text: 'Chúc bạn chơi vui vẻ'})
-            return embeds.push(jobEmbed);
-        } else if (nameJob == "Nông dân") {
-            const hatEmbed = new EmbedBuilder()
-                .setTitle("SHOP CÂY TRỒNG")
-                .setDescription(`
-                    <:chamxanh:1124058113742479400> \`60\` <:seeds97:1155701097806180372> Hạt lúa | \`5,00\` <:O_o:1135831601205481523> coins 
-                    
-                    <:chamxanh:1124058113742479400> \`61\` <:Mokoko42:1155701078306852935> Hạt đậu | \`5,00\` <:O_o:1135831601205481523> coins
-                    
-                    <:chamxanh:1124058113742479400> \`62\` <:gourdpumpkinseedspeeledshellisol:1155704854606532709> Hạt bí | \`5,00\` <:O_o:1135831601205481523> coins
-
-                    <:chamxanh:1124058113742479400> \`63\` <:Melon62:1166407956791840919> Hạt dưa hấu | \`5,00\` <:O_o:1135831601205481523> coins
-                    
-                    <:chamxanh:1124058113742479400> \`64\` <:potato45:1166650017264705547> Khoai tây | \`5,00\` <:O_o:1135831601205481523> coins
-
-                    <:chamxanh:1124058113742479400> \`65\` <:Carrot29:1166650013603090432> Cà rốt | \`5,00\` <:O_o:1135831601205481523> coins
-
-                    <:chamxanh:1124058113742479400> \`66\` <:hand_with_plant:1155701041329872978> Đất | \`2000\` <:O_o:1135831601205481523> coins
-
-                `)
-                .setColor('Green')
-                .setImage('https://opengameart.org/sites/default/files/crops-preview-animated.gif')
-                .setTimestamp()
-                .setFooter({ text: "Chúc bạn một ngày tốt lành"})
-        
-            const animalEmbed = new EmbedBuilder()
-                .setTitle("SHOP VẬT NUÔI")
-                .setColor("Green")
-                .setDescription(` 
-                    <:chamxanh:1124058113742479400> \`70\` <:3331_minecraft_cow:1156555169396428830> Con bò | \`10,000\` <:O_o:1135831601205481523> coins
-    
-                    <:chamxanh:1124058113742479400> \`71\` <:Chicken17:1156557573219168307> Con gà | \`10,000\` <:O_o:1135831601205481523> coins
-
-                    <:chamxanh:1124058113742479400> \`72\` <:technoblade64:1166408637623844924> Con heo | \`10,000\` <:O_o:1135831601205481523> coins
-                `)
-                .setImage('https://media.discordapp.net/attachments/1129012498855636992/1156413823956299878/2ce11169f769ee257dbe2f55d7d2d781.jpg?ex=6514e1cc&is=6513904c&hm=5cf221f79e393f31b9c3000154cf358e814fcef2cfbf33e40fabf8ca2d5a18aa&=&width=481&height=317')
-                .setTimestamp()
-                .setFooter({ text: "Chúc bạn một ngày tốt lành"})
-            embeds.push(hatEmbed);
-            embeds.push(animalEmbed);
-        }
     }
   }
 }

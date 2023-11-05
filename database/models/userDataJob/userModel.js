@@ -15,20 +15,6 @@ const userSchema = new mongoose.Schema(
         streak: { type: Number, default: 0 },
         timestamp: Date,
     },
-    job: {
-        jobType: {
-            type: String, default: "" 
-        },
-        currentExpJob: {
-            type: Number, default: 0
-        },
-        maxExpJob: {
-            type: Number, default: 100
-        },
-        levelJob: {
-            type: Number, default: 1
-        }
-    },
     khoangSan: {
         than: { type: Number, default: 0 },
         sat: { type: Number, default: 0 },

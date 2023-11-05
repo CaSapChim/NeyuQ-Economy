@@ -50,7 +50,6 @@ module.exports = {
    */
   run: async (client, message, args, userData) => {
     const author = message.author.id;
-    const checkJob = await client.checkJob(author);
     const balance = await client.xemTien(author);
     const msgKoDuTien = `${emoji.fail} Bạn không có đủ tiền để mua vật phẩm này!`;
 
@@ -72,7 +71,6 @@ module.exports = {
     };
     
     const getCupInfo = async (price, itemName, itemType) => {
-      if (checkJob != "Thợ mỏ") return;
       await client.truTien(author, price * amount);
       if (itemType === 1) await client.addCup(author, itemName, itemType, amount);
       else if (itemType === 2) await client.addCup(author, itemName, itemType, amount);
@@ -83,7 +81,6 @@ module.exports = {
     };
 
     const getCauCaInfo = async (price, itemName, itemType) => {
-      if (checkJob != "Ngư dân") return;
       if (balance < price * amount) return message.reply(msgKoDuTien);
       await client.truTien(author, price * amount);
       if (itemType === 1) await client.addToolCC(author, itemName, itemType, amount);
@@ -95,7 +92,6 @@ module.exports = {
     }
 
     const getNongSanInfo = async (price, itemName) => {
-      if (checkJob != "Nông dân") return;
       if (balance < price * amount) return message.reply(msgKoDuTien);
       await client.truTien(author, price * amount);
       await client.addNongSan(author, itemName, amount);
@@ -103,7 +99,6 @@ module.exports = {
     }
 
     const getAnimaInfo = async (price, itemName) => {
-      if (checkJob != "Nông dân") return;
       if (balance < price * amount) return message.reply(msgKoDuTien);
       await client.truTien(author, price * amount);
       await client.addAnimal(author, itemName, amount);
