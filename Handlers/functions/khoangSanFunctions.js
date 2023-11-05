@@ -1,4 +1,4 @@
-const userModel = require('../../database/models/userDataJob/userKSModel');
+const userModel = require('../../database/models/userDataJob/userModel');
 
 module.exports = async (client) => {
     client.khoangsan = (userId, name) => new Promise(async ful => {

@@ -37,7 +37,7 @@ module.exports = {
             const currentTime = new Date();
             const lastPlanted = userPlant.plantedAt;
             const elapsedMillis = currentTime - lastPlanted;
-            const timeToGrow = 30 * 60 * 1000;
+            const timeToGrow = 1 * 60 * 1000;
             if (elapsedMillis < timeToGrow) {
 
               const remainingMillis = timeToGrow - elapsedMillis;

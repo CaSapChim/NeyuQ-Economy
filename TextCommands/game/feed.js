@@ -12,9 +12,11 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
-        const idAnimal = args[0];
-        let amount = args[1];
         const author = message.author;
+
+        const animalName = args[0];
+        let amount = args[1];
+
         if (amount < 0 || (isNan(amount) && amount != "all"))
             return message.reply(`${emoji.fail} Phắc du <@${author.id}> sai định dạng rồi`)
             .then(msg => {
@@ -23,8 +25,17 @@ module.exports = {
                 }, 3000);
             });
         
-        const idAnimalToAnimal = {
-            
+        const animalObj = {
+            "bo": "bò",
+            "ga": "gà",
+            "heo": "heo",
         }
+
+        let animal = await client.xemAnimal(author, animalObj[animalName]);
+        if (amount == "all") amount = await client.xemAnimal(author, animalObj[animalName]);
+        if (animal < parseInt(amount)) amount = await client.xemAnimal(author, animalObj[animalName]);
+
+        await client.choAn(author, animalObj[animalName], parseInt(amount));
+        message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công`);
     }
 }

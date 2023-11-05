@@ -11,8 +11,6 @@ module.exports = {
      */
     run: async (client, message, args) => {
         const author = message.author.id;
-        const checkJob = await client.checkJob(author);
-        if (checkJob != "Nông dân") return;
 
         const soLuongLua = await client.plant(author, "hạt lúa");
         const soLuongDau = await client.plant(author, "hạt đậu");
@@ -20,13 +18,14 @@ module.exports = {
         const soLuongDuaHau = await client.plant(author, "hạt dưa hấu");
         const soLuongKhoaiTay = await client.plant(author, "khoai tây");
         const soLuongCaRot = await client.plant(author, "cà rốt");
-        //const soLuongBo = await client.animalFed(author, "con bò");
-        //const soLuongGa = await client.animalFed(author, "con gà");
-        //const soLuongHeo = await client.animalFed(author, "con gà");
+        //const soLuongBo = await client.animalFed(author, "bò");
+        //const soLuongGa = await client.animalFed(author, "gà");
+        //const soLuongHeo = await client.animalFed(author, "heo");
         const soLuongDat = await client.xemDat(author); 
 
-        //const tongBo = await client.xemAnimal(author, "con bò");
-        //const tongGa = await client.xemAnimal(author, "con gà");
+        const tongBo = await client.xemAnimal(author, "bò");
+        const tongGa = await client.xemAnimal(author, "gà");
+        const tongHeo = await client.xemAnimal(author, "heo");
 
         const timeLua = await client.checkTimePlant(author, "hạt lúa");
         const timeDau = await client.checkTimePlant(author, "hạt đậu");
@@ -46,10 +45,15 @@ module.exports = {
 
         const embed = new Discord.EmbedBuilder()
             .setTitle('Thành phần nông trại của bạn')
-            .setDescription(`<:hand_with_plant:1155701041329872978> Số lượng đất còn dư: ${soLuongDat}`)
-            // <:3331_minecraft_cow:1156555169396428830> Tổng số bò chưa cho ăn: ${tongBo}
-            // <:Chicken17:1156557573219168307> Tổng số gà chưa cho ăn: ${tongGa}
-            // `)
+            .setDescription(`
+            > <:hand_with_plant:1155701041329872978> Số lượng đất còn dư: ${soLuongDat}
+            
+            > <:3331_minecraft_cow:1156555169396428830> Tổng số bò chưa cho ăn: ${tongBo}
+
+            > <:Chicken17:1156557573219168307> Tổng số gà chưa cho ăn: ${tongGa}
+
+            > <:technoblade64:1166408637623844924> Tổng số heo chưa cho ăn: ${tongHeo} 
+            `)
             .setColor('Green')
             .addFields(
                 { name: 'Cây trồng', value: `
