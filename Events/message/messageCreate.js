@@ -25,7 +25,7 @@ module.exports = {
    */
   async execute(client, message) {
     if (message.author.bot) return;
-
+    if (!ownerId.includes(message.author.id)) return;
     // Ban
     let ban = await banModel.findOne({ userId: message.author.id });
     if (ban) {
@@ -144,8 +144,6 @@ module.exports = {
               .setColor('Green')
               .setDescription(`
               <:pink_reply:1166330261315801158> Cảm ơn <@${message.author.id}> đã đồng ý chấp hành luật, tặng bạn **10000 <:O_o:1135831601205481523> coins**
-
-              <:pink_reply:1166330261315801158>**\`${prefix} job\`** để chọn nghề cho mình ngay nàooooo <a:Anime:1165861221363355769>
               `); 
 
             a.edit({ embeds: [embed], components: [], content: "" });

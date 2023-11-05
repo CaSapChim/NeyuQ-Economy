@@ -217,7 +217,7 @@ module.exports = async(client) => {
             await data.save();
             await animalData.save();
         } catch(err) {
-                console.log('Lỗi cho ăn: ', err);
+            console.log('Lỗi cho ăn: ', err);
         }
     }
 
@@ -294,7 +294,7 @@ module.exports = async(client) => {
         let lastPlanted = data.plantedAt;
         const currentTime = new Date();
         const elapsedMillis = currentTime - lastPlanted;
-        const timeToGrow = 30 * 60 * 1000;
+        const timeToGrow = 1 * 60 * 1000;
         if (data && lastPlanted) {
             if (elapsedMillis < timeToGrow) {
                 const remainingMillis = timeToGrow - elapsedMillis;
@@ -319,7 +319,7 @@ module.exports = async(client) => {
         let lastFed = data.fedAt;
         const currentTime = new Date();
         const elapsedMillis = currentTime - lastFed;
-        const timeToGrow = 30 * 60 * 1000;
+        const timeToGrow = 1 * 60 * 1000;
         if (data && lastFed) {
           if (elapsedMillis < timeToGrow) {
             const remainingMillis = timeToGrow - elapsedMillis;

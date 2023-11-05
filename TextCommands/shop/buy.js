@@ -261,8 +261,10 @@ module.exports = {
         break;
       case '71':
         getAnimaInfo(10000, "gà");
+        break;
       case '72':
         getAnimaInfo(10000, "heo");
+        break;
       default:
         message.reply('**Không tìm thấy ID của sản phẩm**')
     }
