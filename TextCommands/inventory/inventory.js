@@ -22,7 +22,7 @@ module.exports = {
    * @param {*} userData
    */
   run: async (client, message, args, userData) => {
-
+    const baloImg = `https://media.discordapp.net/attachments/1080138430756966450/1170957876198637629/pngtree-opened-backpack-png-image_462877-removebg-preview.png?ex=655aee81&is=65487981&hm=c0de0f7882c65034a52f5a77fe0d438ff1277de2a0b6e1a0b3e20b4fb55e8340&=&width=625&height=625`;
     const nhanCacLoai = [
       'Nhẫn bạc',
       'Nhẫn vàng',
@@ -137,7 +137,8 @@ module.exports = {
       `\`104\` | ${`<:gubng:1124018585275211867> ${hoaCacLoai[4]}: **${soLuongGauBong}**\n`}`
       )
       .setFooter({text: 'Chúc bạn chơi vui vẻ'})
-      .setTimestamp();
+      .setThumbnail(baloImg)
+      .setTimestamp()
 
       const nhanEmbed = new Discord.EmbedBuilder()
         .setColor(0xaf00fc)
@@ -148,6 +149,7 @@ module.exports = {
             `\`112\` | ${`<:nhan:1124415305347780720> ${nhanCacLoai[2]}: **${soLuongNhanHong}**\n`}`
         )
         .setFooter({text: 'Chúc bạn chơi vui vẻ'})
+      .setThumbnail(baloImg)
         .setTimestamp();
       
     const ruongEmbed = new Discord.EmbedBuilder()
@@ -159,6 +161,7 @@ module.exports = {
           `\`122\` | ${`<:rngkimcuong:1135643691814494278> ${ruongCacLoai[2]}: **${soLuongRuongDacBiet}**\n`}`
       )
       .setFooter({text: 'Chúc bạn chơi vui vẻ'})
+      .setThumbnail(baloImg)
       .setTimestamp();
 
     const huyHieuEmbed = new Discord.EmbedBuilder() 
@@ -173,6 +176,7 @@ module.exports = {
           `> ${`<:trikivalentine:1136577479679688815> | ${huyHieuCacLoai[5]}: **${soLuongHH6}**\n`}`
         )
         .setFooter({text: 'Chúc bạn chơi vui vẻ'})
+      .setThumbnail(baloImg)
         .setTimestamp()
 
     let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, huyHieuEmbed];
