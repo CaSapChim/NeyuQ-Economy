@@ -10,7 +10,8 @@ const {
 const userModel = require("../../database/models/userDataJob/userModel.js");
 const prefixModel = require("../../database/models/prefixModel");
 const banModel = require("../../database/models/banModel.js");
-const { dropGift } = require('../../Utils/dropGiftUtil.js')
+const sanPhamModel = require('../../database/models/userDataJob/sanPhamModel.js');
+const { dropGift } = require('../../Utils/dropGiftUtil.js');
 const ownerId = require('../../config.json').OWNER_ID
 const emoji = require('../../emoji.json');
 
@@ -53,17 +54,17 @@ module.exports = {
     const args = content.slice(prefix.length).trim().split(/ +/g);
     const cmd = args.shift();
     const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-    //if (!client.dev.has(command.name)) 
-      client.dev.set(command.name, new Collection()); // client.dev.set(ping, [ownerId]);
-    const isDev = client.dev.get(command.name);
-    if (isDev) {
-      if (!ownerId.includes(message.author.id))
-        return message.reply(`${emoji.fail} Lệnh chỉ dành cho owner và developer!`).then(msg => {
-          setTimeout(() => {
-            msg.delete();
-          }, 3000);
-        });
-    } 
+    // if (!client.dev.has(command.name)) 
+    //   client.dev.set(command.name, new Collection()); // client.dev.set(ping, [ownerId]);
+    // const isDev = client.dev.get(command.name);
+    // if (isDev) {
+    //   if (!ownerId.includes(message.author.id))
+    //     return message.reply(`${emoji.fail} Lệnh chỉ dành cho owner và developer!`).then(msg => {
+    //       setTimeout(() => {
+    //         msg.delete();
+    //       }, 3000);
+    //     });
+    // } 
 
     if (!command) return;
 
@@ -79,7 +80,7 @@ module.exports = {
     // } 
 
     // Lấy thông tin người dùng và chuyển đến lệnh
-    let userData;
+    let userData, sanphamData;
     try {
       userData = await userModel.findOne({ userId: message.author.id });
       if (!userData) {
@@ -140,14 +141,20 @@ module.exports = {
               inventory: [],
             });
 
+            sanphamData = new sanPhamModel({
+              userId: message.author.id
+            })
+
             const embed = new EmbedBuilder()
               .setColor('Green')
               .setDescription(`
-              <:pink_reply:1166330261315801158> Cảm ơn <@${message.author.id}> đã đồng ý chấp hành luật, tặng bạn **10000 <:O_o:1135831601205481523> coins**
+              <:pink_reply:1166330261315801158> Cảm ơn <@${message.author.id}> đã đồng ý chấp hành luật 
+              <:pink_reply:1166330261315801158> Tặng bạn **10000 <:O_o:1135831601205481523> coins để khởi nghiệp**
               `); 
 
             a.edit({ embeds: [embed], components: [], content: "" });
             await userData.save();
+            await sanphamData.save();
   
             await client.addTien(message.author.id, 10000);
           }
