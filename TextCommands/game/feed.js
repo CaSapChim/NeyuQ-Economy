@@ -17,7 +17,7 @@ module.exports = {
         const animalName = args[0];
         let amount = args[1];
 
-        if (amount < 0 || (isNan(amount) && amount != "all"))
+        if (parseInt(amount) < 1 || (isNaN(amount) && amount.toLowerCase() !== "all"))
             return message.reply(`${emoji.fail} Phắc du <@${author.id}> sai định dạng rồi`)
             .then(msg => {
                 setTimeout(() => {
@@ -31,11 +31,11 @@ module.exports = {
             "heo": "heo",
         }
 
-        let animal = await client.xemAnimal(author, animalObj[animalName]);
-        if (amount == "all") amount = await client.xemAnimal(author, animalObj[animalName]);
-        if (animal < parseInt(amount)) amount = await client.xemAnimal(author, animalObj[animalName]);
+        let animal = await client.xemAnimal(author.id, animalObj[animalName]);
+        if (amount == "all") amount = await client.xemAnimal(author.id, animalObj[animalName]);
+        if (animal < parseInt(amount)) amount = await client.xemAnimal(author.id, animalObj[animalName]);
 
-        await client.choAn(author, animalObj[animalName], parseInt(amount));
+        await client.choAn(author.id, animalObj[animalName], parseInt(amount));
         message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công`);
     }
 }

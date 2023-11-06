@@ -42,12 +42,6 @@ module.exports = async(client) => {
                     userId: userId
                 });
             }
-           if (!data) {
-               data = new userModel({
-                   userId: userId
-               });
-           }
-
            const property = nongSan[name];
            if (property) 
                data.plant[property] += soLuong;
@@ -187,67 +181,86 @@ module.exports = async(client) => {
         ful(data.soLuong);
     })
 
+    client.addAnimal = async(userId, name, soLuong) => {
+        try {
+            let data = await userModel.findOne({ userId: userId });
+            const animal = {
+                "bò": "bo",
+                "gà": "ga",
+                "heo": "heo",
+            };
+            
+           const property = animal[name];
+           if (property) 
+               data.animal[property] += soLuong;
+            data.save();
+        } catch(err) {
+            console.log('Lỗi add động vật: ', err);
+        }
+    }
+
+    client.truAnimal = async(userId, name, soLuong) => {
+        try {
+            let data = await userModel.findOne({ userId: userId });
+            const animal = {
+                "bò": "bo",
+                "gà": "ga",
+                "heo": "heo",
+            };
+            
+           const property = animal[name];
+           if (property) 
+               data.animal[property] -= soLuong;
+            data.save();
+        } catch(err) {
+            console.log("Lỗi truAnimal: ", err);
+        }
+    }
+
     client.choAn = async (userId, name, soLuong) => {
         try { 
             let data = await feedAnimalModel.findOne({ userId: userId, name: name});
-            let animalData = await userModel.findOne({ userId: userId });
             if (!data) {
-            data = new feedAnimalModel({
-                userId: userId,
-                name: name,
-                soLuong: soLuong,
-                fed: true,
-                fedAt: new Date()
-            })
+                data = new feedAnimalModel({
+                    userId: userId,
+                    name: name,
+                    soLuong: soLuong,
+                    fed: true,
+                    fedAt: new Date()
+                })
+                client.truAnimal(userId, name, soLuong);
             } 
             else if (!data.fedAt) {
                 await feedAnimalModel.findOneAndUpdate(
                     {userId: userId, name: name},
                     {fedAt: new Date(), soLuong: soLuong, fed: true}
                 );
-                if (name == "bò") animalData.animal.bo -= soLuong;
-                else if (name == "gà") animalData.animal.ga -= soLuong;
-                else if (name == "heo") animalData.animal.heo -= soLuong;
+                client.truAnimal(userId, name, soLuong);
             } else {
-                if (name == "bò") animalData.animal.bo -= soLuong;
-                else if (name == "gà") animalData.animal.ga -= soLuong;
-                else if (name == "heo") animalData.animal.heo -= soLuong;
+                client.truAnimal(userId, name, soLuong);
                 data.soLuong += soLuong;
             }
             await data.save();
-            await animalData.save();
         } catch(err) {
             console.log('Lỗi cho ăn: ', err);
         }
     }
 
-    client.addAnimal = async(userId, name, soLuong) => {
+    client.vatSua = async(userId) => {    
         try {
-            let data = await userModel.findOne({ userId: userId });
-            if (name == "bò") data.animal.bo += soLuong;
-            else if (name == "gà") data.animal.ga += soLuong;
-            else if (name == "heo") data.animal.heo += soLuong;
-            await data.save();
-        } catch(err) {
-            console.log('Lỗi add động vật: ', err);
-        }
-    }
-
-    client.vatSua = async(userId, name) => {
-        try {
-            let data = await feedAnimalModel.findOne({ userId: userId, name: name});
+            let data = await feedAnimalModel.findOne({ userId: userId, name: "bò"});
             if (!data || !data.fedAt) {
-            data = new feedAnimalModel({
-                userId: userId,
-                name: name,
-                fed: false,
-                fedAt: new Date()
-            })
+                    data = new feedAnimalModel({
+                    userId: userId,
+                    name: "bò",
+                    fed: false,
+                    fedAt: new Date()
+                })
             } else {
-            await feedAnimalModel.findOneAndUpdate(
-                {userId: userId, name: name},
-                {fed: false, soLuong: 0, $unset: {fedAt: 1}}
-            )
+                await feedAnimalModel.findOneAndUpdate(
+                    {userId: userId, name: "bò"},
+                    {fed: false, soLuong: 0, $unset: {fedAt: 1}}
+                )
             }
             await data.save();
         } catch(err) {
@@ -255,19 +268,19 @@ module.exports = async(client) => {
         }
     }
 
-    client.layTrung = async(userId, name) => {
+    client.layTrung = async(userId) => {
         try {
-            let data = await feedAnimalModel.findOne({ userId: userId, name: name});
+            let data = await feedAnimalModel.findOne({ userId: userId, name: "gà"});
             if (!data || !data.fedAt) {
             data = new feedAnimalModel({
                 userId: userId,
-                name: name,
+                name: "gà",
                 fed: false,
                 fedAt: new Date()
             })
             } else {
             await feedAnimalModel.findOneAndUpdate(
-                {userId: userId, name: name},
+                {userId: userId, name: "gà"},
                 {fed: false, soLuong: 0, $unset: {fedAt: 1}}
             )
             }
@@ -277,9 +290,23 @@ module.exports = async(client) => {
         }
     }
 
-    client.thit = (userId, soLuong) => {
+    client.thit = async (userId) => {
         try {
-
+            let data = await feedAnimalModel.findOne({ userId: userId, name: "heo" });
+            if (!data || !data.fedAt) {
+                data = new feedAnimalModel({
+                    userId: userId,
+                    name: "heo",
+                    fed: false,
+                    fedAt: new Date()
+                })
+                } else {
+                await feedAnimalModel.findOneAndUpdate(
+                    {userId: userId, name: "heo"},
+                    {fed: false, soLuong: 0, $unset: {fedAt: 1}}
+                )
+                }
+                await data.save();
         } catch(err) {
             console.log("Lỗi thit: ", err);
         }

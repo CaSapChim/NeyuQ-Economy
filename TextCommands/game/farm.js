@@ -12,29 +12,56 @@ module.exports = {
     run: async (client, message, args) => {
         const author = message.author.id;
 
-        const soLuongLua = await client.plant(author, "hạt lúa");
-        const soLuongDau = await client.plant(author, "hạt đậu");
-        const soLuongBi = await client.plant(author, "hạt bí");
-        const soLuongDuaHau = await client.plant(author, "hạt dưa hấu");
-        const soLuongKhoaiTay = await client.plant(author, "khoai tây");
-        const soLuongCaRot = await client.plant(author, "cà rốt");
-        //const soLuongBo = await client.animalFed(author, "bò");
-        //const soLuongGa = await client.animalFed(author, "gà");
-        //const soLuongHeo = await client.animalFed(author, "heo");
-        const soLuongDat = await client.xemDat(author); 
-
-        const tongBo = await client.xemAnimal(author, "bò");
-        const tongGa = await client.xemAnimal(author, "gà");
-        const tongHeo = await client.xemAnimal(author, "heo");
-
-        const timeLua = await client.checkTimePlant(author, "hạt lúa");
-        const timeDau = await client.checkTimePlant(author, "hạt đậu");
-        const timeBi = await client.checkTimePlant(author, "hạt bí");
-        const timeDuaHau = await client.checkTimePlant(author, "hạt dưa hấu");
-        const timeKhoaiTay = await client.checkTimePlant(author, "khoai tây");
-        const timeCaRot = await client.checkTimePlant(author, "cà rốt");
-        //const timeBo = await client.checkTimeAnimal(author, "con bò");
-        //const timeGa = await client.checkTimeAnimal(author, "con gà");
+        
+        const [
+            soLuongLua,
+            soLuongDau,
+            soLuongBi,
+            soLuongDuaHau,
+            soLuongKhoaiTay,
+            soLuongCaRot,
+            soLuongBo,
+            soLuongGa,
+            soLuongHeo,
+            soLuongDat,
+            tongBo,
+            tongGa,
+            tongHeo,
+            timeLua,
+            timeDau,
+            timeBi,
+            timeDuaHau,
+            timeKhoaiTay,
+            timeCaRot,
+            timeBo,
+            timeGa,
+            timeHeo
+        ] = await Promise.all([
+            client.plant(author, "hạt lúa"),
+            client.plant(author, "hạt đậu"),
+            client.plant(author, "hạt bí"),
+            client.plant(author, "hạt dưa hấu"),
+            client.plant(author, "khoai tây"),
+            client.plant(author, "cà rốt"),
+            client.animalFed(author, "bò"),
+            client.animalFed(author, "gà"),
+            client.animalFed(author, "heo"),
+            client.xemDat(author), 
+    
+            client.xemAnimal(author, "bò"),
+            client.xemAnimal(author, "gà"),
+            client.xemAnimal(author, "heo"),
+    
+            client.checkTimePlant(author, "hạt lúa"),
+            client.checkTimePlant(author, "hạt đậu"),
+            client.checkTimePlant(author, "hạt bí"),
+            client.checkTimePlant(author, "hạt dưa hấu"),
+            client.checkTimePlant(author, "khoai tây"),
+            client.checkTimePlant(author, "cà rốt"),
+            client.checkTimeAnimal(author, "bò"),
+            client.checkTimeAnimal(author, "gà"),
+            client.checkTimeAnimal(author, "heo"),
+        ])
 
         function u(plant, time) {
             if (plant > 0 && time == ` `) 
@@ -49,7 +76,7 @@ module.exports = {
             > <:hand_with_plant:1155701041329872978> Số lượng đất còn dư: ${soLuongDat}
             
             > <:3331_minecraft_cow:1156555169396428830> Tổng số bò chưa cho ăn: ${tongBo}
-
+            
             > <:Chicken17:1156557573219168307> Tổng số gà chưa cho ăn: ${tongGa}
 
             > <:technoblade64:1166408637623844924> Tổng số heo chưa cho ăn: ${tongHeo} 
@@ -57,18 +84,20 @@ module.exports = {
             .setColor('Green')
             .addFields(
                 { name: 'Cây trồng', value: `
-                ${u(soLuongLua, timeLua)} | <:LC_Wheat:1155701062670504037> Lúa: ${soLuongLua} ${timeLua}
-                ${u(soLuongDau, timeDau)} | <:daunh_1:1156608655060381760> Đậu: ${soLuongDau} ${timeDau}
-                ${u(soLuongBi, timeBi)} | <:mc_carved_pumpkin45:1155704587462922272> Bí: ${soLuongBi} ${timeBi}
-                ${u(soLuongDuaHau, timeDuaHau)} | <:Melon8:1166407706496733284> Dưa hấu: ${soLuongDuaHau} ${timeDuaHau}
-                ${u(soLuongKhoaiTay, timeKhoaiTay)} | <:potato45:1166650017264705547> Khoai tây: ${soLuongKhoaiTay} ${timeKhoaiTay}
-                ${u(soLuongCaRot, timeCaRot)} | <:Carrot29:1166650013603090432> Cà rốt: ${soLuongCaRot} ${timeCaRot}
+                ${u(soLuongLua, timeLua)} | **\`250\`** | <:LC_Wheat:1155701062670504037> Lúa: ${soLuongLua} ${timeLua}
+                ${u(soLuongDau, timeDau)} | **\`251\`** | <:daunh_1:1156608655060381760> Đậu: ${soLuongDau} ${timeDau}
+                ${u(soLuongBi, timeBi)} | **\`252\`** | <:mc_carved_pumpkin45:1155704587462922272> Bí: ${soLuongBi} ${timeBi}
+                ${u(soLuongDuaHau, timeDuaHau)} | **\`253\`** | <:Melon8:1166407706496733284> Dưa hấu: ${soLuongDuaHau} ${timeDuaHau}
+                ${u(soLuongKhoaiTay, timeKhoaiTay)} | **\`254\`** | <:potato45:1166650017264705547> Khoai tây: ${soLuongKhoaiTay} ${timeKhoaiTay}
+                ${u(soLuongCaRot, timeCaRot)} | **\`255\`** | <:Carrot29:1166650013603090432> Cà rốt: ${soLuongCaRot} ${timeCaRot}
                 `, inline: false },
-                // { name: 'Vật nuôi đã cho ăn', value: `
-                // <:3331_minecraft_cow:1156555169396428830> Bò: ${soLuongBo} - ${timeBo}
-                // <:Chicken17:1156557573219168307> Gà: ${soLuongGa} - ${timeGa}
-                // `, inline: false }
+                { name: 'Vật nuôi đã cho ăn', value: `
+                ${u(soLuongBo, timeBo)} | **\`bo\`** | <:3331_minecraft_cow:1156555169396428830> Bò: ${soLuongBo} ${timeBo}
+                ${u(soLuongGa, timeGa)} | **\`ga\`** | <:Chicken17:1156557573219168307> Gà: ${soLuongGa} ${timeGa}
+                ${u(soLuongHeo, timeHeo)} | **\`heo\`** | <:technoblade64:1166408637623844924> Heo: ${soLuongHeo} ${timeHeo}
+                `, inline: false }
             )
+            .setThumbnail(`https://cdn.discordapp.com/attachments/1080521432032882700/1170699192658841681/6300787.png?ex=6559fd96&is=65478896&hm=8aba6ff76840f4e7841bd77dab6c4066b4556dc7b33f6d1df7c5ff39c0aab7cd&`)
             .setTimestamp();
 
         message.reply({ embeds: [embed] });
