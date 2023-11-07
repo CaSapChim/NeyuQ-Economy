@@ -3,6 +3,7 @@ const emoji = require('../../emoji.json');
 
 module.exports = {
   name: "use",
+  adminOnly: false,
   description: "Dùng vật phẩm",
   /**
    *

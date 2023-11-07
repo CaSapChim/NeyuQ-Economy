@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'give',
     aliases: ['send'],
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

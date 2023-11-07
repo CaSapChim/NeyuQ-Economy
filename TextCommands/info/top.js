@@ -7,6 +7,7 @@ const caScoreModel = require('../../database/models/caScoreModel')
 module.exports = {
     name: 'top',
     aliases: ["top", "lb"],
+    adminOnly: false,
     description: 'Cho phép member xem top tiền trong server',
 
     run: async (client, message, args, userData) => {

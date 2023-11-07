@@ -3,6 +3,7 @@ const ketBanModel = require('../../database/models/ketBanModel')
 
 module.exports = {
     name: 'xoaban',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

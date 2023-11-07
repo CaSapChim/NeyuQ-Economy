@@ -4,6 +4,7 @@ const marryModel = require('../../database/models/marryModel')
 module.exports = {
     name: 'fa',
     aliases: ["fa", "chiatay"],
+    adminOnly: false,
     description: 'Cho phép member chiatay nhau',
     /**
      * 

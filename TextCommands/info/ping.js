@@ -5,6 +5,7 @@ module.exports = {
   aliases: ["p"],
   cooldowns: 3,
   description: "Xem độ trễ của bot",
+  adminOnly: false,
   /**
    * 
      * @param {Client} client 

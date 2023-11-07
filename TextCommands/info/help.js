@@ -10,6 +10,7 @@ const {
     name: "help",
     description: "Xem danh sách các lệnh của bot",
     cooldown: 10,
+    adminOnly: false,
     /**
      *
      * @param {Client} client

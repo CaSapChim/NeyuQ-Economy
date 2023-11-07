@@ -1,10 +1,10 @@
 const Discord = require('discord.js')
 const prefixModel = require('../../database/models/prefixModel')
-const ownerId = require('../../config.json').OWNER_ID
 
 module.exports = {
     name: 'prefix',
     description: 'Thay đổi prefix cho sv',
+    adminOnly: true,
     /**
      * 
      * @param {Discord.Client} client 
@@ -12,7 +12,6 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
-        if (!ownerId.includes(message.author.id)) return message.reply('**Bạn không có quyền để làm điều này!**')
 
         let data = await prefixModel.findOne({
             guildId: message.guildId,

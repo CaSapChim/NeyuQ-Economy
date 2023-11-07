@@ -4,6 +4,7 @@ const emoji = require('../../emoji.json');
 
 module.exports = {
     name: 'hun',
+    adminOnly: false,
     cooldown: 18000,
     /**
      * 

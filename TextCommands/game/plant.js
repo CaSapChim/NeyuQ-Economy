@@ -6,6 +6,7 @@ module.exports = {
     name: 'plant',
     aliases: ['trongcay'],
     cooldown: 10,
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

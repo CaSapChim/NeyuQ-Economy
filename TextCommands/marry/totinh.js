@@ -5,6 +5,7 @@ module.exports = {
     name: 'totinh',
     aliases: ["totinh", 'marry'],
     description: 'Cho phép member totinh nhau',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

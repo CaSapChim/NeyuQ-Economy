@@ -23,7 +23,8 @@ const RESOURCE_EMOJIS = {
 module.exports = {
   name: 'mine',
   description: 'Đập tí đá',
-  cooldown: 30,
+  cooldowns: 15,
+  adminOnly: false,
   /**
    * 
    * @param {Discord.Client} client 

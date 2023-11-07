@@ -26,7 +26,7 @@ module.exports = {
    */
   async execute(client, message) {
     if (message.author.bot) return;
-    if (!ownerId.includes(message.author.id)) return;
+
     // Ban
     let ban = await banModel.findOne({ userId: message.author.id });
     if (ban) {
@@ -83,7 +83,8 @@ module.exports = {
     let userData, sanphamData;
     try {
       userData = await userModel.findOne({ userId: message.author.id });
-      if (!userData) {
+      sanphamData = await sanPhamModel.findOne({ userId: message.author.id });
+      if (!userData && !sanphamData) {
         const tosEmbed = new EmbedBuilder()
           .setColor("Red")
           .setTitle("**ĐIỀU KHOẢN SỬ DỤNG - BOT GAME VÀ HỆ THỐNG KINH TẾ**")
@@ -212,6 +213,18 @@ module.exports = {
 
     //////////////////////////////////////////////////
     try {
+      // if (command.adminOnly && !ownerId?.includes(message.author.id)) return message.reply(`${emoji.fail} | Lệnh chỉ dành cho developer!`)
+      // .then(msg => {
+      //   setTimeout(() => {
+      //     msg.delete();
+      //   }, 3000);
+      // })
+      if (!ownerId.includes(message.author.id)) return message.reply(`${emoji.fail} | Chỉ developer mới có quyền dùng!`)
+      .then(msg => {
+        setTimeout(() => {
+          msg.delete();
+        }, 3000);
+      })
       await command.run(client, message, args, userData);
     } catch (e) {
       console.error("Lỗi: ", e);

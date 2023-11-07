@@ -12,7 +12,8 @@ module.exports = {
   name: "cauca",
   aliases: ["fish", "cc"],
   description: "Lệnh cho phép member câu cá trong server",
-  cooldown: 30,
+  cooldown: 15,
+  adminOnly: false,
   /**
    *
    * @param {Discord.Client} client

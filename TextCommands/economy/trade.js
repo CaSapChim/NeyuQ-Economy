@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name: 'trade',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

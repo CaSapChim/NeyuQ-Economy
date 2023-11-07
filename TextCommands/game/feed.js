@@ -5,6 +5,7 @@ const emoji = require('../../emoji.json');
 module.exports = {
     name: 'feed',
     aliases: ['choan'],
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 
@@ -31,11 +32,17 @@ module.exports = {
             "heo": "heo",
         }
 
+        const animalEmojiObj = {
+            "bo": "<:3331_minecraft_cow:1156555169396428830>",
+            "ga": "<:Chicken17:1156557573219168307>",
+            "heo": "<:technoblade64:1166408637623844924>",
+        }
+
         let animal = await client.xemAnimal(author.id, animalObj[animalName]);
         if (amount == "all") amount = await client.xemAnimal(author.id, animalObj[animalName]);
         if (animal < parseInt(amount)) amount = await client.xemAnimal(author.id, animalObj[animalName]);
 
         await client.choAn(author.id, animalObj[animalName], parseInt(amount));
-        message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công`);
+        message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công ${animalEmojiObj[animalName]}`);
     }
 }

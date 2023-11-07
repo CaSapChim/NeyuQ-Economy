@@ -14,6 +14,7 @@ module.exports = {
   name: "inventory",
   aliases: ["inv", "bag"],
   description: "Xem các vật phẩm trong túi đồ của bạn",
+  adminOnly: false,
   /**
    *
    * @param {Discord.Client} client
@@ -214,6 +215,7 @@ module.exports = {
           )
           var collector = queueEmbed.createMessageComponentCollector({
             filter: interaction => (interaction.isButton() || interaction.isSelectMenu()) && interaction.message.author.id == client.user.id,
+            time: 60000
           })
           collector.on("collect", (interaction) => {
         

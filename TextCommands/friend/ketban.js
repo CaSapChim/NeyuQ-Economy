@@ -5,6 +5,7 @@ module.exports = {
     name: 'ketban',
     aliases: ["ketban"],
     description: 'Cho phép member kết bạn nhau',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

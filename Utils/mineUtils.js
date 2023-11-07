@@ -8,7 +8,7 @@ async function mine(client, message) {
 
   const miningPromises = [];
 
-  message.channel.send(`${message.author.username} đang đào...`).then(msg => {
+  message.channel.send(`${message.author.username} đang đào...<a:PikaMine:1171460394540355584><a:PikaMine:1171460394540355584><a:PikaMine:1171460394540355584>`).then(msg => {
     setTimeout(() => {
       msg.delete();
     }, 2000);

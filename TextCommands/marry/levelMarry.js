@@ -7,6 +7,7 @@ module.exports = {
     name: 'lvmarry',
     aliases: ["lv", "level"],
     description: 'Cho phép member xem level của nhau',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

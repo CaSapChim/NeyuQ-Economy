@@ -4,6 +4,7 @@ module.exports = {
   name: "daily",
   aliases: ["daily"],
   description: "Nhận tiền hàng ngày của bạn",
+  adminOnly: false,
   run: async (client, message, args, userData) => {
   
      const currentTime = new Date();

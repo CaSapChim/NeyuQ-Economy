@@ -3,6 +3,7 @@ const emoji = require('../../emoji.json');
 
 module.exports = {
     name: 'farm',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 
@@ -47,11 +48,9 @@ module.exports = {
             client.animalFed(author, "gà"),
             client.animalFed(author, "heo"),
             client.xemDat(author), 
-    
             client.xemAnimal(author, "bò"),
             client.xemAnimal(author, "gà"),
             client.xemAnimal(author, "heo"),
-    
             client.checkTimePlant(author, "hạt lúa"),
             client.checkTimePlant(author, "hạt đậu"),
             client.checkTimePlant(author, "hạt bí"),
@@ -64,10 +63,7 @@ module.exports = {
         ])
 
         function u(plant, time) {
-            if (plant > 0 && time == ` `) 
-                return `${emoji.success}`;
-            else   
-                return `<a:xo_cross:1166752009840500857>`;
+            return (plant > 0 && time == ` `) ? `${emoji.success}` : `<a:xo_cross:1166752009840500857>`;
         }
 
         const embed = new Discord.EmbedBuilder()

@@ -41,6 +41,7 @@ const ruongCacLoai = [
 
 module.exports = {
   name: "buy",
+  adminOnly: false,
   /**
    *
    * @param {Discord.Client} client

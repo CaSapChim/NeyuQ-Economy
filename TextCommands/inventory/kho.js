@@ -5,7 +5,8 @@ const ownerId = require("../../config.json").OWNER_ID;
 module.exports = {
   name: "kho",
   aliases: ["ks", "khoangsan"],
-  description: "Xem các loại khoáng sản trong kho của bạn",
+    adminOnly: false,
+    description: "Xem các loại khoáng sản trong kho của bạn",
   /**
    *
    * @param {Discord.Client} client
@@ -102,9 +103,9 @@ module.exports = {
         client.sanPham(message.author.id, "bánh mì"), 
         client.sanPham(message.author.id, "shushi"), 
         client.sanPham(message.author.id, "cá đóng hộp"), 
-        client.thucAnAnimal(message.author.id, "thức ăn bò"), 
-        client.thucAnAnimal(message.author.id, "thức ăn gà"), 
-        client.thucAnAnimal(message.author.id, "thức ăn heo"), 
+        client.sanPham(message.author.id, "thức ăn bò"), 
+        client.sanPham(message.author.id, "thức ăn gà"), 
+        client.sanPham(message.author.id, "thức ăn heo"), 
       ]);
 
       const cupEmbed = new Discord.EmbedBuilder()
@@ -244,6 +245,7 @@ module.exports = {
           filter: (interaction) =>
             (interaction.isButton() || interaction.isSelectMenu()) &&
             interaction.message.author.id == client.user.id,
+            time: 60000
         });
         collector.on("collect", (interaction) => {
           if (interaction.user.id !== authorid)

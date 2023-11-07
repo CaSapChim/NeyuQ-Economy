@@ -1,9 +1,9 @@
-const Discord = require('discord.js')
-const ownerId = require('../../config.json').OWNER_ID
+const Discord = require('discord.js');
 
 module.exports = {
     name: 'blacklist',
     aliases: ['bl'],
+    adminOnly: true,
     /**
      * 
      * @param {Discord.Client} client 
@@ -11,7 +11,6 @@ module.exports = {
      * @param {*} args 
      */
     run: async(client, message, args) => {
-        if (!ownerId.includes(message.author.id)) return
         let toBanUser = message.mentions.members.first()
         if (!toBanUser) toBanUser = client.users.cache.find(u => u.id == args[0]) 
 

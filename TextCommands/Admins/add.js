@@ -1,8 +1,8 @@
 const Discord = require('discord.js')
-const ownerId = require('../../config.json').OWNER_ID
 
 module.exports = {
     name: 'add',
+    adminOnly: true,
     /**
      * 
      * @param {Discord.Client} client 
@@ -14,7 +14,6 @@ module.exports = {
         if (!toGiveUser) return
         let type = args[1].toLowerCase()
         const amount = parseInt(args[2]) || 1
-        if (!ownerId.includes(message.author.id)) return
 
         if (type == 'coin') {
             message.channel.send(`**<:tiu:1135830334664085554> | Đã chuyển cho ${toGiveUser} ${amount.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)

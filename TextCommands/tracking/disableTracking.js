@@ -4,6 +4,7 @@ const trackingCaModel = require('../../database/models/trackingCaModel')
 
 module.exports = {
     name: 'tat',
+    adminOnly: false,
     cooldown: 10,
     /**
      * 

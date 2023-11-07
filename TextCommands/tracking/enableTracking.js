@@ -5,6 +5,7 @@ const trackingCaModel = require('../../database/models/trackingCaModel')
 module.exports = {
     name: 'bat',
     cooldown: 10,
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

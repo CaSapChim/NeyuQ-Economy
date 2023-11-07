@@ -5,6 +5,7 @@ module.exports = {
     name: 'listfriend',
     aliases: ["banbe", "rela", "ketbancheck"],
     description: 'Cho phép member xem các bạn bè của nhau',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

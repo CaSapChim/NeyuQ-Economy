@@ -4,6 +4,7 @@ const emoji = require('../../emoji.json');
                                                                             
 module.exports = {
     name: 'thuhoach',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 

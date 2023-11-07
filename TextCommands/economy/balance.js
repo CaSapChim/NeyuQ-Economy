@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'balance',
     aliases: ['bal', 'cash'],
+    adminOnly: false,
     description: 'Xem số tiền của mình đang có',
     /**
      * 

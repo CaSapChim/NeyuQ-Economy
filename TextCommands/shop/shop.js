@@ -5,6 +5,7 @@ module.exports = {
   description: "Xem danh sách các lệnh của bot",
   aliases: ["cuahang", "store"],
   cooldown: 5,
+  adminOnly: false,
   /**
    * 
    * @param {Client} client 

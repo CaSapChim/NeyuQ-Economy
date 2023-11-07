@@ -6,6 +6,7 @@ module.exports = {
   name: 'work',
   aliases: ['w', 'lamviec'],
   cooldown: 5,
+  adminOnly: false,
 
   run: async (client, message, args) => {
     let verifyData = await verifiedModel.findOne({ userId: message.author.id })
@@ -14,13 +15,13 @@ module.exports = {
     await Captcha(client, message)
 
     const jobs = [
-      { name: 'quét rác', minCoins: 5, maxCoins: 20, chance: 90 },
-      { name: 'bán vé số', minCoins: 5, maxCoins: 20, chance: 80 },
-      { name: 'phục vụ', minCoins: 5, maxCoins: 20, chance: 80 },
-      { name: 'marketing', minCoins: 5, maxCoins: 30, chance: 10 },
-      { name: 'xây dựng', minCoins: 5, maxCoins: 40, chance: 5 },
-      { name: 'viết code', minCoins: 5, maxCoins: 50, chance: 5 },
-      { name: 'bác sĩ', minCoins: 5, maxCoins: 60, chance: 2 },
+      { name: 'quét rác', minCoins: 500, maxCoins: 1000, chance: 90 },
+      { name: 'bán vé số', minCoins: 500, maxCoins: 1000, chance: 80 },
+      { name: 'phục vụ', minCoins: 600, maxCoins: 1300, chance: 80 },
+      { name: 'marketing', minCoins: 600, maxCoins: 2000, chance: 10 },
+      { name: 'xây dựng', minCoins: 1000, maxCoins: 2500, chance: 5 },
+      { name: 'viết code', minCoins: 1500, maxCoins: 5000, chance: 5 },
+      { name: 'bác sĩ', minCoins: 2000, maxCoins: 7000, chance: 2 },
     ];
 
     const job = getRandomJob();
