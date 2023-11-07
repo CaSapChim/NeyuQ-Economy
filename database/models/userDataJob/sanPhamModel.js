@@ -7,12 +7,10 @@ const sanPhamSchema = new mongoose.Schema({
         trung: { type: Number, default: 0},
         thitHeo: { type: Number, default: 0},
         botMi: { type: Number, default: 0},
-        bo: { type: Number, default: 0},
+        butter: { type: Number, default: 0},
         banhMi: { type: Number, default: 0},
         shushi: { type: Number, default: 0},
         caDongHop: { type: Number, default: 0},
-    },
-    foodAnimal: {
         bo: { type: Number, default: 0},
         ga: { type: Number, default: 0},
         heo: { type: Number, default: 0},
