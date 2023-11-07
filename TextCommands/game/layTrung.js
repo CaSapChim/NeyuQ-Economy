@@ -3,6 +3,7 @@ const feedAnimalModel = require('../../database/models/userDataJob/feedAnimalMod
 
 module.exports = {
     name: 'laytrung',
+    adminOnly: false,
     /**
      * 
      * @param {Discord.Client} client 
@@ -26,10 +27,16 @@ module.exports = {
        
               return message.reply(`Vui lòng quay lại sau **${remainingHours} giờ ${remainingMinutes} phút ${remainingSeconds} giây** để gà cho trứng`);
             } else {
-                let result = data.soLuong + Math.floor(Math.random() * data.soLuong);
-                await client.vatSua(author);
-                await client.addAnimal(author, "gà", data.soLuong);
-                message.reply(`Bạn đã vắt được **${result} xô sữa <:eje_minecraft_milk:1156555171493597204>**`);
+
+                let result = 0;
+                for (let i  = 0; i < data.soLuong; i++) {
+                    result += Math.random() < 0.2 ? 3 : Math.random() < 0.5 ? 2 : 1;
+                }
+
+                client.layTrung(author);
+                client.addAnimal(author, "gà", data.soLuong);
+                client.addSanPham(author, "trứng", result);
+                message.reply(`Bạn đã thu được **${result} <:Minecraft_Egg:1156555165189550101>** từ **${data.soLuong} con gà**`);
             }
         } else {
             message.reply('Bạn chưa cho gà ăn!');
