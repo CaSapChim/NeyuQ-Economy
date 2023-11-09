@@ -27,15 +27,11 @@ module.exports = {
     if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
     await Captcha(client, message)
 
-    let data = await buffCauCaModel.findOne({
-      userId: message.author.id,
-    });
-
-    let timeData = await timeModelTest.findOne()
-
-    let caScore = await caScoreModel.findOne({
-      userId: message.author.id
-    })
+    const [data, timeData, caScore] = await Promise.all([
+      buffCauCaModel.findOne({ userId: message.author.id }),
+      timeModelTest.findOne(),
+      caScoreModel.findOne({ userId: message.author.id }),
+    ]);
 
     if (!caScore) {
       caScore = new caScoreModel({

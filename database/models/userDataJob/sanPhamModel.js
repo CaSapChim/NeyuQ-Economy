@@ -11,9 +11,9 @@ const sanPhamSchema = new mongoose.Schema({
         banhMi: { type: Number, default: 0},
         shushi: { type: Number, default: 0},
         caDongHop: { type: Number, default: 0},
-        bo: { type: Number, default: 0},
-        ga: { type: Number, default: 0},
-        heo: { type: Number, default: 0},
+        thucAnBo: { type: Number, default: 0},
+        thucAnGa: { type: Number, default: 0},
+        thucAnHeo: { type: Number, default: 0},
     }
 })
 

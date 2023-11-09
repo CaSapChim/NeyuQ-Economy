@@ -245,7 +245,7 @@ module.exports = {
           filter: (interaction) =>
             (interaction.isButton() || interaction.isSelectMenu()) &&
             interaction.message.author.id == client.user.id,
-            time: 60000
+            time: 30000
         });
         collector.on("collect", (interaction) => {
           if (interaction.user.id !== authorid)
@@ -317,6 +317,13 @@ module.exports = {
             });
           }
         });
+        collector.on("end", () => {
+          buttonRow1.components[0].setDisabled(true);
+          buttonRow1.components[1].setDisabled(true);
+          buttonRow1.components[2].setDisabled(true);
+          buttonRow1.components[3].setDisabled(true);
+          a.edit({ content: `Tin nhắn hết hiệu lực`, components: [buttonRow1] });
+      })
       }
     } catch(err) {
       console.log("Lỗi lệnh kho:", err);

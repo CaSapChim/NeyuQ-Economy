@@ -181,7 +181,7 @@ module.exports = {
         .setTimestamp()
 
     let embeds = [hoaEmbed, nhanEmbed, ruongEmbed, huyHieuEmbed];
-    let a = await message.channel.send({ content: `<@${message.author.id}>`, embeds: [embeds[0]] }).catch(e => console.log(e))
+    let a = await message.reply({ content: `<@${message.author.id}>`, embeds: [embeds[0]] }).catch(e => console.log(e))
     await chuyen_trang(client, a, message.author.id, embeds).catch(e => console.log(e))
 
     async function chuyen_trang(client, message, authorid, embeds) {
@@ -215,7 +215,7 @@ module.exports = {
           )
           var collector = queueEmbed.createMessageComponentCollector({
             filter: interaction => (interaction.isButton() || interaction.isSelectMenu()) && interaction.message.author.id == client.user.id,
-            time: 60000
+            time: 30000
           })
           collector.on("collect", (interaction) => {
         
@@ -250,7 +250,14 @@ module.exports = {
               trangHienTai = embeds.length - 1;
               queueEmbed.edit({ content: `<@${authorid}>\n**Trang hiện tại - ${trangHienTai + 1}/${embeds.length}**`, embeds: [embeds[trangHienTai]], components: [buttonRow1] });
             }
-          }
+          },
+          collector.on("end", () => {
+            buttonRow1.components[0].setDisabled(true);
+            buttonRow1.components[1].setDisabled(true);
+            buttonRow1.components[2].setDisabled(true);
+            buttonRow1.components[3].setDisabled(true);
+            a.edit({ content: `Tin nhắn hết hiệu lực`, components: [buttonRow1] });
+        })
       );
     }
   },
