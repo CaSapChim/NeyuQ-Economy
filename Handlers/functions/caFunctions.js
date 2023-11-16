@@ -4,18 +4,17 @@ module.exports = async(client) => {
     client.ca = (userId, name) => new Promise(async ful => {
         const data = await userModel.findOne({ userId: userId });
         if(!data) return ful(0);
-        if (name == "Very Common")
-            return ful(data.ca.veryCommon);     
-        else if (name == "Common")
-            return ful(data.ca.common);         
-        else if ( name == "Uncommon")
-            return ful(data.ca.unCommon);  
-        else if (name == "Rare")
-            return ful(data.ca.rare);
-        else if (name == "Very Rare")
-            return ful(data.ca.veryRare);
-        else    
-            return ful(data.ca.legendary);
+            const caObj = {
+            "Very Common": "veryCommon",
+            "Common": "common",
+            "Uncommon": "unCommon",
+            "Rare": "rare",
+            "Very Rare": "veryRare",
+            "Legendary": "legendary",
+        };
+        const property = caObj[name];
+        if (property)
+            return ful(data.ca[property]);
       })
 
     client.addCa = async (userId, name, soLuong) => {
@@ -26,18 +25,17 @@ module.exports = async(client) => {
                     userId: userId
                 });
             }
-            if (name == "Very Common")
-                data.ca.veryCommon += soLuong;
-            else if (name == "Common") 
-                data.ca.common += soLuong;
-            else if (name == "Uncommon") 
-                data.ca.unCommon += soLuong;
-            else if (name == "Rare")
-                data.ca.rare += soLuong;
-            else if (name == "Very Rare")
-                data.ca.veryRare += soLuong;
-            else
-                data.ca.legendary += soLuong;
+            const caObj = {
+                "Very Common": "veryCommon",
+                "Common": "common",
+                "Uncommon": "unCommon",
+                "Rare": "rare",
+                "Very Rare": "veryRare",
+                "Legendary": "legendary",
+            };
+            const property = caObj[name];
+            if (property)
+                data.ca[property] += soLuong;
             await data.save();
         } catch(err) {  
             console.log("Lỗi addCa: ", err);
@@ -47,18 +45,17 @@ module.exports = async(client) => {
     client.truCa = async (userId, name, soLuong) => {
         try {   
             let data = await userModel.findOne({ userId: userId });
-            if (name == "Very Common")
-                data.ca.veryCommon -= soLuong;
-            else if (name == "Common") 
-                data.ca.common -= soLuong;
-            else if (name == "Uncommon") 
-                data.ca.unCommon -= soLuong;
-            else if (name == "Rare")
-                data.ca.rare -= soLuong;
-            else if (name == "Very Rare")
-                data.ca.veryRare -= soLuong;
-            else
-                data.ca.legendary -= soLuong;
+            const caObj = {
+                "Very Common": "veryCommon",
+                "Common": "common",
+                "Uncommon": "unCommon",
+                "Rare": "rare",
+                "Very Rare": "veryRare",
+                "Legendary": "legendary",
+            };
+            const property = caObj[name];
+            if (property)
+                data.ca[property] -= soLuong;
             await data.save();
         } catch(err) {  
             console.log("Lỗi addCa: ", err);
