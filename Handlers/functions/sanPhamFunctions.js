@@ -12,9 +12,9 @@ module.exports = async(client) => {
             "bánh mì": "banhMi",
             "shushi": "shushi",
             "cá đóng hộp": "caDongHop",
-            "thức ăn bò": "bo",
-            "thức ăn gà": "ga",
-            "thức ăn heo": "heo"
+            "thức ăn bò": "thucAnBo",
+            "thức ăn gà": "thucAnGa",
+            "thức ăn heo": "thucAnHeo"
         };
         const property = sanPham[name];
         if (property)
@@ -32,9 +32,9 @@ module.exports = async(client) => {
             "bánh mì": "banhMi",
             "shushi": "shushi",
             "cá đóng hộp": "caDongHop",
-            "thức ăn bò": "bo",
-            "thức ăn gà": "ga",
-            "thức ăn heo": "heo"
+            "thức ăn bò": "thucAnBo",
+            "thức ăn gà": "thucAnGa",
+            "thức ăn heo": "thucAnHeo"
         };
         const property = sanPham[name];
         if (property)
@@ -53,9 +53,9 @@ module.exports = async(client) => {
             "bánh mì": "banhMi",
             "shushi": "shushi",
             "cá đóng hộp": "caDongHop",
-            "thức ăn bò": "bo",
-            "thức ăn gà": "ga",
-            "thức ăn heo": "heo"
+            "thức ăn bò": "thucAnBo",
+            "thức ăn gà": "thucAnGa",
+            "thức ăn heo": "thucAnHeo"
         };
         const property = sanPham[name];
         if (property)
