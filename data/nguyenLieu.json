@@ -1,0 +1,32 @@
+{
+    "sanPham": {
+        "thucAnBo": {
+            "lua": 5
+        },
+        "thucAnGa": {
+            "hatLua": 5,
+            "hatDau": 5
+        },
+        "thucAnHeo": {
+            "khoaiTay": 5,
+            "caRot": 5
+        },
+        "botMi": {
+            "lua": 6
+        },
+        "butter": {
+            "sua": 8,
+            "trung": 8
+        },
+        "banhMi": {
+            "botMi": 2
+        },
+        "shushi": {
+            "lua": 8,
+            "veryCommon": 2
+        },
+        "caDongHop": {
+            "common": 2
+        }
+    }
+}

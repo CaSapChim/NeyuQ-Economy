@@ -38,10 +38,20 @@ module.exports = {
             "heo": "<:technoblade64:1166408637623844924>",
         }
 
-        let animal = await client.xemAnimal(author.id, animalObj[animalName]);
-        if (amount == "all") amount = await client.xemAnimal(author.id, animalObj[animalName]);
-        if (animal < parseInt(amount)) amount = await client.xemAnimal(author.id, animalObj[animalName]);
+        const foodObj = {
+            "bo": "thức ăn bò",
+            "ga": "thức ăn gà",
+            "heo": "thức ăn heo"
+        }
 
+        let animal = await client.xemAnimal(author.id, animalObj[animalName]);
+        let food = await client.sanPham(author.id, foodObj[animalName]);
+        if (amount == "all") 
+            amount = food;
+        if (animal < parseInt(amount)) amount = await client.xemAnimal(author.id, animalObj[animalName]);
+        //if (food < amount) return message.reply(`${emoji.fail} Bạn không đủ **${foodObj[animalName]}**`);
+        if (amount < 1) return message.reply(`${emoji.fail} Bạn không đủ **${foodObj[animalName]}**`);
+        await client.truSanPham(author.id, foodObj[animalName], parseInt(amount));
         await client.choAn(author.id, animalObj[animalName], parseInt(amount));
         message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công ${animalEmojiObj[animalName]}`);
     }
