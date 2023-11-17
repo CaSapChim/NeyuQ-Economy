@@ -147,26 +147,25 @@ module.exports = {
                     }
 
                 for (const key in dataNguyenLieu[property]) {
-                    
                     if (obj[key] < 0 || obj[key] < parseInt(t2) * dataNguyenLieu[property][key]) {
                         return interaction.reply({ content: "Bạn không đủ nguyên liệu để là sản phẩm này!", ephemeral: true });
                     }
+                }
+                
+                for (const key in dataNguyenLieu[property]) {
                     await client.truSanPham(interaction.user.id, nameNL[key], parseInt(t2) * dataNguyenLieu[property][key]);
                     await client.truNongSan(interaction.user.id, nameNL[key], parseInt(t2) * dataNguyenLieu[property][key]);
                     await client.truCa(interaction.user.id, nameNL[key], parseInt(t2) * dataNguyenLieu[property][key]);
-                    console.log(obj[key]);
-                    console.log(`${key} - ${dataNguyenLieu[property][key]}`);
                 }
-                
+
                 await client.addSanPham(interaction.user.id, nameSP[t1], parseInt(t2));
-                console.log(`Đã sản xuất thành công ${t2} ${nameSP[t1]}`);
 
                 let successEmbed = new Discord.EmbedBuilder()
                     .setDescription(`Bạn vừa sản xuất thành công ${t2} ${nameSP[t1]} ${emoji[property]}`)
                     .setTimestamp()
                     .setColor("Green")
 
-                await interaction.channel.send({ content: `<@${interaction.user.id}>`, embeds: [successEmbed] });
+                return interaction.channel.send({ content: `<@${interaction.user.id}>`, embeds: [successEmbed] });
 
             }).catch(err => {
                 console.log(err);
