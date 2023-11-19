@@ -7,6 +7,7 @@ const { Captcha } = require('../../Utils/captchaUtils')
 const caScoreModel = require("../../database/models/caScoreModel")
 const trackingCaModel = require('../../database/models/trackingCaModel')
 const verifiedModel = require('../../database/models/verifiedModel')
+const { dropTreasure } = require('../../Utils/dropTreasureUtils');
 
 module.exports = {
   name: "cauca",
@@ -26,7 +27,7 @@ module.exports = {
     let verifyData = await verifiedModel.findOne({ userId: message.author.id })
     if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
     await Captcha(client, message)
-
+    await dropTreasure(client, message);
     const [data, timeData, caScore] = await Promise.all([
       buffCauCaModel.findOne({ userId: message.author.id }),
       timeModelTest.findOne(),

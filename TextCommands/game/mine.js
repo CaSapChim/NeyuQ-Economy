@@ -3,6 +3,7 @@ const { mine } = require('../../Utils/mineUtils');
 const { Captcha } = require('../../Utils/captchaUtils')
 const trackingMineModel = require('../../database/models/trackingMineModel')
 const verifiedModel = require('../../database/models/verifiedModel')
+const { dropTreasure } = require('../../Utils/dropTreasureUtils');
 
 const BUFF_CUPS = {
   3: { emoji: '<:wooden_pickaxe:1134750444854444042>', count: 25 },
@@ -37,6 +38,7 @@ module.exports = {
       if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
       await Captcha(client, message)
       const minedResources = await mine(client, message);
+      await dropTreasure(client, message);
 
       let dataMine = await trackingMineModel.findOne({
         userId: message.author.id
