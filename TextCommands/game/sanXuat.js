@@ -19,22 +19,23 @@ module.exports = {
         let embed = new Discord.EmbedBuilder()
             .setColor("Green")
             .setTitle("BẢNG NGUYÊN LIỆU")
-            .setDescription(`
-                test test test test  
-            `)
             .addFields(
                 {name: "Thức ăn cho động vật", value: `
                 **\`300\`** | ${am.thucAnBo.lua} ${emoji.lua} => 1 ${emoji.thucAnBo}
                 **\`301\`** | ${am.thucAnGa.hatDau} ${emoji.hatDau} + ${am.thucAnGa.hatLua} ${emoji.hatLua} => 1 ${emoji.thucAnGa}
                 **\`302\`** | ${am.thucAnHeo.caRot} ${emoji.caRot} + ${am.thucAnHeo.khoaiTay} ${emoji.khoaiTay} => 1 ${emoji.thucAnHeo}
                 `,inline: false},
-                {name: `Sản phẩm khác`, value: `
+                {name: `Sản phẩm 1`, value: `
                 **\`306\`** | ${am.botMi.lua} ${emoji.lua} => 1 ${emoji.botMi}
                 **\`307\`** | ${am.butter.sua} ${emoji.sua} + ${am.butter.trung} ${emoji.trung} => 1 ${emoji.butter}
                 **\`308\`** | ${am.banhMi.botMi} ${emoji.botMi} => 1 ${emoji.banhMi} 
                 **\`309\`** | ${am.shushi.lua} ${emoji.lua} + ${am.shushi.veryCommon} ${emoji.veryCommon} => 1 ${emoji.shushi} 
+                `, inline: true},
+                {name: `Sản phẩm 2`, value: `
                 **\`310\`** | ${am.caDongHop.common} ${emoji.common} => 1 ${emoji.caDongHop}
-                `, inline: true}
+                **\`311\`** | ${am.banhBi.bi} ${emoji.bi} + ${am.banhBi.botMi} ${emoji.botMi} + ${am.banhBi.sua} ${emoji.sua} + ${am.banhBi.trung} ${emoji.trung} => 1 ${emoji.banhBi}
+                **\`312\`** | ${am.banhKem.botMi} ${emoji.botMi} + ${am.banhKem.sua} ${emoji.sua} + ${am.banhBi.trung} ${emoji.trung} ${am.banhKem.butter} ${emoji.butter} => 1 ${emoji.banhKem}
+                `, inline: false}
             )
             .setTimestamp()
         let buttonRow = new Discord.ActionRowBuilder()
@@ -89,6 +90,8 @@ module.exports = {
                     "308": "banhMi",
                     "309": "shushi",
                     "310": "caDongHop",
+                    "311": "banhBi",
+                    "312": "banhKem",
                 }
 
                 const nameSP = {
@@ -100,6 +103,8 @@ module.exports = {
                     "308": "bánh mì",
                     "309": "shushi",
                     "310": "cá đóng hộp",
+                    "311": "bánh bí",
+                    "312": "bánh kem",
                 }
 
                 const nameNL = {
@@ -115,7 +120,9 @@ module.exports = {
                     "common": "Common",
                     "veryCommon": "Very Common",
                     "butter": "bơ",
-                    "banhMi": "bánh mì"
+                    "banhMi": "bánh mì",
+                    "banhBi": "bánh bí",
+                    "banhKem": "bánh kem",
                 }
 
                 const property = idSphamPhamObj[t1];
@@ -144,6 +151,8 @@ module.exports = {
                         "botMi": await client.sanPham(message.author.id, "bột mì"),
                         "bo": await client.sanPham(message.author.id, "bơ"), 
                         "banhMi": await client.sanPham(message.author.id, "bánh mì"), 
+                        "banhBi": await client.sanPham(message.author.id, "bánh bí"),
+                        "banhKem": await client.sanPham(message.author.id, "bánh kem"),
                     }
 
                 for (const key in dataNguyenLieu[property]) {
