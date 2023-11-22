@@ -60,6 +60,8 @@ module.exports = {
         botMi,
         bo,
         banhMi,
+        banhBi,
+        banhKem,
         shushi,
         caDongHop,
         boFood,
@@ -101,6 +103,8 @@ module.exports = {
         client.sanPham(message.author.id, "bột mì"), 
         client.sanPham(message.author.id, "bơ"), 
         client.sanPham(message.author.id, "bánh mì"), 
+        client.sanPham(message.author.id, "bánh bí"), 
+        client.sanPham(message.author.id, "bánh kem"), 
         client.sanPham(message.author.id, "shushi"), 
         client.sanPham(message.author.id, "cá đóng hộp"), 
         client.sanPham(message.author.id, "thức ăn bò"), 
@@ -200,6 +204,8 @@ module.exports = {
             \`308\` |  <:6429_minecraft_bread:1167391995245891716> Bánh mì: ${banhMi}
             \`309\` |  <:Item_Delicious_Tuna_Sushi:1167391997506629632> Shushi: ${shushi}
             \`310\` |  <:Open_Canned_Sardines46:1167392001436700712> Cá đóng hộp: ${caDongHop}
+            \`311\` |  <:pie_currency:1175707384971264071> Bánh bí đỏ: ${banhBi}
+            \`312\` |  <:cake_is_a_lie59:1175707383146741800> Bánh kem: ${banhKem}
             `
           )
           .setTimestamp()
