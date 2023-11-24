@@ -1,6 +1,7 @@
 const userModel = require("../../database/models/userDataJob/userModel");
 const feedAnimalModel = require("../../database/models/userDataJob/feedAnimalModel");
 const plantModel = require('../../database/models/userDataJob/plantModel');
+const tuoiCayModel = require('../../database/models/userDataJob/tuoiCayModel');
 const emoji = require('../../emoji.json');
 
 module.exports = async(client) => {
@@ -359,4 +360,27 @@ module.exports = async(client) => {
           }
         } else return ful(" ");
     }) 
+
+    client.checkTimeTuoiCay = (userId) => new Promise(async ful => {
+        let data = await tuoiCayModel.findOne({ userid: userId });
+        if (!data) 
+            data = new tuoiCayModel({ userId: userId });
+        if (data.daTuoi == true)
+            return ful(data.tuoiCay.timeTuoi);
+        else 
+            return ful(null);
+    })
+
+    client.tuoiCay = async (userId) => {
+        try {
+            let data = await tuoiCayModel.findOne({ userId: userId });
+            if (!data)
+                data = new tuoiCayModel({ userId: userId });
+            data.tuoiCay.daTuoi = true;
+            data.tuoiCay.timeTuoi = new Date();
+            await data.save();
+        } catch(err) {
+            console.log("Lỗi tuoiCay:", err);
+        }
+    }
 }
