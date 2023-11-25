@@ -95,7 +95,37 @@ module.exports = {
             )
             .setThumbnail(`https://cdn.discordapp.com/attachments/1080521432032882700/1170699192658841681/6300787.png?ex=6559fd96&is=65478896&hm=8aba6ff76840f4e7841bd77dab6c4066b4556dc7b33f6d1df7c5ff39c0aab7cd&`)
             .setTimestamp();
+        
+        const btnRow = new Discord.ActionRowBuilder().addComponents(
+            new Discord.ButtonBuilder()
+                .setCustomId('tuoicay')
+                .setLabel("Tưới cây")
+                .setStyle(Discord.ButtonStyle.Primary)
+        )
 
-        message.reply({ embeds: [embed] });
+        let a = await message.reply({ embeds: [embed], components: [btnRow] });
+        var collector = a.createMessageComponentCollector({
+            filter: interaction => 
+                interaction.isButton() && interaction.message.author.id == client.user.id,
+                time: 5000
+        })
+        
+        collector.on("collect", async interaction => {
+            if (interaction.user.id != message.author.id) return interaction.reply({ content: `Nút này không dành cho bạn`, ephemeral: true});
+            if (interaction.customId === "tuoicay") {
+                const time = 15 * 60 * 1000; // đổi sang mili giây
+                const timeDaTuoi = await client.checkTimeTuoiCay(interaction.user.id);
+                const hours = timeDaTuoi.getHours();
+                
+                if (typeof timeDaTuoi == null) {
+                    
+                }
+                else {
+                    const remainingTimeTuoiCay = timeDaTuoi - time;
+                }
+                await client.tuoiCay(interaction.user.id);
+                interaction.reply({ content: `Bạn đã tưới cây thành công, vui lòng quay lại sau...`});
+            }
+        })
     }   
 }
