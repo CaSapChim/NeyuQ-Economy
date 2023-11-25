@@ -313,6 +313,15 @@ module.exports = async(client) => {
     }
 
     client.checkTimePlant = (userId, name) => new Promise(async ful => {
+        time = {
+            "hạt lúa": 0.5, // 30s
+            "hạt đậu": 0.5,
+            "hạt bí": 1,
+            "hạt dưa hấu": 1.5,
+            "cà rốt": 2,
+            "khoai tây": 2.5,
+        }
+
         let data = await plantModel.findOne({ userId: userId, plantName: name});
         if (!data) data = new plantModel({
             userId: userId,
@@ -321,7 +330,7 @@ module.exports = async(client) => {
         let lastPlanted = data.plantedAt;
         const currentTime = new Date();
         const elapsedMillis = currentTime - lastPlanted;
-        const timeToGrow = 1 * 60 * 1000;
+        const timeToGrow = time[name] * 60 * 1000;
         if (data && lastPlanted) {
             if (elapsedMillis < timeToGrow) {
                 const remainingMillis = timeToGrow - elapsedMillis;
@@ -338,6 +347,12 @@ module.exports = async(client) => {
     })
 
     client.checkTimeAnimal = (userId, name) => new Promise(async ful => {
+        const time = {
+            "bò": 0.5,
+            "gà": 1,
+            "heo": 2,
+        }
+
         let data = await feedAnimalModel.findOne({ userId: userId, name: name});
         if (!data) data = new feedAnimalModel({
           userId: userId,
@@ -346,7 +361,7 @@ module.exports = async(client) => {
         let lastFed = data.fedAt;
         const currentTime = new Date();
         const elapsedMillis = currentTime - lastFed;
-        const timeToGrow = 1 * 60 * 1000;
+        const timeToGrow = time[name] * 60 * 1000;
         if (data && lastFed) {
           if (elapsedMillis < timeToGrow) {
             const remainingMillis = timeToGrow - elapsedMillis;
