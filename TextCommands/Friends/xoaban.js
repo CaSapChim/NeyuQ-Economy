@@ -3,6 +3,7 @@ const ketBanModel = require('../../database/models/ketBanModel')
 
 module.exports = {
     name: 'xoaban',
+    description: "Xóa bạn khỏi danh sách",
     adminOnly: false,
     /**
      * 

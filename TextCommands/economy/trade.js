@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'trade',
     adminOnly: false,
+    description: "Trade vật phẩm với người khác",
     /**
      * 
      * @param {Discord.Client} client 
@@ -22,22 +23,9 @@ module.exports = {
         if (mention.id == author) return message.reply('Bạn không thể tự giao dịch với chính mình!');
         if (money < 1000) return message.reply(`Số tiền trade tối thiểu là 1000 <:O_o:1135831601205481523> coins`)
 
-        const arr = ['lua', 'dau', 'bi', '200', '201', '202', '203', '204', '205', '206', '207', '208', '208', '209', '210'];
+        const arr = [];
         const checkItem = {
-            'lua': 'lúa',
-            'dau': 'đậu',
-            'bi': 'bí',
-            '200': 'sữa',
-            '201': 'trứng',
-            '202': 'bột mì',
-            '203': 'bột bánh đậu xanh',
-            '204': 'bột bánh thập cẩm',
-            '205': 'nhân đậu xanh',
-            '206': 'nhân thập cẩm',
-            '207': 'bánh trung thu nhân đậu xanh',
-            '208': 'bánh trung thu nhân thập cẩm',
-            '209': 'lạp xưởng',
-            '210': 'bơ',
+
         }
 
         let phiTrade = 1000;

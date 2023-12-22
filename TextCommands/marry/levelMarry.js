@@ -6,7 +6,7 @@ const moment = require('moment')
 module.exports = {
     name: 'lvmarry',
     aliases: ["lv", "level"],
-    description: 'Cho phép member xem level của nhau',
+    description: 'Xem điểm kết hôn của mình',
     adminOnly: false,
     /**
      * 

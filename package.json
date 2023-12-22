@@ -29,6 +29,8 @@
     "noblox.js": "^4.14.1",
     "node-cron": "^3.0.2",
     "node-fetch": "^3.3.1",
-    "node-recursive-directory": "^1.2.0"
+    "node-recursive-directory": "^1.2.0",
+    "probability-node": "^0.0.1",
+    "random-number-csprng": "^1.0.2"
   }
 }

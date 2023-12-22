@@ -1,0 +1,132 @@
+{
+    "giaohang": {
+        "banhMi": {
+            "id": "01",
+            "title": "<:6429_minecraft_bread:1167391995245891716> Giao",
+            "description": "bánh mì cho Hàu",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "botMi": {
+            "id": "02",
+            "title": "<:6289_flour:1155701022891704360> Giao",
+            "description": "bột mì cho Hàu",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "trung": {
+            "id": "03",
+            "title": "<:Minecraft_Egg:1156555165189550101> Giao",
+            "description": "trứng cho Vẹt",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "shushi": {
+            "id": "04",
+            "title": "<:Item_Delicious_Tuna_Sushi:1167391997506629632> Giao",
+            "description": "shushi cho Vẹt",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "thitHeo": {
+            "id": "05",
+            "title": "<:rawporkchop76:1166408633622482964> Giao",
+            "description": "thịt heo cho Cá",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "banhKem": {
+            "id": "06",
+            "title": "<:cake_is_a_lie59:1175707383146741800> Giao",
+            "description": "bánh kem cho Pun",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "banhBi": {
+            "id": "07",
+            "title": "<:pie_currency:1175707384971264071> Giao",
+            "description": "bánh bí cho Pun",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "sua": {
+            "id": "08",
+            "title": "<:eje_minecraft_milk:1156555171493597204> Giao",
+            "description": "sữa cho Hàu",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "butter": {
+            "id": "09",
+            "title": "<:butterTT:1157319277335035974> Giao",
+            "description": "bơ cho Vẹt",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "caDonop": {
+            "id": "10",
+            "title": "<:Open_Canned_Sardines46:1167392001436700712> Giao",
+            "description": "cá đóng hộp cho Đức",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "lua": {
+            "id": "11",
+            "title": "<:LC_Wheat:1155701062670504037> Giao",
+            "description": "lúa cho Jully",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "hatDau": {
+            "id": "12",
+            "title": "<:daunh_1:1156608655060381760> Giao",
+            "description": "đậu cho Mèo",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "bi": {
+            "id": "13",
+            "title": "<:mc_carved_pumpkin45:1155704587462922272> Giao",
+            "description": "bí cho Mèo",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "caRot": {
+            "id": "14",
+            "title": "<:Carrot29:1166650013603090432> Giao",
+            "description": "cà rốt cho Đức",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "khoaiTay": {
+            "id": "15",
+            "title": "<:potato45:1166650017264705547> Giao",
+            "description": "khoai tây cho Jully",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        },
+        "duaHau": {
+            "id": "16",
+            "title": "<:Melon8:1166407706496733284> Giao",
+            "description": "dưa hấu cho Cá",
+            "requirement": [10, 20, 30],
+            "reward_0": [10000, 20000, 30000],
+            "reward": [10000, 20000, 30000]
+        }
+    }
+}

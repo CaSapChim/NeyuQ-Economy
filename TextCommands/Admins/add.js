@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 
 module.exports = {
     name: 'add',
+    description: "Thêm vật phẩm cho người chơi",
     adminOnly: true,
     /**
      * 
@@ -18,6 +19,11 @@ module.exports = {
         if (type == 'coin') {
             message.channel.send(`**<:tiu:1135830334664085554> | Đã chuyển cho ${toGiveUser} ${amount.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
             await client.addTien(toGiveUser.id, amount)
+        } 
+
+        else if (type == 'token') {
+            message.channel.send(`**<:tiu:1135830334664085554> | Đã chuyển cho ${toGiveUser} ${amount.toLocaleString('En-Us')} <:token:1181941410446979122> tokens**`)
+            await client.addToken(toGiveUser.id, amount)
         } 
         
         else if (type == 'bonghoa') {

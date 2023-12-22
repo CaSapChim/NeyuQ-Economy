@@ -1,12 +1,10 @@
 const Discord = require("discord.js");
-const toolCauCaModel = require("../../database/models/toolCauCaModel");
-const ownerId = require("../../config.json").OWNER_ID;
 
 module.exports = {
   name: "kho",
   aliases: ["ks", "khoangsan"],
     adminOnly: false,
-    description: "Xem các loại khoáng sản trong kho của bạn",
+    description: "Xem đồ trong kho của bạn",
   /**
    *
    * @param {Discord.Client} client
@@ -45,6 +43,10 @@ module.exports = {
         vang,
         kc,
         nlb,
+        ruby,
+        saphir,
+        ametit,
+        titan,
         hatLua,
         hatDau,
         hatBi,
@@ -88,6 +90,10 @@ module.exports = {
         client.khoangsan(message.author.id, "Vàng"),
         client.khoangsan(message.author.id, "Kim cương"),
         client.khoangsan(message.author.id, "Ngọc lục bảo"),
+        client.khoangsan(message.author.id, "ruby"),
+        client.khoangsan(message.author.id, "saphir"),
+        client.khoangsan(message.author.id, "ametit"),
+        client.khoangsan(message.author.id, "titan"),
         client.nongSan(message.author.id, "hạt lúa"),
         client.nongSan(message.author.id, "hạt đậu"),
         client.nongSan(message.author.id, "hạt bí"),
@@ -147,7 +153,11 @@ module.exports = {
           `\`231\` | ${`<:842601384561868810:1134500649548124161> Sắt: ${sat}\n`}` +
           `\`232\` | ${`<:905609869485289482:1134500596871868588> Vàng: ${vang}\n`}` +
           `\`233\` | ${`<:943215979935187074:1134500706095743150> Kim cương: ${kc}\n`}` +
-          `\`234\` | ${`<:905609867769839637:1134500619898593380> Ngọc lục bảo: ${nlb}\n`}`
+          `\`234\` | ${`<:905609867769839637:1134500619898593380> Ngọc lục bảo: ${nlb}\n`}` + 
+          `\`235\` | ${`<:diamond92:1179255142651011122> Titan: ${titan}\n`}` + 
+          `\`236\` | ${`<:DiamondPurple:1179255138276356207> Ametit: ${ametit}\n`}` + 
+          `\`237\` | ${`<:sapphire_gem:1179255149043134464> Saphir: ${saphir}\n`}` + 
+          `\`238\` | ${`<:gem_ruby83:1179255146643988500> Ruby: ${ruby}\n`}`
       )
       .setFooter({ text: "Chúc bạn một ngày tốt lành" })
       .setTimestamp()

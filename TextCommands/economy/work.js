@@ -6,6 +6,7 @@ module.exports = {
   name: 'work',
   aliases: ['w', 'lamviec'],
   cooldown: 5,
+  description: "Làm việc kiếm tiền",
   adminOnly: false,
 
   run: async (client, message, args) => {

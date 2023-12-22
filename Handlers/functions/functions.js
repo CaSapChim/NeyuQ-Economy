@@ -84,6 +84,44 @@ module.exports = async(client) => {
     }
   };
 
+  client.xemToken = (userId) => new Promise(async ful => {
+    const data = await balanceModel.findOne({ userId: userId });
+    if (!data) return ful(0);
+    ful(data.token);
+  })
+  
+  client.addToken = async (userId, tokens) => {
+    try {
+      let data = await balanceModel.findOne({ userId: userId });
+  
+      if (data) {
+        data.token = data.token + tokens;
+      } else {
+        data = new balanceModel({ userId: userId, token: tokens });
+      }
+  
+      await data.save();
+    } catch (err) {
+      console.log('Lỗi add token: ', err);
+    }
+  };
+  
+  client.truToken = async (userId, tokens) => {
+    try {
+      let data = await balanceModel.findOne({ userId: userId });
+  
+      if (data) {
+        data.token = data.token - tokens;
+      } else {
+        data = new balanceModel({ userId: userId, token: -tokens });
+      }
+  
+      await data.save();
+    } catch (err) {
+      console.log('Lỗi trừ token: ', err);
+    }
+  };
+
   ////////////////////////////////////////////////////////////////////////////////// Xem level marry
   client.marryLevel = (userId) => new Promise(async ful => {
     const data = await marryModel.findOne({ $or: [{userId1: userId}, {userId2: userId}] });

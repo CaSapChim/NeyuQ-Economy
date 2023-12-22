@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'blacklist',
     aliases: ['bl'],
+    description: "Thêm một người dùng vào blacklist",
     adminOnly: true,
     /**
      * 

@@ -1,19 +1,19 @@
 const Discord = require("discord.js");
 const fishData = require("../../data/fish.json");
-const ownerId = require("../../config.json").OWNER_ID;
-const timeModelTest = require('../../database/models/test/timeModelTest')
+const timeModelTest = require('../../database/models/timeModel');
 const buffCauCaModel = require("../../database/models/buffCauCaModel");
 const { Captcha } = require('../../Utils/captchaUtils')
 const caScoreModel = require("../../database/models/caScoreModel")
 const trackingCaModel = require('../../database/models/trackingCaModel')
 const verifiedModel = require('../../database/models/verifiedModel')
 const { dropTreasure } = require('../../Utils/dropTreasureUtils');
+const { thanhTuuUtils } = require('../../Utils/thanhTuuUtils');
 
 module.exports = {
   name: "cauca",
   aliases: ["fish", "cc"],
-  description: "Lệnh cho phép member câu cá trong server",
-  cooldown: 15,
+  description: "Câu cá kiếm nguyên liệu",
+  cooldowns: 15,
   adminOnly: false,
   /**
    *
@@ -28,7 +28,7 @@ module.exports = {
     if (verifyData) return message.reply('**Vui lòng nhập captcha để tiếp tục sử dung bot**')
     await Captcha(client, message)
     await dropTreasure(client, message);
-    const [data, timeData, caScore] = await Promise.all([
+    let [data, timeData, caScore] = await Promise.all([
       buffCauCaModel.findOne({ userId: message.author.id }),
       timeModelTest.findOne(),
       caScoreModel.findOne({ userId: message.author.id }),
@@ -40,6 +40,9 @@ module.exports = {
         score: 0
       })
     }
+
+    await client.addThongKe(message.author.id, "cauca");
+    //await thanhTuuUtils(client, message, "cauca");
 
     let rarity = {
       "Very Common": 35,
@@ -200,21 +203,28 @@ module.exports = {
       case "Very Rare":
         result = getRandomFish(veryRareFish);
         await client.addCa(message.author.id, "Very Rare", 1);
+        await client.addThongKe(message.author.id, "VeryRare");
         break;
       case "Legendary":
         result = getRandomFish(legendFish);
         await client.addCa(message.author.id, "Legendary", 1);
+        await client.addThongKe(message.author.id, "legendary");
         break;
     }
-    if (result) {
+    
+    const channelId = "1080521432032882700";
 
-      if (result.rarity === "Very Common") caScore.score += 20
-      if (result.rarity === "Common") caScore.score += 30
-      if (result.rarity === "Uncommon") caScore.score += 40
-      if (result.rarity === "Rare") caScore.score += 50
-      if (result.rarity === "Very Rare") caScore.score += 70
-      if (result.rarity === "Legendary") caScore.score += 200
-      await caScore.save()
+    if (result) {
+      if (message.channel.id === channelId) {
+        if (result.rarity === "Very Common") caScore.score += 20
+        if (result.rarity === "Common") caScore.score += 30
+        if (result.rarity === "Uncommon") caScore.score += 40
+        if (result.rarity === "Rare") caScore.score += 50
+        if (result.rarity === "Very Rare") caScore.score += 70
+        if (result.rarity === "Legendary") caScore.score += 200
+        await caScore.save()
+      }
+
       const fishEmbed = new Discord.EmbedBuilder()
         .setColor("Blue")
         .setTitle(`Bạn đã bắt được \`${result.name}\``)
@@ -228,13 +238,13 @@ module.exports = {
         .setFooter({ text: `${result.catch}` })
         .setThumbnail(`${result.image}`);
         await client.addTien(message.author.id, result.price)
-      message.reply({ embeds: [fishEmbed], content: `${buffMsg} - Điểm hiện tại của bạn: ${caScore.score} <a:Minecraft_Fish7:1141240605800939650>` });
+      message.reply({ embeds: [fishEmbed], content: `${message.channel.id === channelId ? `${buffMsg} - ${caScore.score} điểm <a:Minecraft_Fish7:1141240605800939650>` : `${buffMsg}`}` });
     } else {
       const fail = fishData.fail;
       const failEmbed = new Discord.EmbedBuilder()
         .setTitle(`${fail[Math.floor(Math.random() * fail.length)]}`)
         .setTimestamp();  
-      message.reply({ embeds: [failEmbed], content: `${buffMsg}` });
+      message.reply({ embeds: [failEmbed], content: `${message.channel.id === channelId ? `${buffMsg} - ${caScore.score} điểm <a:Minecraft_Fish7:1141240605800939650>` : `${buffMsg}`}`  });
     } 
 
     let dataCa = await trackingCaModel.findOne({
@@ -251,7 +261,7 @@ module.exports = {
     if (dataCa.enable == true) {
       setTimeout(() => {
         message.reply(`${dataCa.text.length === 0 ? `\`nqg cauca\` đã sẵn sàng!` : dataCa.text}`)
-      }, 50000);
+      }, 15000);
     }
   },
 };

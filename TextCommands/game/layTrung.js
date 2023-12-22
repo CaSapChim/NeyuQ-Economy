@@ -3,6 +3,7 @@ const feedAnimalModel = require('../../database/models/userDataJob/feedAnimalMod
 
 module.exports = {
     name: 'laytrung',
+    description: "Thu hoạch trứng gà",
     adminOnly: false,
     /**
      * 

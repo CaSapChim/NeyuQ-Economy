@@ -1,8 +1,8 @@
 const Discord = require('discord.js')
-const ownerId = require('../../config.json').OWNER_ID
 
 module.exports = {
     name: 'tru',
+    description: "Trừ vật phẩm khỏi người chơi",
     adminOnly: true,
     /**
      * 

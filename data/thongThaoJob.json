@@ -1,0 +1,23 @@
+{
+    "miner": {
+        "0": "Học nghề",
+        "1": "Thợ Mỏ",
+        "2": "Thợ Mỏ Chuyên Nghiệp",
+        "3": "Chuyên Gia Đào Mỏ",
+        "4": "Chuyên Gia Nghiên Cứu Khoáng Sản"
+    },
+    "fisher": {
+        "0": "Học nghề",
+        "1": "Nghệ Nhân Cần Câu",
+        "2": "Chuyên Gia Lưới",
+        "3": "Chuyên Gia Đánh Bắt Cá Đêm",
+        "4": "Thủy Thủ Chuyên Nghiệp"
+    },
+    "farmer": {
+        "0": "Học nghề",
+        "1": "Người Quản Lý Nông Trại",
+        "2": "Chuyên Gia Cây Trồng",
+        "3": "Nông Dân Công Nghệ Cao",
+        "4": "Chuyên Gia Farmer"
+    }
+}

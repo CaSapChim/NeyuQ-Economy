@@ -30,8 +30,8 @@ const arr = [
 ];
 
 const dropTreasure = async (client, message) => {
-    const rand = (await random(1, 1000)) / 10;
-    if (rand <= 45) { // 5%
+    const rand = (await random(1, 100));
+    if (Math.round(rand) <= 10) { // 10%
         let khoBauEmbed = new Discord.EmbedBuilder()
             .setColor(0xfcc603)
             .setDescription(`${emoji.congra} ${emoji.congra} ${emoji.congra} \n**Bạn vừa tìm thấy một hộp kho báu!!!** \n**Ấn nút bên dưới để mở ngay.**`)

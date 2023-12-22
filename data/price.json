@@ -1,0 +1,44 @@
+{
+    "taphoa": {
+        "bonghoa": 1500,
+        "bobong": 3000,
+        "cuckeo": 5000,
+        "socola": 8000,
+        "gaubong": 12000,
+        "nhanbac": 80000,
+        "nhanvang": 150000,
+        "nhanhong": 200000,
+        "role1": 25000,
+        "role2": 25000,
+        "role3": 25000,
+        "role4": 25000,
+        "role5": 25000,
+        "ruongbac": 15000,
+        "ruongvang": 30000,
+        "ruongdacbiet": 50000
+    },
+    "tool": {
+        "cancautre": 1000,
+        "cancauxin": 2000,
+        "luoi": 5000,
+        "luoivip": 10000,
+        "cupgo": 1000,
+        "cupda": 2000,
+        "cupsat": 5000,
+        "cupvang": 10000,
+        "cupkimcuong": 15000
+    },
+    "farm": {
+        "hatlua": 5,
+        "hatdau": 5,
+        "hatbi": 5,
+        "hatduahau": 5,
+        "khoaitay": 5,
+        "carot": 5,
+        "dat": 2000,
+        "bo": 10000,
+        "ga": 10000,
+        "heo": 10000
+    },
+    "slot": 10
+}

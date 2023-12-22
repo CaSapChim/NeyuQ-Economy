@@ -4,7 +4,7 @@ const ketBanModel = require('../../database/models/ketBanModel')
 module.exports = {
     name: 'listfriend',
     aliases: ["banbe", "rela", "ketbancheck"],
-    description: 'Cho phép member xem các bạn bè của nhau',
+    description: 'Cho phép người dùng xem các bạn bè của nhau',
     adminOnly: false,
     /**
      * 

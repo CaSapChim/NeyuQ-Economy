@@ -1,11 +1,12 @@
 const Discord = require('discord.js')
 const marryModel = require('../../database/models/marryModel');
 const emoji = require('../../emoji.json');
+const coolDownMarryModel = require('../../database/models/marryCooldownModel');
 
 module.exports = {
     name: 'hun',
     adminOnly: false,
-    cooldown: 18000,
+    cooldown: 5,
     /**
      * 
      * @param {Discord.Client} client 
@@ -19,15 +20,34 @@ module.exports = {
         let toKissUser = message.mentions.users.first()
         if (toKissUser.id === message.author.id) return message.reply('<:02_facepalm:1137441545499463690> **Bạn không thể hun chính mình...** ')
         let existMarry = await marryModel.findOne({ $or: [{ userId1: toKissUser.id }, { userId2: toKissUser.id }] })
-        if (!existMarry) return message.reply(`${emoji.fail} **Bạn chỉ có thể hun với người đã kết hôn!**`)
+        if (!existMarry)
+             return message.reply(`${emoji.fail} **Bạn chỉ có thể hun với người đã kết hôn!**`)
+        else {
+            let data = await coolDownMarryModel.findOne({ userId: message.author.id });
+             if (!data) {
+                data = coolDownMarryModel.create({ userId: message.author.id });
+             }
+    
+            const currentTime = new Date();
+            const lastHon = data.lastHon;
+            const elapsedMillis = currentTime - lastHon;
+            const elapsedDays = Math.floor(elapsedMillis / (24 * 60 * 60 * 1000));
+    
+            if (elapsedDays === 0) {
+
+              const remainingMillis = 5 * 60 * 60 * 1000 - elapsedMillis;
+              const remainingHours = Math.floor(remainingMillis / (1000 * 60 * 60));
+              const remainingMinutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
+              const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
+       
+              return message.channel.send(`Bạn đã hun người này rồi. Hãy quay lại sau ${remainingHours} giờ, ${remainingMinutes} phút và ${remainingSeconds} giây.`);
+            }
+        }
+
         let level = 10
 
-        const currentTime = new Date();
-        const hours = currentTime.getHours();
-
-        if ( hours < ((hours + 5) % 24) ) {
-
-        }
+        data.lastHon = currentTime;
+        await data.save();
 
         const hon = [
             `> <a:bearkiss:1125365990625124424> <@${message.author.id}> đã trao cho <@${toKissUser.id}> một nụ hôn ngọt ngào`,

@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
         vang: { type: Number, default: 0 },
         kimCuong: { type: Number, default: 0 },
         ngocLucBao: { type: Number, default: 0 },
+        saphir: { type: Number, default: 0 },
+        ruby: { type: Number, default: 0 },
+        titan: { type: Number, default: 0 },
+        ametit: { type: Number, default: 0 },
     },
     ca: {
         veryCommon: { type: Number, default: 0},

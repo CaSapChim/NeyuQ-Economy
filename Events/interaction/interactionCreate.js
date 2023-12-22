@@ -48,6 +48,16 @@ module.exports = {
         });
       }
     }
+
+    if (interaction.isStringSelectMenu()) {
+      const menuName = interaction.customId;
+      const values = interaction.values;
+      if (menuName) {
+          delete require.cache[require.resolve(`../../components/menus/${menuName}.js`)]
+          const menu = require(`../../components/menus/${menuName}.js`);
+          if (menu) await menu({ client, interaction, values });
+      }
+    }
     
     
   },

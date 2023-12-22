@@ -7,6 +7,7 @@ const am = data.sanPham;
 module.exports = {
     name: "sanxuat",
     aliases: ['sx'],
+    description: "Sản xuất các vật phẩm",
     cooldown: 5,
     adminOnly: false,
     /**
@@ -169,22 +170,24 @@ module.exports = {
 
                 await client.addSanPham(interaction.user.id, nameSP[t1], parseInt(t2));
 
+                console.log(`Bạn vừa sản xuất thành công ${t2} ${nameSP[t1]} ${emoji[property]}`);
+
                 let successEmbed = new Discord.EmbedBuilder()
                     .setDescription(`Bạn vừa sản xuất thành công ${t2} ${nameSP[t1]} ${emoji[property]}`)
                     .setTimestamp()
                     .setColor("Green")
 
-                return interaction.channel.send({ content: `<@${interaction.user.id}>`, embeds: [successEmbed] });
+                await interaction.channel.send({ content: `<@${interaction.user.id}>`, embeds: [successEmbed] });
 
             }).catch(err => {
                 console.log(err);
             });
         });
 
-        collector.on("end", () => {
+        collector.on("end", async () => {
             buttonRow.components[0].setDisabled(true);
             embed.setColor("Grey");
-            a.edit({ content: `Tin nhắn hết hiệu lực`, components: [buttonRow], embeds: [embed] });
+            await a.edit({ content: `Tin nhắn hết hiệu lực`, components: [buttonRow], embeds: [embed] });
         })
     }
 }

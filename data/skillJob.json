@@ -1,0 +1,36 @@
+{
+    "miner": {
+        "1": { 
+            "skill":{
+                "description": "giảm thời gian mine còn 5s trong 1 phút",
+                "duration": 1,
+                "cooldown": 5, 
+                "giamTimeMine1": 5
+            }
+        },
+        "2": {
+            "skill": {
+                "description": "Tăng tỉ lệ bantumlum ",
+                "duration": 1,
+                "cooldown": 5, 
+                "cc": 5
+            }
+        },
+        "3": {
+            "skill": {
+                "description": "Tăng tỉ lệ rớt ra loli ",
+                "duration": 1,
+                "cooldown": 5, 
+                "cc": 5
+            }
+        },
+        "4": {
+            "skill": {
+                "description": "Tăng tỉ lệ bán noledaden ",
+                "duration": 1,
+                "cooldown": 5, 
+                "cc": 5
+            }
+        }
+    }
+}

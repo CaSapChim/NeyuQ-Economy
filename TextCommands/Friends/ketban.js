@@ -4,7 +4,7 @@ const ketBanModel = require('../../database/models/ketBanModel');
 module.exports = {
     name: 'ketban',
     aliases: ["ketban"],
-    description: 'Cho phép member kết bạn nhau',
+    description: 'Cho phép người dùng kết bạn với nhau',
     adminOnly: false,
     /**
      * 

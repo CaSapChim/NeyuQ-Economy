@@ -27,6 +27,18 @@
         },
         "caDongHop": {
             "common": 2
+        },
+        "banhBi": {
+            "bi": 8,
+            "botMi": 2,
+            "trung": 2,
+            "sua": 2
+        },
+        "banhKem": {
+            "botMi": 2,
+            "trung": 5,
+            "sua": 3,
+            "butter": 2
         }
     }
 }

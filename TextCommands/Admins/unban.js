@@ -4,6 +4,7 @@ const { Message, Client } = require('discord.js')
 module.exports = {
     name: 'unblacklist',
     adminOnly: true,
+    description: "Xóa người dùng ra khỏi blacklist",
     aliases: ['unbl'],
     /**
      * 

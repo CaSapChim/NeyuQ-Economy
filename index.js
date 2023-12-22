@@ -2,7 +2,7 @@ console.clear();
 const { Client, Collection, GatewayIntentBits, Partials, Options } = require("discord.js");
 require("colors");
 const fs = require("node:fs");
-const TOKEN = require('./config.json').TOKEN;
+const TOKEN = require('./dontPushMe/config.json').TOKEN;
 const { initializeMongoose } = require('./database/mongoose')
 
 const client = new Client({
@@ -73,7 +73,15 @@ for (const folder of folders) {
   }
 }
 
-(async () =>{
+(async () => {
   await initializeMongoose()
   await client.login(TOKEN)
 })()
+
+process.on('unhandledRejection', err => {
+  console.log(`Have an error: ${err.message}.`);
+});
+process.on('beforeExit', (code) => {
+  console.log('Process beforeExit event with code: ', code);
+  process.kill(1);
+});

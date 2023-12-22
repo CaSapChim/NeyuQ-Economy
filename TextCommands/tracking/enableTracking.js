@@ -1,9 +1,11 @@
 const Discord = require('discord.js')
 const trackingMineModel = require('../../database/models/trackingMineModel')
 const trackingCaModel = require('../../database/models/trackingCaModel')
+const trackingTuoiCayModel = require('../../database/models/trackingTuoiCayModel');
 
 module.exports = {
     name: 'bat',
+    description: "Bật tính năng nhắc nhở dùng lệnh",
     cooldown: 10,
     adminOnly: false,
     /**
@@ -17,7 +19,7 @@ module.exports = {
         let content = args.slice(1).join(" ")
 
         if (!type) {
-            return message.reply('Cách dùng: `nqg bat <mine|cauca> [tinnhắn (tùy chọn)]`')
+            return message.reply('Cách dùng: `nqg bat <mine|cauca|tuoicay> [tin nhắn (tùy chọn)]`')
         }
 
         let enableEmbed 
@@ -57,7 +59,7 @@ module.exports = {
             await message.reply({ embeds: [enableEmbed]})
         }
 
-        if (type === 'cc' || type === 'cauca') {
+        else if (type === 'cc' || type === 'cauca') {
             let dataCa = await trackingCaModel.findOne({
                 userId: message.author.id
             })
@@ -88,6 +90,40 @@ module.exports = {
 
             enableEmbed = new Discord.EmbedBuilder()
                 .setTitle('<:very:1137010214835597424> Đã bật thành công nhắc nhở lệnh `cauca`')
+                .setDescription(`Lời nhắc: ${dataCa.text.length === 0 ? 'Không có' : content}`)
+            await message.reply({ embeds: [enableEmbed]})
+        } 
+        else if (type === "tc" || type === "tuoicay") {
+            let dataTuoiCay = await trackingTuoiCayModel.findOne({
+                userId: message.author.id
+            })
+    
+            if (!dataTuoiCay) {
+                dataTuoiCay = new trackingTuoiCayModel({
+                    userId: message.author.id,
+                })
+            }    
+            await dataTuoiCay.save()
+
+            if (content) {
+                await dataTuoiCay.updateOne({
+                    userId: message.author.id,
+                    text: content
+                })
+            } else {
+                await dataTuoiCay.updateOne({
+                    userId: message.author.id,
+                    text: ''
+                })
+            }
+
+            dataTuoiCay = await trackingCaModel.findOne({ userId: message.author.id })
+            dataTuoiCay.enable = true
+
+            await dataTuoiCay.save()
+
+            enableEmbed = new Discord.EmbedBuilder()
+                .setTitle('<:very:1137010214835597424> Đã bật thành công nhắc nhở `tưới cây`')
                 .setDescription(`Lời nhắc: ${dataCa.text.length === 0 ? 'Không có' : content}`)
             await message.reply({ embeds: [enableEmbed]})
         }

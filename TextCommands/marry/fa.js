@@ -5,7 +5,7 @@ module.exports = {
     name: 'fa',
     aliases: ["fa", "chiatay"],
     adminOnly: false,
-    description: 'Cho phép member chiatay nhau',
+    description: 'Ly hôn với người đã kết hôn',
     /**
      * 
      * @param {Discord.Client} client 

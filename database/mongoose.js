@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const mongodbURI = require('../config.json').MONGO
+const mongodbURI = require('../dontPushMe/config.json').MONGO
 
 module.exports = {
     async initializeMongoose() {

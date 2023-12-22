@@ -1,7 +1,6 @@
 const userModel = require("../../database/models/userDataJob/userModel");
 const feedAnimalModel = require("../../database/models/userDataJob/feedAnimalModel");
 const plantModel = require('../../database/models/userDataJob/plantModel');
-const tuoiCayModel = require('../../database/models/userDataJob/tuoiCayModel');
 const emoji = require('../../emoji.json');
 
 module.exports = async(client) => {
@@ -95,15 +94,17 @@ module.exports = async(client) => {
             plantName: name,
             soLuongPlanted: soLuong,
             planted: true,
-            plantedAt: new Date()
+            canHarvest: false,
+            plantedAt: Date.now()
         })
         } else if(!data.plantedAt) {
         await plantModel.findOneAndUpdate(
             {userId: userId, plantName: name},
-            {plantedAt: new Date(), soLuongPlanted: soLuong, planted: true}
+            {plantedAt: Date.now(), soLuongPlanted: soLuong, planted: true, canHarvest: false}
         )
         } else {
         data.soLuongPlanted += soLuong;
+        data.canHarvest = false;
         }
         await data.save();
     } catch(err) {
@@ -118,13 +119,14 @@ module.exports = async(client) => {
             data = new plantModel({
             userId: userId,
             planted: false,
+            canHarvest: false,
             plantedAt: new Date(),
             plantName: name
         });
         } else {
         await plantModel.findOneAndUpdate(
             {userId: userId, plantName: name},
-            {planted : false, soLuongPlanted: 0, $unset: {plantedAt: 1}}
+            {planted : false, soLuongPlanted: 0, canHarvest: false, $unset: {plantedAt: 1}}
         )
         await data.save();
         }
@@ -315,18 +317,19 @@ module.exports = async(client) => {
 
     client.checkTimePlant = (userId, name) => new Promise(async ful => {
         time = {
-            "hạt lúa": 0.5, // 30s
-            "hạt đậu": 0.5,
-            "hạt bí": 1,
-            "hạt dưa hấu": 1.5,
-            "cà rốt": 2,
-            "khoai tây": 2.5,
+            "hạt lúa": 3,
+            "hạt đậu": 5,
+            "hạt bí": 7,
+            "hạt dưa hấu": 10,
+            "cà rốt": 12,
+            "khoai tây": 15,
         }
 
         let data = await plantModel.findOne({ userId: userId, plantName: name});
         if (!data) data = new plantModel({
             userId: userId,
-            plantedAt: null
+            plantedAt: null,
+            canHarvest: false,
         })
         let lastPlanted = data.plantedAt;
         const currentTime = new Date();
@@ -340,6 +343,8 @@ module.exports = async(client) => {
                 const remainingSeconds = Math.floor((remainingMillis % (1000 * 60)) / 1000);
                 return ful(`- **\`${remainingHours}h ${remainingMinutes}p ${remainingSeconds}s\`**`); 
             } else {
+                data.canHarvest = true;
+                await data.save();
                 return ful(` `);
             }
         } else {
@@ -349,9 +354,9 @@ module.exports = async(client) => {
 
     client.checkTimeAnimal = (userId, name) => new Promise(async ful => {
         const time = {
-            "bò": 0.5,
-            "gà": 1,
-            "heo": 2,
+            "bò": 2,
+            "gà": 3,
+            "heo": 5,
         }
 
         let data = await feedAnimalModel.findOne({ userId: userId, name: name});
@@ -375,27 +380,4 @@ module.exports = async(client) => {
           }
         } else return ful(" ");
     }) 
-
-    client.checkTimeTuoiCay = (userId) => new Promise(async ful => {
-        let data = await tuoiCayModel.findOne({ userid: userId });
-        if (!data) 
-            data = new tuoiCayModel({ userId: userId });
-        if (data.daTuoi == true)
-            return ful(data.tuoiCay.timeTuoi);
-        else 
-            return ful(null);
-    })
-
-    client.tuoiCay = async (userId) => {
-        try {
-            let data = await tuoiCayModel.findOne({ userId: userId });
-            if (!data)
-                data = new tuoiCayModel({ userId: userId });
-            data.tuoiCay.daTuoi = true;
-            data.tuoiCay.timeTuoi = new Date();
-            await data.save();
-        } catch(err) {
-            console.log("Lỗi tuoiCay:", err);
-        }
-    }
 }

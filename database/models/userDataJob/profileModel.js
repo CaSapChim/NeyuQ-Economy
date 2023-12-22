@@ -14,10 +14,6 @@ const profileSchema = new mongoose.Schema({
         type: String,
         default: "Không có"
     },
-    isMarried: {
-        type: Boolean,
-        default: false
-    },
     color: {
         type: String,
         default: "Grey"

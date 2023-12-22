@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'give',
     aliases: ['send'],
+    description: "Tặng quà cho người mình đã kết hôn",
     adminOnly: false,
     /**
      * 

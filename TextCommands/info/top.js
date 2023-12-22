@@ -8,11 +8,11 @@ module.exports = {
     name: 'top',
     aliases: ["top", "lb"],
     adminOnly: false,
-    description: 'Cho phép member xem top tiền trong server',
+    description: 'Xem top tiền và marry',
 
     run: async (client, message, args, userData) => {
         let type = args[0];
-        if (!type) return message.reply('Bạn hãy nhập tên top muốn xem!');
+        if (!type) return message.reply('Bạn hãy nhập tên top muốn xem!\nVd **`nqg top <bal/marry>`**');
 
         // Handle money leaderboard
         if (['money', 'cash', 'coin', 'c', 'bal'].includes(type)) {
@@ -62,51 +62,28 @@ module.exports = {
             message.channel.send({ embeds: [embed] });
         }
 
-        if (['mayman', 'mm'].includes(type)) {
-            let soluong = parseInt(args[1]) || 10
-            if (soluong > 15) soluong = 15
+        // if (['mayman', 'mm'].includes(type)) {
+        //     let soluong = parseInt(args[1]) || 10
+        //     if (soluong > 15) soluong = 15
             
-            let mayman = await dropGiftModel.find().sort({ soLuong: -1 });
-            let leaderboard = mayman
-                .slice(0, soluong)
-                .map((user, index) => {
-                    const positionEmoji = getMedalEmoji(index);
-                    return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.mayman} điểm may mắn <:t_:1138458437559263323>`;
-                })
-                .join('\n');
+        //     let mayman = await dropGiftModel.find().sort({ soLuong: -1 });
+        //     let leaderboard = mayman
+        //         .slice(0, soluong)
+        //         .map((user, index) => {
+        //             const positionEmoji = getMedalEmoji(index);
+        //             return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.mayman} điểm may mắn <:t_:1138458437559263323>`;
+        //         })
+        //         .join('\n');
 
-            const embed = new Discord.EmbedBuilder()
-                .setColor('Green')
-                .setTitle(`TOP ${soluong} ĐIỂM MAY MẮN`)
-                .setDescription(leaderboard)
-                .setFooter({ text: 'Chat càng nhiều, cơ hội nhận rương may mắn càng cao!'})
-                .setTimestamp();
+        //     const embed = new Discord.EmbedBuilder()
+        //         .setColor('Green')
+        //         .setTitle(`TOP ${soluong} ĐIỂM MAY MẮN`)
+        //         .setDescription(leaderboard)
+        //         .setFooter({ text: 'Chat càng nhiều, cơ hội nhận rương may mắn càng cao!'})
+        //         .setTimestamp();
 
-            message.channel.send({ embeds: [embed] });
-        }
-
-        if (['cauca','cc', 'fish'].includes(type)) {
-            let soluong = parseInt(args[1]) || 10
-            if (soluong > 25) soluong = 25
-            
-            let diemCauCa = await caScoreModel.find().sort({ score: -1 });
-            let leaderboard = diemCauCa
-                .slice(0, soluong)
-                .map((user, index) => {
-                    const positionEmoji = getMedalEmoji(index);
-                    return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.score} điểm <a:Minecraft_Fish7:1141240605800939650>`;
-                })
-                .join('\n');
-
-            const embed = new Discord.EmbedBuilder()
-                .setColor('Green')
-                .setTitle(`TOP ${soluong} ĐIỂM CÂU CÁ`)
-                .setDescription(leaderboard)
-                .setFooter({ text: 'Câu càng nhiều, điểm càng cao!'})
-                .setTimestamp();
-
-            message.channel.send({ embeds: [embed] });
-        }
+        //     message.channel.send({ embeds: [embed] });
+        // }
     },
 };
 

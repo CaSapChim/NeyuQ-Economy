@@ -1,5 +1,5 @@
 const { Client, Message } = require("discord.js");
-const ownerId = require('../../config.json').OWNER_ID;
+
 module.exports = {
   name: "ping",
   aliases: ["p"],

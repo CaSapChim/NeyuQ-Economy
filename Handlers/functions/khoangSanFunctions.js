@@ -12,6 +12,10 @@ module.exports = async (client) => {
             "Vàng": "vang",
             "Kim cương": "kimCuong",
             "Ngọc lục bảo": "ngocLucBao",
+            "saphir": "saphir",
+            "ruby": "ruby",
+            "titan": "titan",
+            "ametit": "ametit",
         }
         const property = khoangSan[name];
         if (property) {
@@ -33,6 +37,10 @@ module.exports = async (client) => {
                 "Vàng": "vang",
                 "Kim cương": "kimCuong",
                 "Ngọc lục bảo": "ngocLucBao",
+                "saphir": "saphir",
+                "ruby": "ruby",
+                "titan": "titan",
+                "ametit": "ametit",
             }
             const property = khoangSan[name];
             if (property) {
@@ -53,6 +61,10 @@ module.exports = async (client) => {
                 "Vàng": "vang",
                 "Kim cương": "kimCuong",
                 "Ngọc lục bảo": "ngocLucBao",
+                "saphir": "saphir",
+                "ruby": "ruby",
+                "titan": "titan",
+                "ametit": "ametit",
             }
             const property = khoangSan[name];
             if (property) {

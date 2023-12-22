@@ -4,6 +4,7 @@ const emoji = require('../../emoji.json');
                                                                             
 module.exports = {
     name: 'thuhoach',
+    description: "Thu hoạch cây trồng đã chín",
     adminOnly: false,
     /**
      * 

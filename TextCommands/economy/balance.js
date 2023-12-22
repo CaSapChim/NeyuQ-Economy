@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const emoji = require("../../emoji.json");
 
 module.exports = {
     name: 'balance',
@@ -13,8 +14,10 @@ module.exports = {
      * @returns 
      */
     run: async(client, message, args, userData) => {
-        const coins = await client.xemTien(message.author.id)
+        const coins = await client.xemTien(message.author.id);
+        const tokens = await client.xemToken(message.author.id);
         let formattedcoins = coins.toLocaleString('en-US');
-        await message.channel.send(`<:tiu:1135830334664085554> | **${message.author.username}** hiện đang có **${formattedcoins}** <:O_o:1135831601205481523> Coins`)
+        let formattedtokens = tokens.toLocaleString('en-US');
+        await message.channel.send(`<@${message.author.id}> hiện đang có:\n<:tiu:1135830334664085554> | **${formattedcoins}** ${emoji.coin} Coins.\n<:tiu:1135830334664085554> | **${formattedtokens}** ${emoji.token} Tokens.`);
     }
 }

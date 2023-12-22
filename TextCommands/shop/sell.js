@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const emoji = require('../../emoji.json');
+const data = require("../../data/sell.json");
 
 module.exports = {
     name: 'sell',
@@ -13,65 +14,117 @@ module.exports = {
      * @returns 
      */
     run: async(client, message, args) => {
-        let id = args[0];
-        let amount = args[1];
-        if (!id) return message.reply("Cách dùng: **`nqg sell <id/tên> <số lượng/all>`**");
-        const author = message.author.id
-        
-        if (amount < 0 || (isNaN(amount) && amount !== "all")) 
-            return message.reply(`${emoji.fail} Phắc du <@${message.author.id}> sai định dạng rồi`)
-            .then(msg => setTimeout(() => {
-            msg.delete();
-            }, 5000));
-
-        const getItemInfo = async (price, itemName) => {
-            let item = await client.item(message.author.id, itemName);
-            if (amount == "all") amount = item;
-            if (item > 0) {
-                await client.truItem(message.author.id, itemName, 1)
-                await client.addTien(message.author.id, price)
-                return message.reply(`${emoji.success} Bạn đã bán thành công **${itemName}** với giá **${price.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
-            } else {
-                return message.reply(`Bạn không có **${itemName}** nào để bán!`)
-            }
-        }
+        let type = args[0];
+        let id = args[1]
+        let amount = args[2];
+        if (!type || !id || !amount) return message.reply("Cách dùng: **`nqg sell <ks/nhan> <id/tên> <số lượng/all>`**\nVí dụ: **nqg sell ks than 100**");
+        const author = message.author;
 
         const emojiKS = {
             "Than": "<:905609870114439208:1134500336862765138>",
             "Sắt": "<:842601384561868810:1134500649548124161>",
             "Vàng": "<:905609869485289482:1134500596871868588>",
             "Kim cương": "<:943215979935187074:1134500706095743150>",
-            "Ngọc lục bảo": "<:905609867769839637:1134500619898593380>"
+            "Ngọc lục bảo": "<:905609867769839637:1134500619898593380>",
+            "titan": "<:diamond92:1179255142651011122>",
+            "saphir": "<:sapphire_gem:1179255149043134464>",
+            "ametit": "<:DiamondPurple:1179255138276356207>",
+            "ruby": "<:gem_ruby83:1179255146643988500>",
         }
 
-        const getKSInfo = async (author, price, itemName) => {
-            let amount = args[1]
-            if ( amount != 'all'.toLowerCase()) return message.reply(`Cách dùng \`nqg sell <than/sat/vang/kc/nlb> all\``)
-
-            amount = await client.khoangsan(author, itemName)
-
-            if ( amount <= 0 ) return message.reply(`Bạn không có **${itemName}** nào để bán!`)
-
-            await client.truKS(author, itemName, amount)
-            await client.addTien(author, price * amount)
-
-            await message.reply(`<:very:1137010214835597424> **|** Đã bán thành công **${amount} ${emojiKS[itemName]}** với giá **${price.toLocaleString('En-Us') * amount} <:O_o:1135831601205481523> coins**`)
+        const nameKS = {
+            "than": "Than",
+            "230": "Than",
+            "sat": "Sắt",
+            "231": "Sắt",
+            "vang": "Vàng",
+            "232": "Vàng",
+            "kimcuong": "Kim cương",
+            "kc": "Kim cương",
+            "233": "Ngọc lục bảo",
+            "nlb": "Ngọc lục bảo",
+            "ngoclucbao": "Ngọc lục bảo",
+            "234": "Ngọc lục bảo",
+            "titan": "titan",
+            "235": "titan",
+            "ametit": "ametit",
+            "236": "ametit",
+            "saphir": "saphir",
+            "237": "saphir",
+            "ruby": "ruby",
+            "238": "ruby",
         }
 
-        if ( id === '106' || id === 'nhanbac'.toLowerCase()) {
-            getItemInfo(35000, "Nhẫn bạc")
-        } else if ( id === '107' || id === 'nhanvang'.toLowerCase() ) {
-            getItemInfo(70000, "Nhẫn vàng")
-        } else if ( id === '108' || id === 'nhanhong'.toLowerCase()) {
-            getItemInfo(105000, "Nhẫn hồng")
+        const priceKS = {
+            "than": data.than,
+            "230": data.than,
+            "sat": data.sat,
+            "231": data.sat,
+            "vang": data.vang,
+            "232": data.vang,
+            "kimcuong": data.kimcuong,
+            "kc": data.kimcuong,
+            "233": data.ngoclucbao,
+            "nlb": data.ngoclucbao,
+            "ngoclucbao": data.ngoclucbao,
+            "234": data.ngoclucbao,
+            "titan": data.titan,
+            "235": data.titan,
+            "ametit": data.ametit,
+            "236": data.ametit,
+            "saphir": data.saphir,
+            "237": data.saphir,
+            "ruby": data.ruby,
+            "238": data.ruby,
         }
-        else if ( id === 'than'.toLowerCase() ) await getKSInfo(author, 30, "Than")
-        else if ( id === 'sat'.toLowerCase() ) await getKSInfo(author, 35, "Sắt")
-        else if ( id === 'vang'.toLowerCase() ) await getKSInfo(author, 45, "Vàng")
-        else if ( id === 'kimcuong'.toLowerCase() || id === 'kc'.toLowerCase() ) await getKSInfo(author, 500, "Kim cương")
-        else if ( id === 'ngoclucbao'.toLowerCase() || id === 'nlb'.toLowerCase() ) await getKSInfo(author, 2000, "Ngọc lục bảo")
-        else {
-            message.reply('**Không tìm thấy ID của sản phẩm\nHiện tại chỉ được phép bán nhẫn và các loại khoáng sản!**')
+
+        const nameNhan = {
+            "110": 'Nhẫn bạc',
+            "111": 'Nhẫn vàng',
+            "112": 'Nhẫn hồng'
+        }
+
+        const priceNhan = {
+            "110": data.nhanbac,
+            "111": data.nhanvang,
+            "112": data.nhanhong
+        }
+        
+        if (amount < 0 || (isNaN(amount) && amount !== "all".toLowerCase())) 
+            return message.reply(`${emoji.fail} Phắc du <@${author.id}> sai định dạng rồi`)
+            .then(msg => setTimeout(() => {
+                msg.delete();
+            }, 5000));
+
+        const getKSInfo = async (authorId, price, itemName) => {
+            let ks = await client.khoangsan(authorId, itemName);
+            if (amount === "all".toLowerCase()) amount = ks;
+
+            if (ks - parseInt(amount) < 0) return message.reply(`${emoji.fail} Bạn không đủ **${nameKS[id]}**để bán.`);
+            
+            await client.truKS(authorId, itemName, amount)
+            await client.addTien(authorId, price * amount)
+
+            await message.reply(`${emoji.success} **|** Đã bán thành công **${amount} ${emojiKS[itemName]}** với giá **${(price * amount).toLocaleString("En-Us")} <:O_o:1135831601205481523> coins**`)
+        }   
+
+        if (type === "ks".toLowerCase()) {
+            getKSInfo(author.id, priceKS[id], nameKS[id]);
+        } 
+        else if (type === "nhan".toLowerCase()) {
+            getItemInfo(priceNhan[id], nameNhan[id]);
+        }
+
+        const getItemInfo = async (price, itemName) => {
+            let item = await client.item(author.id, itemName);
+            if (amount == "all") amount = item;
+            if (item > 0) {
+                await client.truItem(author.id, itemName, amount)
+                await client.addTien(author.id, price)
+                return message.reply(`${emoji.success} Bạn đã bán thành công **${itemName}** với giá **${price.toLocaleString('En-Us')} <:O_o:1135831601205481523> coins**`)
+            } else {
+                return message.reply(`${emoji.fail} Bạn không có **${itemName}** nào để bán!`)
+            }
         }
     }
 }

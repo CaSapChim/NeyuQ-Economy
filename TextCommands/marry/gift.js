@@ -4,6 +4,7 @@ const emoji = require('../../emoji.json');
 
 module.exports = {
     name: 'gift',
+    description: "Tặng quà tăng điểm cho người đã kết hôn với mình",
     adminOnly: false,
     /**
      * 

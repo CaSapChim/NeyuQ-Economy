@@ -1,10 +1,19 @@
 const Discord = require("discord.js");
+const marryModel = require('../../database/models/marryModel');
 
 module.exports = {
   name: "daily",
   aliases: ["daily"],
   description: "Nhận tiền hàng ngày của bạn",
   adminOnly: false,
+  /**
+   * 
+   * @param {Discord.Client} client 
+   * @param {Discord.Message} message 
+   * @param {*} args 
+   * @param {*} userData 
+   * @returns 
+   */
   run: async (client, message, args, userData) => {
   
      const currentTime = new Date();
@@ -29,21 +38,24 @@ module.exports = {
     let dailyReward = 500;
 
     if (streak === 2) {
-      dailyReward = 200;
+      dailyReward = 1000;
     } else if (streak === 3) {
-      dailyReward = 300;
+      dailyReward = 2000;
     } else if (streak === 4) {
-      dailyReward = 400;
+      dailyReward = 4000;
     } else if (streak >= 5) {
-      dailyReward = 500;
+      dailyReward = 8000;
     }
 
     const bonusRoles = [
-      { roleId: '1071392984639229984', bonus: 2000 }, // booster
-      { roleId: '1113451254195159161', bonus: 500 }, //  donator 1
-      { roleId: '1135968082435788952', bonus: 1000 }, // donator 2
-      { roleId: '1076113410355363860', bonus: 500 }, // MC
-      { roleId: '1127613575314284614', bonus: 1500 } // girlgang
+      { roleId: '1071392984639229984', bonus: 2500 }, // booster
+      { roleId: '1113451254195159161', bonus: 1000 }, //  donator 1
+      { roleId: '1135968082435788952', bonus: 2000 }, // donator 2
+      { roleId: '1076113410355363860', bonus: 1000 }, // MC
+      { roleId: '1127613575314284614', bonus: 3000 }, // girlgang
+      { roleId: '1113451367181332530', bonus: 3000}, // donator 3
+      { roleId: '1175546375530885190', bonus: 4000}, // donator 4
+      { roleId: '1176075681667498044', bonus: 5000}, // donator 5
     ];
 
     let bonusMoney = 0;
@@ -63,6 +75,20 @@ module.exports = {
     }
 
     const totalReward = dailyReward + bonusMoney;
+    let msg = ``;
+
+    let marryData = await marryModel.findOne({ $or: [{userId1: message.author.id}, {userId2: message.author.id }] });
+    if (marryData) {
+      // Nếu userId1 == id của người dùng lệnh thì + tiền cho người đã kết hôn vs mình (userId2)
+      if (marryData.userId1 === message.author.id) {
+        client.addTien(marryData.userId2, totalReward/2);
+        msg += `, Người yêu bạn được nhận thêm ${totalReward/2} vì đã cưới bạn`;
+      } else {
+        client.addTien(marryData.userId1, totalReward/2);
+        msg += `, Người yêu bạn được nhận thêm ${totalReward/2} vì đã cưới bạn`;
+      }
+    }
+
     client.addTien(message.author.id, totalReward);
 
     try {
@@ -93,6 +119,6 @@ module.exports = {
       .setTimestamp()
       .setColor('#61c4ff');
 
-    message.channel.send({ embeds: [dailyEmbed] });
+    message.channel.send({ content: `<@${message.author.id}>${msg}`, embeds: [dailyEmbed] });
   },
 };

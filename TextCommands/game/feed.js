@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const feedAnimalModel = require('../../database/models/userDataJob/feedAnimalModel');
 const emoji = require('../../emoji.json');
+const random = require('random-number-csprng');
 
 module.exports = {
     name: 'feed',
     aliases: ['choan'],
+    description: "Cho động vật ăn",
     adminOnly: false,
     /**
      * 
@@ -51,8 +53,17 @@ module.exports = {
         if (animal < parseInt(amount)) amount = await client.xemAnimal(author.id, animalObj[animalName]);
         //if (food < amount) return message.reply(`${emoji.fail} Bạn không đủ **${foodObj[animalName]}**`);
         if (amount < 1) return message.reply(`${emoji.fail} Bạn không đủ **${foodObj[animalName]}**`);
+        
+        const rand = (await random(1, 1000)) / 10;
+        let msg = ``;
+        if (rand <= 20) { // 20%
+            let success = Math.floor(Math.random() * Math.floor(amount / 2)) + 1;
+            msg += `${emoji.congra} Đã sinh thành công thêm **${success} con ${animalObj[animalName]}**`;
+            await client.addAnimal(author.id, animalObj[animalName], success);
+        }
+        
         await client.truSanPham(author.id, foodObj[animalName], parseInt(amount));
         await client.choAn(author.id, animalObj[animalName], parseInt(amount));
-        message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công ${animalEmojiObj[animalName]}`);
+        await message.reply(`${emoji.success} Bạn đã cho **${amount} con ${animalObj[animalName]}** ăn thành công ${animalEmojiObj[animalName]}\n${msg}`);
     }
 }
