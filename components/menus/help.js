@@ -48,14 +48,19 @@ module.exports = async ({ client, interaction, values }) => {
           const emoji = sourceEmoji.emojihelp;
 
           const resultEmbed = new EmbedBuilder()
+               .setColor("Fuchsia")
                .setTitle(`${emoji?.[category]} ${category} - (${commandObjects.length}) ${nameOfCommand(commandObjects)}`)
                .addFields(fields(commandObjects))
                .setTimestamp()
                .setFooter({ text: `Prefix của bot là nqg`, iconURL: client.user.displayAvatarURL() });
           return resultEmbed;
      }
-
-     await interaction.editReply({ embeds: [createEmbedForCommand(values[0])], ephemeral: true });
+     const helpEmbeds = []
+     for (const key of values) {
+          const temp = createEmbedForCommand(key);
+          helpEmbeds.push(temp)
+     } 
+     await interaction.editReply({ embeds: helpEmbeds });
 
 }
 

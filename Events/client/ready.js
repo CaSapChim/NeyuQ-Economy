@@ -29,36 +29,68 @@ module.exports = {
       `✅ Đăng Nhập Thành Công Vào ${client.user.tag}`.bold.brightBlue
     );
 
-    cron.schedule('30 19 * * 1,3,5', () => { // thứ 2 4 6
-      const channelId = '1080521432032882700';
-      const channel = client.channels.cache.get(channelId);
-  
+    cron.schedule('07 0 * * 1,3,5,6', () => { // thứ 2 4 6
+      const channel = client.channels.cache.get("1129314158555443231");
       if (channel) {
-        channel.send(`${emoji.congra} ${emoji.congra} **EVENT CÂU CÁ BẮT ĐẦU (7H30 - 8H00)** ${emoji.congra} ${emoji.congra}\nVào kênh <#1070274984750100522> để tham gia event nhaaa.`).then(() => {
-          setTimeout(async () => {
-            channel.send(`**ĐÃ KẾT THÚC EVENT CÂU CÁ**`);
-            let diemCauCa = await caScoreModel.find().sort({ score: -1 });
-            let leaderboard = diemCauCa
-                .slice(0, 10)
-                .map((user, index) => {
-                    const positionEmoji = getMedalEmoji(index);
-                    return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.score} điểm <a:Minecraft_Fish7:1141240605800939650>`;
-                })
-                .join('\n');
-
-            const embed = new EmbedBuilder()
-                .setColor('Green')
-                .setTitle(`TOP 10 ĐIỂM CÂU CÁ`)
-                .setDescription(leaderboard)
-                .setFooter({ text: 'Câu càng nhiều, điểm càng cao!'})
-                .setTimestamp();
-
-            channel.send({ embeds: [embed] });
-            await caScoreModel.deleteMany({});
-          }, 1 * 60 * 1000);
-        })
+        try {
+          unLockChannel();
+          channel.send(`${emoji.congra} ${emoji.congra} **EVENT CÂU CÁ BẮT ĐẦU (7H30 - 8H00)** ${emoji.congra} ${emoji.congra}\nVào kênh <#1070274984750100522> để tham gia event nhaaa.`).then(() => {
+            setTimeout(async () => {
+              channel.send(`**ĐÃ KẾT THÚC EVENT CÂU CÁ**`);
+              let diemCauCa = await caScoreModel.find().sort({ score: -1 });
+              if (diemCauCa.length == 0)
+                return message.channel.send("Không ghi nhận được điểm nào");
+              let leaderboard = diemCauCa
+                  .slice(0, 5)
+                  .map((user, index) => {
+                      const positionEmoji = getMedalEmoji(index);
+                      return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.score} điểm <a:Minecraft_Fish7:1141240605800939650>`;
+                  })
+                  .join('\n');
+  
+              const embed = new EmbedBuilder()
+                  .setColor('Green')
+                  .setTitle(`TOP 5 NGƯỜI THẮNG EVENT HÔM NAY`)
+                  .setDescription(leaderboard)
+                  .setFooter({ text: 'Câu càng nhiều, điểm càng cao!'})
+                  .setTimestamp();
+  
+              channel.send({ embeds: [embed] });
+              await lockChannel();
+              await caScoreModel.deleteMany({});
+              await getReward();
+              async function getReward() {
+                let token = 50;
+                for (let i = 0; i < 4 ; i++) {
+                  await client.addToken(diemCauCa[i].userId, 50);
+                  token -= 10;
+                }
+              }
+            }, 1 * 60 * 1000);
+          })
+        } catch(err) {
+          console.log("lỗi event cc:", err);
+        }
       } else {
         console.error('Không tìm thấy kênh');
+      }
+
+      async function lockChannel() {
+        await channel.permissionOverwrites.edit("1118211005521076254", {
+          'SendMessages': false,
+          'EmbedLinks': null,
+          'AttachFiles': false,
+        })
+        console.log("Đã lock kênh");
+      }
+
+      async function unLockChannel() {
+        await channel.permissionOverwrites.edit("1118211005521076254", {
+          'SendMessages': true,
+          'EmbedLinks': true,
+          'AttachFiles': true,
+        });
+      console.log("Đã unlock kênh");
       }
     });
 
@@ -73,6 +105,7 @@ module.exports = {
           default:
               return `${index + 1}.`;
       }
+    
   }
 
 ///////////////////////////////////////////////////////////////// time câu cá

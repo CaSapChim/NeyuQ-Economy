@@ -1,9 +1,11 @@
 const Discord = require('discord.js');
+const checkIdAndName = require('../../data/idAndNameProducts.json');
+const emoji = require('../../emoji.json');
 
 module.exports = {
     name: 'trade',
     adminOnly: false,
-    description: "Trade vật phẩm với người khác",
+    description: "Trao đổi, buôn bán vật phẩm với người khác",
     /**
      * 
      * @param {Discord.Client} client 
@@ -18,30 +20,30 @@ module.exports = {
         let money = parseInt(args[3]);
 
         if (!soLuong || soLuong < 0 || !money) {
-            return message.reply('Sai cú pháp.\nCách dùng: `nqg trade @user <id> <số lượng> <tiền>`');
+            return message.reply('Sai cú pháp.\nCách dùng: `nqg trade @user <id vật phẩm> <số lượng> <tiền>`');
         }
-        if (mention.id == author) return message.reply('Bạn không thể tự giao dịch với chính mình!');
+        if (mention.id == author) return message.reply(`${emoji.fail} Bạn không thể tự giao dịch với chính mình!`);
         if (money < 1000) return message.reply(`Số tiền trade tối thiểu là 1000 <:O_o:1135831601205481523> coins`)
 
-        const arr = [];
-        const checkItem = {
+        const sanPhamArr = ["300", "301", "302", "303", "304", "305", "306", "307", "308", "309", "310", "311", "312"];
+        const nongSanArr = ["250", "251", "252", "253", "254", "255", "256", "257", "258"];
+        const caArr = ["240", "241", "242", "243", "244", "245"];
 
-        }
 
         let phiTrade = 1000;
         let balance = await client.xemTien(mention.id); // Xem tiền người đc trade
-        
-        if (balance < money) return message.reply(`<@${mention.id}> không đủ tiền để tiếp tục cuộc giao dịch này!`);
-        
+
         let logChannel = client.channels.cache.get('1157540591320711178');
-        if (arr.includes(itemId)) {
+        if (sanPhamArr.includes(itemId) || nongSanArr.includes(itemId) || caArr.includes(itemId)) {
 
             const tradeEmbed = new Discord.EmbedBuilder()
                 .setDescription(`Cuộc giao dịch giữa <@${author}> và <@${mention.id}>
+
+                <a:Glitch_warn:1166628298374266971> **Lưu ý: Vui lòng đọc kĩ thông tin giao dịch trước khi bấm nút xác nhận để tránh bị scam <:socam:1188124042679570432>**
                 
                     > <@${author}> sẽ nhận được **${money - phiTrade} <:O_o:1135831601205481523> coins**
 
-                    > <@${mention.id}> sẽ nhận được **${soLuong} ${checkItem[itemId]}** và mất **${money} <:O_o:1135831601205481523> coins**
+                    > <@${mention.id}> sẽ nhận được **${soLuong} ${checkIdAndName.name[itemId]}** và mất **${money} <:O_o:1135831601205481523> coins**
 
                     > <@${mention.id}>, bạn có muốn thực hiện cuộc giao dịch này với <@${author}> không ?
                 `)
@@ -66,7 +68,13 @@ module.exports = {
     
             const dongYEmbed = new Discord.EmbedBuilder()
                 .setDescription(`
-                    **<@${author}> và <@${mention.id}> vừa thực hiện thành công cuộc giao dịch!**
+                <@${author}> đã giao dịch thành công với <@${mention.id}>
+                
+                > <@${author}> **+${money - phiTrade} <:O_o:1135831601205481523> coins**
+
+                > <@${mention.id}> **+${soLuong} ${checkIdAndName.name[itemId]} ${checkIdAndName.emoji[itemId]}**
+
+                > <@${mention.id}> **-${money} <:O_o:1135831601205481523> coins**
                 `)
                 .setColor('Green')
                 .setThumbnail('https://gifdb.com/images/high/handshake-making-a-deal-hcx268nm9llx57gt.gif')
@@ -83,14 +91,13 @@ module.exports = {
                 .setDescription(`
                 <@${author}> đã giao dịch thành công với <@${mention.id}>
                 
-                > <@${author}> **+${money - phiTrade} <:O_o:1135831601205481523> coins**
+                > <@${author}> **+${money - phiTrade} <:O_o:1135831601205481523> coins (đã trừ phí giao dịch)**
 
-                > <@${mention.id}> **+${soLuong} ${checkItem[itemId]}**
+                > <@${mention.id}> **+${soLuong} ${checkIdAndName.name[itemId]} ${checkIdAndName.emoji[itemId]}**
 
                 > <@${mention.id}> **-${money} <:O_o:1135831601205481523> coins**
                 `)
-                .setTimestamp()
-                .setFooter({ text: 'Lệ phí mỗi lần giao dịch: 1000 nqg coins'})
+                .setTimestamp() 
 
             const a = await message.channel.send({ embeds: [tradeEmbed], components: [row] });
 
@@ -101,10 +108,11 @@ module.exports = {
             collector.on('collect', async (button) => {
                 if (button.user.id === mention.id) {
                     if (button.customId === 'accept') {
+                        if (balance < money) return message.reply(`<@${mention.id}> không đủ tiền để tiếp tục cuộc giao dịch này!`);
                         button.deferUpdate()
                         a.edit({ embeds: [dongYEmbed], components: []})
-                        trade(author, mention.id, checkItem[itemId], soLuong, money);
-                        //await logChannel.send({ embeds: [embed] });
+                        trade(author, mention.id, checkIdAndName.name[itemId], soLuong, money);
+                        await logChannel.send({ embeds: [logEmbed] });
                 
                     } else if (button.customId === 'decline') {
                         button.deferUpdate()
@@ -118,10 +126,18 @@ module.exports = {
             message.reply('Không tìm thấy id vật phẩm');
         }
 
-        async function trade(author, toGiveUser, itemId, soLuong, money) {
-            await client.addNongSan(toGiveUser, itemId, soLuong); // add item cho người đc trade
-            await client.truNongSan(author, itemId, soLuong); // trừ item người trade
-            await client.truTien(toGiveUser, money); // trừ tiền người đc trade
+        const trade = async (author, toGiveUser, itemName, soLuong, money) => {
+            if (caArr.includes(itemId)) {
+                await client.addCa(toGiveUser, itemName, soLuong);
+                await client.truCa(author, itemName, soLuong);
+            } else if (sanPhamArr.includes(itemId)) {
+                await client.addSanPham(toGiveUser, itemName, soLuong);
+                await client.truSanPham(author, itemName, soLuong);
+            } else {
+                await client.addNongSan(toGiveUser, itemName, soLuong);
+                await client.truNongSan(author, itemName, soLuong);
+            }
+            await client.truTien(toGiveUser, money); // trừ tiền cho người bị trade
             await client.addTien(author, money - phiTrade); // add tiền cho người trade
         }
     }

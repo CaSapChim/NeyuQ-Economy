@@ -212,7 +212,7 @@ module.exports = {
         break;
     }
     
-    const channelId = "1080521432032882700";
+    const channelId = "1129314158555443231";
 
     if (result) {
       if (message.channel.id === channelId) {

@@ -77,119 +77,46 @@ module.exports = {
 
         const rsEmbedFunc = (roleNum) => {
             const rsEmbed = new Discord.EmbedBuilder()
-                .setColor("Green")
-                .setDescription(`Chúc mừng, bạn đã nhận được <@${roleObj[roleNum].id}>`)
+                .setColor("Fuchsia")
+                .setDescription(`Chúc mừng, bạn đã nhận được role <@&${roleObj[roleNum].id}>`)
                 .setTimestamp()
             return message.channel.send({content: `<@${message.author.id}>`, embeds: [rsEmbed] });
         }
 
         let rslots = [];
         let roleNum = 0;
+        const randRole = Math.floor(Math.random() * slots.length);
         const rand = [
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[0]); 
-                    rslots.push(slots[0]); 
-                    rslots.push(slots[0]);
-                    roleNum = 1;
-                } 
+            {
+                p: 40, f: async() => {
+                    rslots.push(slots[randRole]); 
+                    rslots.push(slots[randRole]); 
+                    rslots.push(slots[randRole]);
+                    roleNum = randRole;
+                    let r = message.guild.roles.cache.find((role) => role.name === `${roleObj[roleNum].id}` || role.id === `${roleObj[roleNum].id}`);
+                    if (!message.member.roles.cache.has(roleObj[roleNum].id))
+                        await message.member.roles.add(r);
+                    else {
+                        message.channel.send({ content: `<@${author.id}>`, 
+                            embeds: [
+                                new Discord.EmbedBuilder()
+                                    .setColor("Fuchsia")
+                                    .setDescription(`Bạn đã sở hữu role <@&${roleObj[roleNum].id}> này rồi nên bạn\nđược nhận lại 5 tokens ${emoji.token}`)
+                                    .setTimestamp()
+                            ] 
+                        });
+                        await client.addToken(author.id, 5);
+                    }
+                }
             },
             { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[1]); 
-                    rslots.push(slots[1]); 
-                    rslots.push(slots[1]);
-                    roleNum = 2;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[2]); 
-                    rslots.push(slots[2]); 
-                    rslots.push(slots[2]);
-                    roleNum = 3;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[3]); 
-                    rslots.push(slots[3]); 
-                    rslots.push(slots[3]);
-                    roleNum = 4;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[4]); 
-                    rslots.push(slots[4]); 
-                    rslots.push(slots[4]);
-                    roleNum = 5;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[5]); 
-                    rslots.push(slots[5]); 
-                    rslots.push(slots[5]);
-                    roleNum = 6;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[6]); 
-                    rslots.push(slots[6]); 
-                    rslots.push(slots[6]);
-                    roleNum = 7;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[7]); 
-                    rslots.push(slots[7]); 
-                    rslots.push(slots[7]);
-                    roleNum = 8;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[8]); 
-                    rslots.push(slots[8]); 
-                    rslots.push(slots[8]);
-                    roleNum = 9;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[9]); 
-                    rslots.push(slots[9]); 
-                    rslots.push(slots[9]);
-                    roleNum = 10;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[10]); 
-                    rslots.push(slots[10]); 
-                    rslots.push(slots[10]);
-                    roleNum = 11;
-                } 
-            },
-            { 
-                p: 5, f: async() => { 
-                    rslots.push(slots[11]); 
-                    rslots.push(slots[11]); 
-                    rslots.push(slots[11]);
-                    roleNum = 12;
-                } 
-            },
-            { 
-                p: 40, f: async() => { 
+                p: 60, f: async() => { 
                     var slot1 = Math.floor(Math.random() * (slots.length - 1));
                     var slot2 = Math.floor(Math.random() * (slots.length - 1));
                     var slot3 = Math.floor(Math.random() * (slots.length - 1));
 
                     if (slot3 == slot1)
-					    slot2 = (slot1 + Math.ceil(Math.random() * (slots.length - 2))) % (slots.length - 1);
+                    slot2 = (slot1 + Math.ceil(Math.random() * (slots.length - 2))) % (slots.length - 1);
                     if (slot2 == slots.length - 2) slot2++;
 
                     rslots.push(slots[slot1]);
@@ -200,8 +127,8 @@ module.exports = {
         ]
         const probabilitilized = new Probability(...rand.map(entry => ({ p: `${entry.p}%`, f: entry.f })));
         await probabilitilized();
-
-        let winmsg = roleNum == 0 ? "cái nịt" : "một role...";
+        
+        let winmsg = roleNum == 0 ? "cái nịt" : `một role xịn xò ${emoji.congra}`;
         const authorName = `<@${author.id}>`
 
         let displaySlots = 
@@ -257,7 +184,7 @@ module.exports = {
             ' ` ` ' +
             authorName +
             ' đã bỏ ra 10 tokens <:token:1181941410446979122> và...' +
-            '\n  `=============`   và nhận được ' +
+            '\n  `=============`   nhận được ' +
             winmsg +
             '\n  `====[...]====`';
             (await a).edit(displaySlots);

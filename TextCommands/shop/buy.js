@@ -220,16 +220,6 @@ module.exports = {
       case '72':
         getAnimaInfo(data.farm.heo, "heo");
         break;
-      // case 'gacharole':
-      //   let userDataGacha = await gachaUserModel.findOne({ userId: author });
-      //   if (!userDataGacha) {
-      //     userDataGacha = await gachaUserModel.create({ userId: author });
-      //     if (balance < amount * data.vegacha) return message.reply(`${emoji.fail} Bạn không đủ tiền để mua`);
-      //     await client.truTien(author, data.vegacha * amount);
-      //     userDataGacha.soLuong += amount;
-      //     await userDataGacha.save();
-      //   }
-      //   break;
       default:
         message.reply('**Không tìm thấy ID của sản phẩm**')
     }

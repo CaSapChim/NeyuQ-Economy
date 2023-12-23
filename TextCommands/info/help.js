@@ -36,7 +36,7 @@ module.exports = {
                .setCustomId('help')
                .setPlaceholder('Help menu')
                .setMinValues(1)
-               .setMaxValues(1)
+               .setMaxValues(5)
                .addOptions(createSelectMenuOption(commandFolders));
           const row1 = new ActionRowBuilder().addComponents(menu);
           
@@ -46,11 +46,11 @@ module.exports = {
           const embed = new EmbedBuilder()
                .setColor('Fuchsia')
                .setAuthor({ name: "BẢNG LỆNH LOLI BOT GAME" })
-               .setDescription(`Chào mừng ${message.author.toString()} đến với sở thú||LOLI||. \n Bot được phát triển bởi <@479182625764802560> <@874321270437728257> và <@942356413546635264>`)
+               .setDescription(`Chào mừng ${message.author.toString()} đến với sở thú - ||LOLI||. \n Bot được phát triển bởi <@479182625764802560> <@874321270437728257> và <@942356413546635264>`)
                .addFields([
                     {
                          name: `- Các loại lệnh của Bot \n `,
-                         value: helpString,
+                         value: helpString + '\n \n ● [NeyuQ-server](https://discord.gg/neyuq)',
                          inline: false
                     }
                ])

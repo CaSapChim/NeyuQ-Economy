@@ -39,7 +39,7 @@ module.exports = {
         }
 
         // Handle marry leaderboard
-        if (['marry', 'm', 'thanmat', 'diem'].includes(type)) {
+        else if (['marry', 'm', 'thanmat', 'diem'].includes(type)) {
             let soluong = parseInt(args[1]) || 5;
             if (soluong > 10) soluong = 10;
 
@@ -57,6 +57,30 @@ module.exports = {
                 .setTitle(`TOP ${soluong} ĐIỂM THÂN MẬT`)
                 .setDescription(leaderboard)
                 .setFooter({ text: 'Càng chân thành với nhau thì top 1 càng về gần bạn!'})
+                .setTimestamp();
+
+            message.channel.send({ embeds: [embed] });
+        } 
+        else if (["cc", "fish", "cauca"].includes(type)) {
+            let soluong = parseInt(args[1]) || 10
+            if (soluong > 25) soluong = 25
+
+            let diemCauCa = await caScoreModel.find().sort({ score: -1 });
+            if (diemCauCa.length == 0) 
+                return message.reply("Event câu cá chưa diễn ra nên không thể xem điểm được");
+            let leaderboard = diemCauCa
+                .slice(0, soluong)
+                .map((user, index) => {
+                    const positionEmoji = getMedalEmoji(index);
+                    return `${positionEmoji} ${client.users.cache.get(user.userId)} - ${user.score} điểm <a:Minecraft_Fish7:1141240605800939650>`;
+                })
+                .join('\n');
+
+            const embed = new Discord.EmbedBuilder()
+                .setColor('Green')
+                .setTitle(`TOP ${soluong} ĐIỂM CÂU CÁ`)
+                .setDescription(leaderboard)
+                .setFooter({ text: 'Câu càng nhiều, điểm càng cao!'})
                 .setTimestamp();
 
             message.channel.send({ embeds: [embed] });
